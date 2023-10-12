@@ -14,6 +14,13 @@ public class Task8 {
             if (board[i].length != LEN) {
                 throw new IllegalArgumentException();
             }
+
+            // Проверка, что в нашей матрице содержатся только нули и единицы
+            for (int j = 0; j < LEN; j++) {
+                if (board[i][j] != 0 && board[i][j] != 1) {
+                    throw new IllegalArgumentException();
+                }
+            }
         }
 
         // Логическая переменная для хранения результата

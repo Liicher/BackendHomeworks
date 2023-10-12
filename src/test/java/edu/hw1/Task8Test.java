@@ -59,7 +59,22 @@ class Task8Test {
     }
 
     @Test
-    void invalidBoardInput() {
+    void invalidBoardSizeInput() {
+        int[][] input = {{1, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 1, 0, 0, 0, 0, 0},
+            {0, 0, 0, 4, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 2, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 5, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0,-5, 0, 0, 0, 0, 0}};
+        assertThrows(IllegalArgumentException.class, () -> {
+            task8.knightBoardCapture(input);
+        });
+    }
+
+    @Test
+    void invalidNumInput() {
         int[][] input = {{1, 0, 0, 0, 0, 0, 0, 0},
             {0, 0, 1, 0, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
