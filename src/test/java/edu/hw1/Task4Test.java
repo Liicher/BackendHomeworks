@@ -9,29 +9,17 @@ class Task4Test {
     Task4 task4 = new Task4();
     @Test
     void fixString() {
-        String input = "hTsii  s aimex dpus rtni.g";
-        String response = task4.fixString(input);
-        Assertions.assertThat(response).isEqualTo("This is a mixed up string.");
+        Assertions.assertThat(task4.fixString("hTsii  s aimex dpus rtni.g")).isEqualTo("This is a mixed up string.");
+        Assertions.assertThat(task4.fixString("badce")).isEqualTo("abcde");
+        Assertions.assertThat(task4.fixString(" ")).isEqualTo(" ");
+        Assertions.assertThat(task4.fixString("")).isEqualTo("");
     }
 
     @Test
-    void fixString2() {
-        String input = "badce";
-        String response = task4.fixString(input);
-        Assertions.assertThat(response).isEqualTo("abcde");
-    }
-
-    @Test
-    void blankStringInput() {
-        String input = " ";
-        String response = task4.fixString(input);
-        Assertions.assertThat(response).isEqualTo(" ");
-    }
-
-    @Test
-    void emptyStringInput() {
-        String input = "";
-        String response = task4.fixString(input);
-        Assertions.assertThat(response).isEqualTo("");
+    void invalidNullInput() {
+        String input = null;
+        assertThrows(IllegalArgumentException.class, () -> {
+            task4.fixString(input);
+        });
     }
 }

@@ -13,7 +13,7 @@ class Task3Test {
         int[] a1 = {1, 2, 3, 4};
         int[] a2 = {0, 6};
         boolean response = task3.isNestable(a1, a2);
-        Assertions.assertThat(response).isEqualTo(true);
+        Assertions.assertThat(task3.isNestable(a1, a2)).isEqualTo(true);
     }
 
     @Test
@@ -25,20 +25,17 @@ class Task3Test {
     }
 
     @Test
-    void emptyInputArray() {
+    void invalidNullInput() {
         int[] a1 = {};
         int[] a2 = {0, 6};
         assertThrows(IllegalArgumentException.class, () -> {
             task3.isNestable(a1, a2);
         });
-    }
 
-    @Test
-    void invalidNullInput() {
-        int[] a1 = null;
-        int[] a2 = {0, 6};
+        int[] b1 = null;
+        int[] b2 = {0, 6};
         assertThrows(IllegalArgumentException.class, () -> {
-          task3.isNestable(a1, a2);
+            task3.isNestable(b1, b2);
         });
     }
 }

@@ -3,6 +3,8 @@ package edu.hw1;
 public class Task8 {
     // Переменная для размера матрицы
     public static final byte LEN = 8;
+    public static final byte EMPTY = 0;
+    public static final byte KNIGHT = 1;
 
     public boolean knightBoardCapture(int[][] board) throws IllegalArgumentException {
         // Две проверки на соблюдение размеров квадратной матрицы 8х8
@@ -17,7 +19,7 @@ public class Task8 {
 
             // Проверка, что в нашей матрице содержатся только нули и единицы
             for (int j = 0; j < LEN; j++) {
-                if (board[i][j] != 0 && board[i][j] != 1) {
+                if (board[i][j] != EMPTY && board[i][j] != KNIGHT) {
                     throw new IllegalArgumentException();
                 }
             }
@@ -29,7 +31,7 @@ public class Task8 {
         for (int i = 0; i < LEN; i++) {
             for (int j = 0; j < LEN; j++) {
                 // В случае если поле пустое, продолжаем
-                if (board[i][j] == 0) {
+                if (board[i][j] == EMPTY) {
                     continue;
                 }
 
@@ -74,11 +76,11 @@ public class Task8 {
     private boolean checkUpPosition(int[][] board, int x, int y) {
         switch (y) {
             case 0:
-                return (board[x - 2][y + 1] == 0);
+                return (board[x - 2][y + 1] == EMPTY);
             case LEN - 1:
-                return (board[x - 2][y - 1] == 0);
+                return (board[x - 2][y - 1] == EMPTY);
             default:
-                return (board[x - 2][y - 1] == 0 && board[x - 2][y + 1] == 0);
+                return (board[x - 2][y - 1] == EMPTY && board[x - 2][y + 1] == EMPTY);
         }
     }
 
@@ -86,24 +88,23 @@ public class Task8 {
     private boolean checkDownPosition(int[][] board, int x, int y) {
         switch (y) {
             case 0:
-                return (board[x + 2][y + 1] == 0);
+                return (board[x + 2][y + 1] == EMPTY);
             case LEN - 1:
-                return (board[x + 2][y - 1] == 0);
+                return (board[x + 2][y - 1] == EMPTY);
             default:
-                return (board[x + 2][y - 1] == 0 && board[x + 2][y + 1] == 0);
+                return (board[x + 2][y - 1] == EMPTY && board[x + 2][y + 1] == EMPTY);
         }
     }
-
 
     // Проверка левых полей относительно "коня"
     private boolean checkLeftPosition(int[][] board, int x, int y) {
         switch (x) {
             case 0:
-                return (board[x + 1][y - 2] == 0);
+                return (board[x + 1][y - 2] == EMPTY);
             case LEN - 1:
-                return (board[x - 1][y - 2] == 0);
+                return (board[x - 1][y - 2] == EMPTY);
             default:
-                return (board[x + 1][y - 2] == 0 && board[x - 1][y - 2] == 0);
+                return (board[x + 1][y - 2] == EMPTY && board[x - 1][y - 2] == EMPTY);
         }
     }
 
@@ -111,11 +112,11 @@ public class Task8 {
     private boolean checkRightPosition(int[][] board, int x, int y) {
         switch (x) {
             case 0:
-                return (board[x + 1][y + 2] == 0);
+                return (board[x + 1][y + 2] == EMPTY);
             case LEN - 1:
-                return (board[x - 1][y + 2] == 0);
+                return (board[x - 1][y + 2] == EMPTY);
             default:
-                return (board[x + 1][y + 2] == 0 && board[x - 1][y + 2] == 0);
+                return (board[x + 1][y + 2] == EMPTY && board[x - 1][y + 2] == EMPTY);
         }
     }
 }

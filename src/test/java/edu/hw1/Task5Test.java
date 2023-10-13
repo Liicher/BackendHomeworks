@@ -7,30 +7,15 @@ class Task5Test {
     Task5 task5 = new Task5();
 
     @Test
-    void isPalindromeDescendant() {
-        int input = 11211230;
-        boolean response = task5.isPalindromeDescendant(input);
-        Assertions.assertThat(response).isEqualTo(true);
+    void isPalindromeDescendantTrue() {
+        Assertions.assertThat(task5.isPalindromeDescendant(11211230)).isEqualTo(true);
+        Assertions.assertThat(task5.isPalindromeDescendant(111)).isEqualTo(true);
     }
 
     @Test
-    void isPalindromeDescendant1() {
-        int input = 123234; // 357 // 87
-        boolean response = task5.isPalindromeDescendant(input);
-        Assertions.assertThat(response).isEqualTo(false);
-    }
-
-    @Test
-    void isPalindromeDescendant2() {
-        int input = 111;
-        boolean response = task5.isPalindromeDescendant(input);
-        Assertions.assertThat(response).isEqualTo(true);
-    }
-
-    @Test
-    void isPalindromeDescendant4() {
-        int input = -111;
-        boolean response = task5.isPalindromeDescendant(input);
-        Assertions.assertThat(response).isEqualTo(false);
+    void isPalindromeDescendantFalse() {
+        Assertions.assertThat(task5.isPalindromeDescendant(123234)).isEqualTo(false);
+        Assertions.assertThat(task5.isPalindromeDescendant(-111)).isEqualTo(false);
+        Assertions.assertThat(task5.isPalindromeDescendant(3)).isEqualTo(false);
     }
 }

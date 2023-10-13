@@ -8,22 +8,8 @@ class Task2Test {
 
     @Test
     void countDigits() {
-        int input = 4666;
-        int response = task2.countDigits(input);
-        Assertions.assertThat(response).isEqualTo(4);
-    }
-
-    @Test
-    void countNumberZero() {
-        int input = 0;
-        int response = task2.countDigits(input);
-        Assertions.assertThat(response).isEqualTo(1);
-    }
-
-    @Test
-    void countNegativeNumber() {
-        int input = -733;
-        int response = task2.countDigits(input);
-        Assertions.assertThat(response).isEqualTo(3);
+        Assertions.assertThat(task2.countDigits(4666)).isEqualTo(4);
+        Assertions.assertThat(task2.countDigits(0)).isEqualTo(1);
+        Assertions.assertThat(task2.countDigits(-765)).isEqualTo(3);
     }
 }

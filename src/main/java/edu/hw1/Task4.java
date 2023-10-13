@@ -1,7 +1,12 @@
 package edu.hw1;
 
 public class Task4 {
-    public String fixString(String input) {
+    public String fixString(String input) throws IllegalArgumentException {
+        // Проверка на значение null
+        if (input == null) {
+            throw new IllegalArgumentException();
+        }
+
         // Выполним проверку, что наша строка содержит хотя бы два элемента для "свапа"
         if (input.length() < 2) {
             return input;

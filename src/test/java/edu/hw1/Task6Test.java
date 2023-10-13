@@ -10,53 +10,23 @@ class Task6Test {
 
     @Test
     void countK() {
-        int input = 6621;
         Task6.count = 0;
-        int response = task6.countK(input);
-        Assertions.assertThat(response).isEqualTo(5);
+        Assertions.assertThat(task6.countK(6621)).isEqualTo(5);
+        Task6.count = 0;
+        Assertions.assertThat(task6.countK(6554)).isEqualTo(4);
+        Task6.count = 0;
+        Assertions.assertThat(task6.countK(6174)).isEqualTo(0);
     }
 
     @Test
-    void countK2() {
-        int input = 6554;
-        Task6.count = 0;
-        int response = task6.countK(input);
-        Assertions.assertThat(response).isEqualTo(4);
-    }
-
-    @Test
-    void illegalInput() {
-        int input = 3333;
-        Task6.count = 0;
+    void invalidInput() {
         assertThrows(IllegalArgumentException.class, () -> {
-            task6.countK(input);
-        });
-    }
-
-    @Test
-    void illegalLowerInput() {
-        int input = 997;
-        Task6.count = 0;
+            task6.countK(997);});
         assertThrows(IllegalArgumentException.class, () -> {
-            task6.countK(input);
-        });
-    }
-
-    @Test
-    void illegalNegativeInput() {
-        int input = -5346;
-        Task6.count = 0;
+            task6.countK(-5346);});
         assertThrows(IllegalArgumentException.class, () -> {
-            task6.countK(input);
-        });
-    }
-
-    @Test
-    void illegalIncreasedInput() {
-        int input = 16432;
-        Task6.count = 0;
+            task6.countK(16432);});
         assertThrows(IllegalArgumentException.class, () -> {
-            task6.countK(input);
-        });
+            task6.countK(3333);});
     }
 }
