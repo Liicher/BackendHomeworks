@@ -1,11 +1,16 @@
 package edu.hw2.task1;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public interface Expr {
+    Logger LOGGER = LogManager.getLogger();
     double evaluate();
 
     record Constant(double expr) implements Expr {
         @Override
         public double evaluate() {
+            LOGGER.info(this.toString());
             return expr;
         }
     }
@@ -20,6 +25,7 @@ public interface Expr {
             if (expr == null) {
                 throw new IllegalArgumentException();
             }
+            LOGGER.info(this.toString());
             return -expr.evaluate();
         }
     }
@@ -42,6 +48,7 @@ public interface Expr {
             if (exponent == null || expr == null || exponent.evaluate() % 1 != 0) {
                 throw new IllegalArgumentException();
             }
+            LOGGER.info(this.toString());
             return Math.pow(expr.evaluate(), exponent.evaluate());
         }
     }
@@ -64,6 +71,7 @@ public interface Expr {
             if (exprFirst == null || exprSecond == null) {
                 throw new IllegalArgumentException();
             }
+            LOGGER.info(this.toString());
             return exprFirst.evaluate() + exprSecond.evaluate();
         }
     }
@@ -86,6 +94,7 @@ public interface Expr {
             if (exprFirst == null || exprSecond == null) {
                 throw new IllegalArgumentException();
             }
+            LOGGER.info(this.toString());
             return exprFirst.evaluate() * exprSecond.evaluate();
         }
     }

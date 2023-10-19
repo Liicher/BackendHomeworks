@@ -1,5 +1,7 @@
 package edu.hw2.task3;
 
+import edu.hw2.task3.exceptions.LimitOfAttemptsException;
+
 public final class PopularCommandExecutor {
     private final ConnectionManager manager;
     private final int maxAttempts;
@@ -14,13 +16,15 @@ public final class PopularCommandExecutor {
     }
 
     void tryExecute(String command) {
-        for (int i = 0; i < maxAttempts; i++) {
+        int attempt = 1;
+        while (attempt <= maxAttempts) {
             try (Connection connection = manager.getConnection()) {
                 connection.execute(command);
                 return;
             } catch (Exception exception) {
-                if (i == maxAttempts - 1) {
-                    throw new ConnectionException(exception);
+                attempt++;
+                if (attempt > maxAttempts) {
+                    throw new LimitOfAttemptsException("Limit of attempts", exception.getCause());
                 }
             }
         }

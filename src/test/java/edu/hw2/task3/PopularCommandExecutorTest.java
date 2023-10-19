@@ -1,5 +1,6 @@
 package edu.hw2.task3;
 
+import edu.hw2.task3.exceptions.LimitOfAttemptsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ class PopularCommandExecutorTest {
     @Test
     @DisplayName("Fault")
     void updatePackagesFault() {
-        assertThrows(ConnectionException.class, () -> {
+        assertThrows(LimitOfAttemptsException.class, () -> {
             new PopularCommandExecutor(new FaultyConnectionManager(), 1).updatePackages();
         });
     }

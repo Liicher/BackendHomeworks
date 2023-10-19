@@ -32,10 +32,15 @@ class RectangleTest {
     }
 
     @Test
-    void instanceOfTest() {
+    void instanceOfTests() {
         Square square = new Square();
         assertThat(square).isInstanceOf(Square.class);
         assertThat(square.setSides(10, 10)).isInstanceOf(Square.class);
         assertThat(square.setSides(20, 10)).isNotInstanceOf(Square.class);
+
+        Rectangle rectangle = new Rectangle();
+        assertThat(rectangle).isInstanceOf(Rectangle.class);
+        assertThat(rectangle.setSides(10, 20)).isInstanceOf(Rectangle.class);
+        assertThat(rectangle.setSides(20, 10)).isInstanceOf(Rectangle.class);
     }
 }

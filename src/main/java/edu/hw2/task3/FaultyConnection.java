@@ -1,5 +1,6 @@
 package edu.hw2.task3;
 
+import edu.hw2.task3.exceptions.ConnectionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,11 +15,10 @@ public class FaultyConnection implements Connection {
     @Override
     public void execute(String command) {
         if (execution == FAILURE || failureTest == FAILURE) {
-            LOGGER.info("Connection Error!");
             failureTest++;
-            throw new ConnectionException();
+            throw new ConnectionException("Connection Exception");
         }
-        LOGGER.info(command + " --- executed.");
+        LOGGER.info(command + " - executed.");
     }
 
     @Override
