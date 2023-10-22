@@ -18,9 +18,22 @@ class ConsoleHangman {
             printState(session);
             guess = SCANNER.nextLine();
             session.checkExit(guess);
-            tryGuess(session, guess);
+            session = tryGuess(session, guess);
         }
         gameResult(session);
+    }
+
+    /**
+     *      tryGuess() - метод проверки, что
+     *      Введенный символ один
+     *      Введенный символ не использовался ранее
+     *      Return новое состояние "Сессии" игры
+     */
+    protected Session tryGuess(Session session, String input) {
+        if (input != null && input.length() == 1 && session.checkUserInputCharacter(input)) {
+            session.guess(input);
+        }
+        return session;
     }
 
     /**
@@ -32,17 +45,6 @@ class ConsoleHangman {
             MSG.messageWin(session.getAnswerString());
         } else {
             MSG.messageLose(session.getAnswerString());
-        }
-    }
-
-    /**
-     *      tryGuess() - метод проверки, что
-     *      Введенный символ один
-     *      Введенный символ не использовался ранее
-     */
-    protected void tryGuess(Session session, String input) {
-        if (input != null && input.length() == 1 && session.checkUserInputCharacter(input)) {
-            session.guess(input);
         }
     }
 

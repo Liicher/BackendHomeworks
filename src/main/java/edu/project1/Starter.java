@@ -6,26 +6,29 @@ public class Starter {
     private final static Scanner SCANNER = new Scanner(System.in);
 
     /**
-     *      startMenu() - метод для вывода стартового сообщение на экран
-     *      Предоставляет пользователю выбор
-     *      "Начать игру" или "Выйти из игры"
+     * startMenu() - метод для вывода стартового сообщение на экран
+     * Предоставляет пользователю выбор
+     * "Начать игру" или "Выйти из игры"
      */
     public void startMenu() {
         Messages msg = new Messages();
+        char input = ' ';
         msg.messageIntro();
-        while (true) {
+        while (input != 'Q') {
             msg.messageStart();
-            char input = SCANNER.nextLine().toUpperCase().charAt(0);
+            String str = SCANNER.nextLine().toUpperCase();
+            // Добавил проверку на корректный ввод (не null и не больше одного символа)
+            if (str.length() != 1) {
+                msg.messageIncorrectInput();
+                continue;
+            }
+            input = str.charAt(0);
             switch (input) {
-                case 'Y':
-                    new ConsoleHangman().run();
-                    break;
-                case 'Q':
-                    System.exit(0);
-                    break;
-                default:
-                    msg.messageIncorrectInput();
+                case 'Y' -> new ConsoleHangman().run();
+                case 'Q' -> msg.messageExit();
+                default -> msg.messageIncorrectInput();
             }
         }
+        System.exit(0);
     }
 }

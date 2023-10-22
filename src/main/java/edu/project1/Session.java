@@ -1,13 +1,13 @@
 package edu.project1;
 
-import java.util.ArrayList;
+import java.util.List;
 
 class Session {
     private final InfoGenerator infoGenerator = new InfoGenerator();                    // Класс для генерации данных
-    private final ArrayList<Character> answer = infoGenerator.randomWord();             // Загаданное слово
+    private final List<Character> answer = infoGenerator.randomWord();                  // Загаданное слово
     private final String answerString = answer.toString();                              // Хранение ответа в виде строки
-    private final ArrayList<Character> userAnswer = infoGenerator.userAnswer(answer);   // Ответы игрока
-    private final ArrayList<Character> allLetters = infoGenerator.letters();            // Алфавит
+    private final List<Character> userAnswer = infoGenerator.userAnswer(answer);        // Ответы игрока
+    private final List<Character> allLetters = infoGenerator.letters();                 // Алфавит
     private final int maxAttempts = 5;                                                  // Максимальное кол-во попыток
     private int attempts = 0;                                                           // Используемые попытки
 
@@ -61,7 +61,7 @@ class Session {
         return answerString;
     }
 
-    public ArrayList<Character> getUserAnswer() {
+    public List<Character> getUserAnswer() {
         return userAnswer;
     }
 

@@ -1,12 +1,12 @@
 package edu.project1;
 
-import java.util.ArrayList;
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 interface Preparation {
-    @NotNull ArrayList<Character> randomWord();
+    @NotNull List<Character> randomWord();
 
-    ArrayList<Character> userAnswer(ArrayList<Character> answer);
+    List<Character> userAnswer(List<Character> answer);
 
-    ArrayList<Character> letters();
+    List<Character> letters();
 }

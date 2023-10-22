@@ -2,6 +2,7 @@ package edu.project1;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 public class InfoGenerator implements Preparation {
@@ -13,7 +14,7 @@ public class InfoGenerator implements Preparation {
      *      Возвращает список символов этого слова
      */
     @Override
-    public @NotNull ArrayList<Character> randomWord() {
+    public @NotNull List<Character> randomWord() {
         String[] library = {"dictionary", "target", "library",
             "language", "smart", "laptop", "", "yes", "no"};
 
@@ -24,7 +25,7 @@ public class InfoGenerator implements Preparation {
         }
 
         // Преобразование выбранного слова в список символов
-        ArrayList<Character> answerWord = new ArrayList<>();
+        List<Character> answerWord = new ArrayList<>();
         for (char ch : answer.toCharArray()) {
             answerWord.add(ch);
         }
@@ -35,8 +36,8 @@ public class InfoGenerator implements Preparation {
      *      userAnswer() - метод создания списка символов с ответов пользователя
      */
     @Override
-    public ArrayList<Character> userAnswer(ArrayList<Character> answer) {
-        ArrayList<Character> userAnswer = new ArrayList<>();
+    public List<Character> userAnswer(List<Character> answer) {
+        List<Character> userAnswer = new ArrayList<>();
         for (int i = 0; i < answer.size(); i++) {
             userAnswer.add(i, '*');
         }
@@ -47,10 +48,10 @@ public class InfoGenerator implements Preparation {
      *      letters() - метод, создающий список с алфавитом
      */
     @Override
-    public ArrayList<Character> letters() {
+    public List<Character> letters() {
         Character[] letters = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
             'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
-        ArrayList<Character> allLetters = new ArrayList<>();
+        List<Character> allLetters = new ArrayList<>();
         Collections.addAll(allLetters, letters);
         return allLetters;
     }
