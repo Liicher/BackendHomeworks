@@ -45,8 +45,6 @@ public class Task1 {
             'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L',
             'm', 'M', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's',
             'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z'};
-        List<Character> alphabetList = new ArrayList<>();
-        Collections.addAll(alphabetList, letters);
-        return alphabetList;
+	    return List.of(letters);
     }
 }
