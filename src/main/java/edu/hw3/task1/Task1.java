@@ -1,8 +1,6 @@
 package edu.hw3.task1;
 
 import edu.hw3.Util;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,6 +43,6 @@ public class Task1 {
             'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L',
             'm', 'M', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's',
             'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z'};
-	    return List.of(letters);
+        return List.of(letters);
     }
 }
