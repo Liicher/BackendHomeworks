@@ -1,7 +1,8 @@
 package edu.hw3.task7;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import java.util.TreeMap;
+import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -11,13 +12,18 @@ import static org.assertj.core.api.Assertions.assertThat;
  * assertThat(tree.contains(null)).isTrue();
  */
 class Task7Test {
-    Task7 task7 = new Task7();
+    private static Task7 task7;
+
+    @BeforeAll
+    static void init() {
+        task7 = new Task7();
+    }
 
     @Test
     void treeNullKeyExample() {
         String key = null;
         String value = "test";
-        TreeMap<String, String> tree = task7.nullTree(key, value);
+        Map<String, String> tree = task7.nullTree(key, value);
         assertThat(tree.containsKey(null)).isTrue();
     }
 }

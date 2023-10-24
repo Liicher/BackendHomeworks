@@ -1,5 +1,6 @@
 package edu.hw3.task1;
 
+import edu.hw3.Util;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class Task1 {
     private final List<Character> alphabet = alphabetGenerator();
+    private final Util util = new Util();
 
     public String atbash(String input) {
         // Проверка на null
@@ -22,28 +24,18 @@ public class Task1 {
         }
 
         StringBuilder result = new StringBuilder();
-        List<Character> charList = stringToList(input);
-        for (int i = 0; i < charList.size(); i++) {
-            char letter = charList.get(i);
+        List<Character> charList = util.stringToList(input);
+        for (Character letter : charList) {
             // Проверка на то, что алфавит латинский
             // И шифрация и добавление к строке
             if (alphabet.contains(letter)) {
-                int index = alphabet.indexOf(letter);
-                result.append(alphabet.get(alphabet.size() - 1 - index));
+                char ch = (char) ('Z' - Character.toUpperCase(letter) + 'A');
+                result.append(Character.isUpperCase(letter) ? ch : Character.toLowerCase(ch));
             } else {
                 result.append(letter);
             }
         }
         return result.toString();
-    }
-
-    // Метод для преобразования строки в список
-    private List<Character> stringToList(String input) {
-        List<Character> output = new ArrayList<>();
-        for (char ch : input.toCharArray()) {
-            output.add(ch);
-        }
-        return output;
     }
 
     // Метод для генерации списка-алфавита сразу обоих регистров

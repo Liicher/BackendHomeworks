@@ -1,12 +1,18 @@
 package edu.hw3.task2;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Task2Test {
-    private final Task2 task2 = new Task2();
+    private static Task2 task2;
+
+    @BeforeAll
+    static void init() {
+        task2 = new Task2();
+    }
 
     @Test
     void clusterizeExamples() {

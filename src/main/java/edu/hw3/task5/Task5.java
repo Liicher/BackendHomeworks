@@ -16,6 +16,15 @@ public class Task5 {
             throw new IllegalArgumentException();
         }
 
+        boolean sort;
+        if (sortType.equals("ASC")) {
+            sort = true;
+        } else if (sortType.equals("DESC")) {
+            sort = false;
+        } else {
+            throw new IllegalArgumentException();
+        }
+
         // Создаем массив "Контактов", инициализируем из входящего массива Контакты и создаем из них новый массив
         Contact[] contacts = new Contact[input.length];
         for (int i = 0; i < input.length; i++) {
@@ -28,17 +37,13 @@ public class Task5 {
         Arrays.sort(contacts);
 
         // В случае обратной сортировки, меняю банальным способом через temp
-        if (sortType.equals("ASC")) {
-            return contacts;
-        } else if (sortType.equals("DESC")) {
+        if (!sort) {
             for (int i = 0; i < contacts.length / 2; i++) {
                 Contact temp = contacts[i];
                 contacts[i] = contacts[contacts.length - 1 - i];
                 contacts[contacts.length - 1 - i] = temp;
             }
-            return contacts;
-        } else {
-            throw new IllegalArgumentException();
         }
+        return contacts;
     }
 }

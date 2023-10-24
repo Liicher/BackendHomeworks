@@ -1,5 +1,6 @@
 package edu.hw3.task2;
 
+import edu.hw3.Util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -10,6 +11,7 @@ import java.util.Stack;
  */
 
 public class Task2 {
+    private final Util util = new Util();
 
     // Знаю что не лучшее решение, но всегда нравилось решать задачи со скобками с помощью стека
     public String[] clusterize(String input) {
@@ -19,15 +21,15 @@ public class Task2 {
         StringBuilder result = new StringBuilder();
         List<String> output = new ArrayList<>();
         Stack<Character> brackets = new Stack<>();
-        List<Character> inputList = stringToList(input);
+        List<Character> inputList = util.stringToList(input);
 
         // Проходимся по всему списку элементов строки
-        for (int i = 0; i < inputList.size(); i++) {
+        for (Character character : inputList) {
             // С помощью стека отслеживаем балансировку скобок
-            if (inputList.get(i) == '(') {
+            if (character == '(') {
                 result.append('(');
                 brackets.push('(');
-            } else if (inputList.get(i) == ')') {
+            } else if (character == ')') {
                 result.append(')');
                 brackets.pop();
 
@@ -41,14 +43,5 @@ public class Task2 {
             }
         }
         return output.toArray(new String[0]);
-    }
-
-    // Метод для преобразования строки в список
-    private List<Character> stringToList(String input) {
-        List<Character> output = new ArrayList<>();
-        for (char ch : input.toCharArray()) {
-            output.add(ch);
-        }
-        return output;
     }
 }

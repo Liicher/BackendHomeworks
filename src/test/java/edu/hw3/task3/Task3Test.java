@@ -1,5 +1,6 @@
 package edu.hw3.task3;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,7 +12,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Task3Test {
-    private final Task3 task3 = new Task3();
+    private static Task3 task3;
+
+    @BeforeAll
+    static void init() {
+        task3 = new Task3();
+    }
 
     @Test
     void freqDictExamples() {

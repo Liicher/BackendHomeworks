@@ -13,7 +13,7 @@ public class Stock implements Comparable<Stock> {
         this.price = price;
     }
 
-    // Проверк
+    // Проверка
     private void checks(String name, int price) {
         if (name == null || price < 0) {
             throw new IllegalArgumentException();
@@ -21,7 +21,8 @@ public class Stock implements Comparable<Stock> {
     }
 
     // Красивый вывод
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return name + ' ' + price;
     }
 
@@ -32,7 +33,8 @@ public class Stock implements Comparable<Stock> {
     }
 
     // Для тестов
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

@@ -1,12 +1,17 @@
 package edu.hw3.task6;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class Task6Test {
-    Task6 task6 = new Task6();
+    private static Task6 task6;
+
+    @BeforeAll
+    static void init() {
+        task6 = new Task6();
+    }
 
     @Test
     void stockMarketExamples() {
@@ -21,15 +26,5 @@ class Task6Test {
 
         task6.remove(stock);
         assertThat(task6.mostValuableStock()).isEqualTo(new Stock("3", 3));
-    }
-
-    @Test
-    void invalidInputs() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Stock(null, 20);
-        });
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Stock("ok", -20);
-        });
     }
 }

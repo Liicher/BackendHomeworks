@@ -13,12 +13,14 @@ public class Contact implements Comparable<Contact> {
     }
 
     // Переопределил для понятного вывода
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return name + ' ' + surname;
     }
 
     // Переопределил для тестов
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }

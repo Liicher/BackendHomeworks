@@ -1,13 +1,19 @@
 package edu.hw3.task8;
 
 import edu.hw3.task6.Stock;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class Task8Test {
-    Task8 task8 = new Task8();
+    private static Task8 task8;
+
+    @BeforeAll
+    static void init() {
+        task8 = new Task8();
+    }
 
     @Test
     void backwardIteratorExamples() {

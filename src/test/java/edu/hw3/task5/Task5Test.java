@@ -1,12 +1,18 @@
 package edu.hw3.task5;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Task5Test {
-    Task5 task5 = new Task5();
+    private static Task5 task5;
+
+    @BeforeAll
+    static void init() {
+        task5 = new Task5();
+    }
 
     @Test
     void parseContactsExamples() {

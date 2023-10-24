@@ -1,12 +1,18 @@
 package edu.hw3.task4;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 class Task4Test {
-    private final Task4 task4 = new Task4();
+    private static Task4 task4;
+
+    @BeforeAll
+    static void init() {
+        task4 = new Task4();
+    }
 
     @Test
     void convertToRomanExamples() {
@@ -20,8 +26,14 @@ class Task4Test {
 
     @Test
     void invalidInputs() {
-        assertThrows(IllegalArgumentException.class, () -> {task4.convertToRoman(0);});
-        assertThrows(IllegalArgumentException.class, () -> {task4.convertToRoman(-123);});
-        assertThrows(IllegalArgumentException.class, () -> {task4.convertToRoman(4000);});
+        assertThrows(IllegalArgumentException.class, () -> {
+            task4.convertToRoman(0);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            task4.convertToRoman(-123);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            task4.convertToRoman(4000);
+        });
     }
 }
