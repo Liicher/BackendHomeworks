@@ -12,10 +12,12 @@ import java.util.Stack;
 
 public class Task2 {
     private final Util util = new Util();
+    private final static char ROUND_OPEN_BRACKET = '(';
+    private final static char ROUND_CLOSE_BRACKET = ')';
 
     // Знаю что не лучшее решение, но всегда нравилось решать задачи со скобками с помощью стека
     public String[] clusterize(String input) {
-        if (input == null || input.isEmpty() || input.charAt(0) == ')') {
+        if (input == null || input.isEmpty() || input.charAt(0) == ROUND_CLOSE_BRACKET) {
             throw new IllegalArgumentException();
         }
         StringBuilder result = new StringBuilder();
@@ -26,11 +28,11 @@ public class Task2 {
         // Проходимся по всему списку элементов строки
         for (Character character : inputList) {
             // С помощью стека отслеживаем балансировку скобок
-            if (character == '(') {
-                result.append('(');
-                brackets.push('(');
-            } else if (character == ')') {
-                result.append(')');
+            if (character == ROUND_OPEN_BRACKET) {
+                result.append(ROUND_OPEN_BRACKET);
+                brackets.push(ROUND_OPEN_BRACKET);
+            } else if (character == ROUND_CLOSE_BRACKET) {
+                result.append(ROUND_CLOSE_BRACKET);
                 brackets.pop();
 
                 // В случае полного баланса скобок, добавить строку в список

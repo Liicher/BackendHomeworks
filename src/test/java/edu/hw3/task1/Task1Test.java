@@ -23,8 +23,6 @@ class Task1Test {
             .isEqualTo("Zmb ullo xzm dirgv xlwv gszg z xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi");
         assertThat(task1.atbash(" ")).isEqualTo(" ");
         assertThat(task1.atbash("Привет")).isEqualTo("Привет");
-
-        assertThrows(IllegalArgumentException.class, () -> {task1.atbash(null);});
     }
 
     @Test

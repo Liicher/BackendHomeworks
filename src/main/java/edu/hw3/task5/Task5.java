@@ -8,6 +8,7 @@ import java.util.Arrays;
  * возвращает новый массив контактов с заданной сортировкой.
  */
 public class Task5 {
+
     public Contact[] parseContacts(String[] input, String sortType) {
         // Проверки
         if (input == null) {
@@ -16,13 +17,13 @@ public class Task5 {
             throw new IllegalArgumentException();
         }
 
-        boolean sort;
-        if (sortType.equals("ASC")) {
-            sort = true;
-        } else if (sortType.equals("DESC")) {
-            sort = false;
-        } else {
-            throw new IllegalArgumentException();
+        // Проверка на тип сортировки
+        SortType enumSortType = SortType.valueOf(sortType);
+        boolean type;
+        switch (enumSortType) {
+            case ASC -> type = true;
+            case DESC -> type = false;
+            default -> throw new IllegalArgumentException();
         }
 
         // Создаем массив "Контактов", инициализируем из входящего массива Контакты и создаем из них новый массив
@@ -37,7 +38,7 @@ public class Task5 {
         Arrays.sort(contacts);
 
         // В случае обратной сортировки, меняю банальным способом через temp
-        if (!sort) {
+        if (!type) {
             for (int i = 0; i < contacts.length / 2; i++) {
                 Contact temp = contacts[i];
                 contacts[i] = contacts[contacts.length - 1 - i];

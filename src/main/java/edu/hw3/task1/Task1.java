@@ -2,6 +2,7 @@ package edu.hw3.task1;
 
 import edu.hw3.Util;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Задание 1
@@ -12,7 +13,7 @@ import java.util.List;
  * Создайте функцию, которая принимает строку и применяет к ней шифр.
  */
 public class Task1 {
-    private final List<Character> alphabet = alphabetGenerator();
+    private final Set<Character> alphabet = alphabetGenerator();
     private final Util util = new Util();
 
     public String atbash(String input) {
@@ -36,13 +37,13 @@ public class Task1 {
         return result.toString();
     }
 
-    // Метод для генерации списка-алфавита сразу обоих регистров
-    // Регистры отзеркалены относительно середины
-    private List<Character> alphabetGenerator() {
+    // Метод для генерации set-алфавита сразу обоих регистров
+    // Храним все элементы латинского алфавита
+    private Set<Character> alphabetGenerator() {
         Character[] letters = {'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E',
             'f', 'F', 'g', 'G', 'h', 'H', 'i', 'I', 'j', 'J', 'k', 'K', 'l', 'L',
             'm', 'M', 'N', 'n', 'O', 'o', 'P', 'p', 'Q', 'q', 'R', 'r', 'S', 's',
             'T', 't', 'U', 'u', 'V', 'v', 'W', 'w', 'X', 'x', 'Y', 'y', 'Z', 'z'};
-        return List.of(letters);
+        return Set.of(letters);
     }
 }
