@@ -21,8 +21,12 @@ public class Task5 {
         SortType enumSortType = SortType.valueOf(sortType);
         boolean type;
         switch (enumSortType) {
-            case ASC -> type = true;
-            case DESC -> type = false;
+            case ASC -> {       // Чекстайл ругается на отсутствие этих скобок D:
+                type = true;
+            }
+            case DESC -> {
+                type = false;
+            }
             default -> throw new IllegalArgumentException();
         }
 
