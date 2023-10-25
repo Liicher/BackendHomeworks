@@ -17,19 +17,6 @@ public class Task5 {
             throw new IllegalArgumentException();
         }
 
-        // Проверка на тип сортировки
-        SortType enumSortType = SortType.valueOf(sortType);
-        boolean type;
-        switch (enumSortType) {
-            case ASC -> {       // Чекстайл ругается на отсутствие этих скобок D:
-                type = true;
-            }
-            case DESC -> {
-                type = false;
-            }
-            default -> throw new IllegalArgumentException();
-        }
-
         // Создаем массив "Контактов", инициализируем из входящего массива Контакты и создаем из них новый массив
         Contact[] contacts = new Contact[input.length];
         for (int i = 0; i < input.length; i++) {
@@ -41,6 +28,8 @@ public class Task5 {
         // Сортируем
         Arrays.sort(contacts);
 
+        // Проверка на тип сортировки
+        boolean type = SortType.isReverseOrder(sortType);
         // В случае обратной сортировки, меняю банальным способом через temp
         if (!type) {
             for (int i = 0; i < contacts.length / 2; i++) {
