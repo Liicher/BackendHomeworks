@@ -1,29 +1,36 @@
 package edu.project2_maze.Maze;
 
-import edu.project2_maze.GUI.UserInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("ParameterAssignment")
 public class MazeSessionWilson {
-    UserInterface userInterface;
-    public Cell[][] cells = cellsGenerator();
-    private static final int HORIZONTAL_CELLS = 13;
-    private static final int VERTICAL_CELLS = 13;
+    private final static Logger LOGGER = LogManager.getLogger();
     private static final int MILLISECONDS_PER_FRAME = 2;
+    private static final int AROUND_CELLS = 8;
+    private static final int LEFT = 0;
+    private static final int RIGHT = 1;
+    private static final int TOP = 2;
+    private static final int UP = 3;
+    private static final int START_POS = 5;
 
-    public void run() {
-        userInterface = new UserInterface();
-        userInterface.runWindowWilson(this);
-        move();
+    private MazeSession mazeSession;
+    private Cell[][] cells;
+
+    public MazeSessionWilson(MazeSession mazeSession, Cell[][] cells) {
+        this.mazeSession = mazeSession;
+        this.cells = cells;
     }
 
     public void move() {
-        cells[cells.length - 2][1].setType(TypeOfCell.PASSAGE);
-        cells[cells.length - 2][2].setType(TypeOfCell.PASSAGE);
-        cells[cells.length - 2][3].setType(TypeOfCell.PASSAGE);
+        for (int i = 1; i < START_POS; i++) {
+            cells[cells.length - 2][i].setType(TypeOfCell.PASSAGE);
+        }
 
-        Cell cell = cells[cells.length - 2][5];
+        Cell cell = cells[cells.length - 2][START_POS];
         while (cell != null) {
             mazeGenerator(cell.getX(), cell.getY());
             cell = findNextCell(cell);
@@ -53,14 +60,16 @@ public class MazeSessionWilson {
             // Выбираем случайную сторону для шага
             int randomMove = sidesList.get(random.nextInt(sidesList.size()));
 
-            // Цикл, чтобы делать два шага, так как при одном шаге метод будет всегда считать что он создал цикл с предыдущим деревом
+            // Цикл, чтобы делать два шага, так как при одном шаге
+            // метод будет всегда считать что он создал цикл с предыдущим деревом
             for (int i = 0; i < 2; i++) {
                 // Делаем шаг в выпавшую сторону
                 switch (randomMove) {
-                    case 0 -> x--;
-                    case 1 -> x++;
-                    case 2 -> y--;
-                    case 3 -> y++;
+                    case LEFT -> x--;
+                    case RIGHT -> x++;
+                    case TOP -> y--;
+                    case UP -> y++;
+                    default -> wayList.add(cells[y][x]);
                 }
 
                 // Добавляем наш шаг в список с путем
@@ -72,37 +81,17 @@ public class MazeSessionWilson {
 
                 // Тяжелый случай.
                 // Проверяем абстрактный шаг на соседние клетки, и если можно зациклить, то ходим туда
-                if (cells[y][x + 1].getType().equals(TypeOfCell.WAY) && randomMove != 0) {
+                if (cells[y][x + 1].getType().equals(TypeOfCell.WAY) && randomMove != LEFT) {
                     x++;
                     isLoop = true;
-                } else if (cells[y][x - 1].getType().equals(TypeOfCell.WAY) && randomMove != 1) {
+                } else if (cells[y][x - 1].getType().equals(TypeOfCell.WAY) && randomMove != RIGHT) {
                     x--;
                     isLoop = true;
-                } else if (cells[y + 1][x].getType().equals(TypeOfCell.WAY) && randomMove != 2) {
+                } else if (cells[y + 1][x].getType().equals(TypeOfCell.WAY) && randomMove != TOP) {
                     y++;
                     isLoop = true;
-                } else if (cells[y - 1][x].getType().equals(TypeOfCell.WAY) && randomMove != 3) {
+                } else if (cells[y - 1][x].getType().equals(TypeOfCell.WAY) && randomMove != UP) {
                     y--;
-                    isLoop = true;
-                } else if (cells[y - 1][x - 1].getType().equals(TypeOfCell.WAY) &&
-                    cells[y - 1][x - 1] != wayList.get(wayList.size() - 3)) {
-                    x--;
-                    y--;
-                    isLoop = true;
-                } else if (cells[y - 1][x + 1].getType().equals(TypeOfCell.WAY) &&
-                    cells[y - 1][x + 1] != wayList.get(wayList.size() - 3)) {
-                    x++;
-                    y--;
-                    isLoop = true;
-                } else if (cells[y + 1][x - 1].getType().equals(TypeOfCell.WAY) &&
-                    cells[y + 1][x - 1] != wayList.get(wayList.size() - 3)) {
-                    x--;
-                    y++;
-                    isLoop = true;
-                } else if (cells[y + 1][x + 1].getType().equals(TypeOfCell.WAY) &&
-                    cells[y + 1][x + 1] != wayList.get(wayList.size() - 3)) {
-                    x++;
-                    y++;
                     isLoop = true;
                 }
 
@@ -119,33 +108,32 @@ public class MazeSessionWilson {
                     wayList.subList(retrace + 1, wayList.size()).clear();
                     moveList.subList(retrace / 2 + 1, moveList.size()).clear();
 
-                    //frame.repaint();
-                    userInterface.drawMaze(this);
+                    mazeSession.drawMaze(cells);
                     break;
                 }
 
                 // если все клетки вокруг - проходы
                 // переопределяем путь в - PASSAGE
-                if (i == 0 && (cells[y][x - 1].getType().equals(TypeOfCell.PASSAGE) ||
-                    cells[y][x + 1].getType().equals(TypeOfCell.PASSAGE) ||
-                    cells[y - 1][x].getType().equals(TypeOfCell.PASSAGE) ||
-                    cells[y + 1][x].getType().equals(TypeOfCell.PASSAGE))) {
+                if (i == 0 && (cells[y][x - 1].getType().equals(TypeOfCell.PASSAGE)
+                    || cells[y][x + 1].getType().equals(TypeOfCell.PASSAGE)
+                    || cells[y - 1][x].getType().equals(TypeOfCell.PASSAGE)
+                    || cells[y + 1][x].getType().equals(TypeOfCell.PASSAGE))) {
                     for (Cell c : wayList) {
                         c.setType(TypeOfCell.PASSAGE);
                     }
-                    userInterface.drawMaze(this);
+                    mazeSession.drawMaze(cells);
                     return;
                 }
 
                 // Если нет зацикливания, то добавляем в наш список направления, наш ход
                 moveList.add(randomMove);
-                userInterface.drawMaze(this);
+                mazeSession.drawMaze(cells);
 
                 // Для наглядности алгоритма
                 try {
                     Thread.sleep(MILLISECONDS_PER_FRAME);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    LOGGER.info(e);
                 }
             }
         }
@@ -161,18 +149,19 @@ public class MazeSessionWilson {
         if (x - 2 > 0 && previous != 1) {
             sidesList.add(0);
         }
-        if (x + 2 < cells[0].length - 1 && previous != 0) {
+        if (x + 2 < cells[0].length - 1 && previous != LEFT) {
             sidesList.add(1);
         }
-        if (y - 2 > 0 && previous != 3) {
-            sidesList.add(2);
+        if (y - 2 > 0 && previous != UP) {
+            sidesList.add(TOP);
         }
-        if (y + 2 < cells.length - 1 && previous != 2) {
-            sidesList.add(3);
+        if (y + 2 < cells.length - 1 && previous != TOP) {
+            sidesList.add(UP);
         }
         return sidesList;
     }
 
+    @SuppressWarnings("ModifiedControlVariable")
     private Cell findNextCell(Cell previousCell) {
         boolean isLoop = true;
         for (int y = cells.length - 2; y >= 1; y--) {
@@ -183,7 +172,7 @@ public class MazeSessionWilson {
                     isLoop = false;
                 }
 
-                if (checkAroundCells(x, y) == 8) {
+                if (checkAroundCells(x, y) == AROUND_CELLS) {
                     return cells[y][x];
                 }
             }
@@ -219,23 +208,5 @@ public class MazeSessionWilson {
             wallCellsAroundCounter++;
         }
         return wallCellsAroundCounter;
-    }
-
-    private Cell[][] cellsGenerator() {
-	    cells = new Cell[VERTICAL_CELLS][HORIZONTAL_CELLS];
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j] = new Cell(j, i, TypeOfCell.WALL);
-            }
-        }
-        return cells;
-    }
-
-    public int getHorizontalCells() {
-        return HORIZONTAL_CELLS;
-    }
-
-    public int getVerticalCells() {
-        return VERTICAL_CELLS;
     }
 }
