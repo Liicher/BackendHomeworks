@@ -10,7 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class UserInterface {
-    private static final int SIZE = 50;
+    private static final int SIZE_VER = 40;
+    private static final int SIZE_GOR = 15;
     private static final JFrame FRAME = new JFrame("Maze");
 
     public void runWindow(MazeSession mazeSession) {
@@ -18,8 +19,8 @@ public class UserInterface {
         Panel panel = new Panel(mazeSession);
         FRAME.getContentPane().add(BorderLayout.CENTER, panel);
         FRAME.setSize(
-            mazeSession.getHorizontalCells() * Cell.WIDTH + SIZE,
-            mazeSession.getVerticalCells() * Cell.HEIGHT + SIZE
+            mazeSession.getHorizontalCells() * Cell.WIDTH + SIZE_GOR,
+            mazeSession.getVerticalCells() * Cell.HEIGHT + SIZE_VER
         );
         FRAME.setLocationByPlatform(true);
         FRAME.setResizable(false);
@@ -35,6 +36,8 @@ public class UserInterface {
                     cells[i][j].setColor(Color.RED);
                 } else if (cells[i][j].getType().equals(TypeOfCell.PASSAGE)) {
                     cells[i][j].setColor(Color.WHITE);
+                } else if (cells[i][j].getType().equals(TypeOfCell.CURRENT)) {
+                    cells[i][j].setColor(Color.YELLOW);
                 }
             }
         }

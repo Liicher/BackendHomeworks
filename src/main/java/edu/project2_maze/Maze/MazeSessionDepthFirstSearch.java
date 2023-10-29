@@ -1,132 +1,126 @@
-/*
-
 package edu.project2_maze.Maze;
 
-import edu.project2_maze.GUI.UserInterface;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("ParameterAssignment")
 public class MazeSessionDepthFirstSearch {
-    UserInterface userInterface;
-    public Cell[][] cells = cellsGenerator();
-    private static final int HORIZONTAL_CELLS = 101;
-    private static final int VERTICAL_CELLS = 51;
-    private static final int MILLISECONDS_PER_FRAME = 2;
-    private int fields = (((HORIZONTAL_CELLS - 1) * (VERTICAL_CELLS - 1)) / 4);
+    private static final int LEFT = 0;                      // Кодовые значения для окружающих клеток
+    private static final int RIGHT = 1;
+    private static final int TOP = 2;
+    private static final int UP = 3;
+    private static final int QUARTER = 4;
 
-    public void run() {
-        userInterface = new UserInterface();
-        //userInterface.runWindowWilson(this);
-        move();
+    private final MazeSession mazeSession;
+    private final Cell[][] cells;
+    private long allFields;
+    private final List<Cell> wayList = new ArrayList<>();
+
+    public MazeSessionDepthFirstSearch(MazeSession mazeSession, Cell[][] cells) {
+        this.mazeSession = mazeSession;
+        this.cells = cells;
+        this.allFields =
+            ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
     }
 
     public void move() {
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
+        mazeSession.drawMaze(cells);
+        wayList.add(cells[cell.getX()][cell.getY()]);
+        allFields--;
         mazeDepthFirstSearchGenerator(cell.getX(), cell.getY());
     }
 
     public void mazeDepthFirstSearchGenerator(int x, int y) {
-        List<Cell> wayList = new ArrayList<>();
         List<Integer> moveList = new ArrayList<>();
         Random random = new Random();
+        cells[y][x].setType(TypeOfCell.CURRENT);    // Меняем ему тип
+        moveList.add(-1);                           // Тупо для старта
 
-        wayList.add(cells[y][x]);               // Добавляем первый шаг
-        fields--;                               // Количество полей всего
-        cells[y][x].setType(TypeOfCell.WAY);    // Меняем ему тип
-        moveList.add(-1);                       // Тупо для старта
-
-        while (!isDeadlock(x, y)) {
+        // Пока не тупик и не пройдены все поля
+        while (!isDeadlock(x, y) && allFields > 0) {
             // Алгоритм для шага в случайную сторону
             List<Integer> sidesList = getSidesList(x, y, moveList);
             int randomMove = sidesList.get(random.nextInt(sidesList.size()));
-            switch (randomMove) {
-                case 0 -> x--;
-                case 1 -> x++;
-                case 2 -> y--;
-                case 3 -> y++;
+            for (int i = 0; i < 2; i++) {
+                cells[y][x].setType(TypeOfCell.WAY);
+                switch (randomMove) {
+                    case LEFT -> x--;
+                    case RIGHT -> x++;
+                    case TOP -> y--;
+                    case UP -> y++;
+                    default -> wayList.add(cells[y][x]);
+                }
+                // Делаем шаг в случайную сторону
+                wayList.add(cells[y][x]);
+                cells[y][x].setType(TypeOfCell.CURRENT);
+                moveList.add(randomMove);
+                mazeSession.drawMaze(cells);
             }
-            // Делаем шаг в случайную сторону
-            wayList.add(cells[y][x]);
-            fields--;
-            cells[y][x].setType(TypeOfCell.WAY);
+            allFields--;
         }
-
-        if (fields == 0) {
-            return;
+        if (allFields > 0) {
+            makeBackwardMove(x, y);
+        } else {
+            remarkCells();
         }
+        mazeSession.drawMaze(cells);
+    }
 
-        // Индекс для обратного прохода
-        int index = wayList.size() - 2;
-        while (fields != 0 || index != 0) {
-            int lastX = wayList.get(index).getX();
-            int lastY = wayList.get(index).getY();
-            if (isDeadlock(lastX, lastY)) {
-                index--;
-                continue;
-            } else {
-                wayList = makeBackwardMove(wayList, lastX, lastY);
+    private void remarkCells() {
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                if (cells[i][j].getType().equals(TypeOfCell.WAY) || cells[i][j].getType().equals(TypeOfCell.CURRENT)) {
+                    cells[i][j].setType(TypeOfCell.PASSAGE);
+                }
             }
         }
     }
 
-    private List<Cell> makeBackwardMove(List<Cell> inputList, int x, int y) {
-        List<Cell> wayList = new ArrayList<>(inputList);
-        List<Integer> moveList = new ArrayList<>();
-        Random random = new Random();
-
-        wayList.add(cells[y][x]);               // Добавляем первый шаг
-        fields--;                               // Количество полей всего
-        cells[y][x].setType(TypeOfCell.WAY);    // Меняем ему тип
-        moveList.add(-1);                       // Тупо для старта
-
-        while (!isDeadlock(x, y)) {
-            // Алгоритм для шага в случайную сторону
-            List<Integer> sidesList = getSidesList(x, y, moveList);
-            int randomMove = sidesList.get(random.nextInt(sidesList.size()));
-            switch (randomMove) {
-                case 0 -> x--;
-                case 1 -> x++;
-                case 2 -> y--;
-                case 3 -> y++;
-            }
-            // Делаем шаг в случайную сторону
-            wayList.add(cells[y][x]);
-            fields--;
+    private void makeBackwardMove(int x, int y) {
+        int index = wayList.size() - 1;
+        while (isDeadlock(x, y)) {
+            index = index - 2;
             cells[y][x].setType(TypeOfCell.WAY);
+            x = wayList.get(index).getX();
+            y = wayList.get(index).getY();
+            cells[y][x].setType(TypeOfCell.CURRENT);
         }
-
-        return wayList;
-    }
-
-    private int backwardCheckSides(int x, int y) {
-        if (cells[y][x - 1].getType().equals(TypeOfCell.WALL)) {
-            return 0;
-        }
-        if (cells[y][x + 1].getType().equals(TypeOfCell.WALL)) {
-            return 1;
-        }
-        if (cells[y - 1][x].getType().equals(TypeOfCell.WALL)) {
-            return 2;
-        }
-        if (cells[y + 1][x].getType().equals(TypeOfCell.WALL)) {
-            return 3;
-        }
-
-        return -1;
+        mazeDepthFirstSearchGenerator(x, y);
     }
 
     private boolean isDeadlock(int x, int y) {
-        if (cells[y][x - 1].getType().equals(TypeOfCell.WAY) &&
-            cells[y][x + 1].getType().equals(TypeOfCell.WAY) &&
-            cells[y - 1][x].getType().equals(TypeOfCell.WAY) &&
-            cells[y + 1][x].getType().equals(TypeOfCell.WAY)) {
-            return true;
+        boolean isLock = true;
+        if (x - 2 > 0) {
+            if (!(cells[y][x - 2].getType().equals(TypeOfCell.WAY)
+                || cells[y][x - 2].getType().equals(TypeOfCell.CURRENT))) {
+                return false;
+            }
         }
-        return false;
+        if (x + 2 < cells[y].length - 1) {
+            if (!(cells[y][x + 2].getType().equals(TypeOfCell.WAY)
+                || cells[y][x + 2].getType().equals(TypeOfCell.CURRENT))) {
+                return false;
+            }
+        }
+        if (y - 2 > 0) {
+            if (!(cells[y - 2][x].getType().equals(TypeOfCell.WAY)
+                || cells[y][y - 2].getType().equals(TypeOfCell.CURRENT))) {
+                return false;
+            }
+        }
+        if (y + 2 < cells.length - 1) {
+            if (!(cells[y + 2][x].getType().equals(TypeOfCell.WAY)
+                || cells[y][y + 2].getType().equals(TypeOfCell.CURRENT))) {
+                isLock = false;
+            }
+        }
+        return true;
     }
 
+    // Метод, добавляющий возможные шаги
     private List<Integer> getSidesList(int x, int y, List<Integer> moveList) {
         List<Integer> sidesList = new ArrayList<>();
         int previous = moveList.get(moveList.size() - 1);
@@ -134,37 +128,22 @@ public class MazeSessionDepthFirstSearch {
         // Проверим возможные стороны для шага
         // Первая проверка на грань или соседний проход
         // Вторая проверка на предыдущий шаг
-        if (x - 2 > 0 && previous != 1) {
-            sidesList.add(0);
+        if (x - 2 > 0 && previous != RIGHT && !cells[y][x - 2].getType().equals(TypeOfCell.WAY)) {
+            sidesList.add(LEFT);
         }
-        if (x + 2 < cells[0].length - 1 && previous != 0) {
-            sidesList.add(1);
+        if (x + 2 < cells[0].length - 1 && previous != LEFT && !cells[y][x + 2].getType().equals(TypeOfCell.WAY)) {
+            sidesList.add(RIGHT);
         }
-        if (y - 2 > 0 && previous != 3) {
-            sidesList.add(2);
+        if (y - 2 > 0 && previous != UP && !cells[y - 2][x].getType().equals(TypeOfCell.WAY)) {
+            sidesList.add(TOP);
         }
-        if (y + 2 < cells.length - 1 && previous != 2) {
-            sidesList.add(3);
+        if (y + 2 < cells.length - 1 && previous != TOP && !cells[y + 2][x].getType().equals(TypeOfCell.WAY)) {
+            sidesList.add(UP);
+        }
+        if (sidesList.isEmpty()) {
+            sidesList.add(-1);
         }
         return sidesList;
     }
-
-    private Cell[][] cellsGenerator() {
-        cells = new Cell[VERTICAL_CELLS][HORIZONTAL_CELLS];
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j] = new Cell(j, i, TypeOfCell.WALL);
-            }
-        }
-        return cells;
-    }
-
-    public int getHorizontalCells() {
-        return HORIZONTAL_CELLS;
-    }
-
-    public int getVerticalCells() {
-        return VERTICAL_CELLS;
-    }
 }
-*/
+

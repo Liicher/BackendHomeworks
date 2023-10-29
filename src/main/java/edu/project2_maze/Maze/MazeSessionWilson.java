@@ -3,22 +3,18 @@ package edu.project2_maze.Maze;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings("ParameterAssignment")
+@SuppressWarnings({"ParameterAssignment", "CyclomaticComplexity"})
 public class MazeSessionWilson {
-    private final static Logger LOGGER = LogManager.getLogger();
-    private static final int MILLISECONDS_PER_FRAME = 2;
-    private static final int AROUND_CELLS = 8;
-    private static final int LEFT = 0;
+    private static final int AROUND_CELLS = 8;              // Клетки вокруг
+    private static final int LEFT = 0;                      // Кодовые значения для окружающих клеток
     private static final int RIGHT = 1;
     private static final int TOP = 2;
     private static final int UP = 3;
-    private static final int START_POS = 5;
+    private static final int START_POS = 5;                 // Стартовая позиция для обхода
 
-    private MazeSession mazeSession;
-    private Cell[][] cells;
+    private final MazeSession mazeSession;
+    private final Cell[][] cells;
 
     public MazeSessionWilson(MazeSession mazeSession, Cell[][] cells) {
         this.mazeSession = mazeSession;
@@ -78,7 +74,6 @@ public class MazeSessionWilson {
 
                 // Булиан для проверки
                 boolean isLoop = false;
-
                 // Тяжелый случай.
                 // Проверяем абстрактный шаг на соседние клетки, и если можно зациклить, то ходим туда
                 if (cells[y][x + 1].getType().equals(TypeOfCell.WAY) && randomMove != LEFT) {
@@ -99,25 +94,19 @@ public class MazeSessionWilson {
                 if (isLoop) {
                     // индекс "клетки" куда пришли
                     int retrace = wayList.indexOf(cells[y][x]);
-
-                    //
                     for (int j = retrace + 1; j < wayList.size(); j++) {
                         wayList.get(j).setType(TypeOfCell.WALL);
                     }
 
                     wayList.subList(retrace + 1, wayList.size()).clear();
                     moveList.subList(retrace / 2 + 1, moveList.size()).clear();
-
                     mazeSession.drawMaze(cells);
                     break;
                 }
 
                 // если все клетки вокруг - проходы
                 // переопределяем путь в - PASSAGE
-                if (i == 0 && (cells[y][x - 1].getType().equals(TypeOfCell.PASSAGE)
-                    || cells[y][x + 1].getType().equals(TypeOfCell.PASSAGE)
-                    || cells[y - 1][x].getType().equals(TypeOfCell.PASSAGE)
-                    || cells[y + 1][x].getType().equals(TypeOfCell.PASSAGE))) {
+                if (i == 0 && checkPassages(x, y)) {
                     for (Cell c : wayList) {
                         c.setType(TypeOfCell.PASSAGE);
                     }
@@ -128,15 +117,18 @@ public class MazeSessionWilson {
                 // Если нет зацикливания, то добавляем в наш список направления, наш ход
                 moveList.add(randomMove);
                 mazeSession.drawMaze(cells);
-
-                // Для наглядности алгоритма
-                try {
-                    Thread.sleep(MILLISECONDS_PER_FRAME);
-                } catch (InterruptedException e) {
-                    LOGGER.info(e);
-                }
             }
         }
+    }
+
+    private boolean checkPassages(int x, int y) {
+        if ((cells[y][x - 1].getType().equals(TypeOfCell.PASSAGE)
+            || cells[y][x + 1].getType().equals(TypeOfCell.PASSAGE)
+            || cells[y - 1][x].getType().equals(TypeOfCell.PASSAGE)
+            || cells[y + 1][x].getType().equals(TypeOfCell.PASSAGE))) {
+            return true;
+        }
+        return false;
     }
 
     private List<Integer> getSidesList(int x, int y, List<Integer> moveList) {
@@ -146,11 +138,11 @@ public class MazeSessionWilson {
         // Проверим возможные стороны для шага
         // Первая проверка на грань или соседний проход
         // Вторая проверка на предыдущий шаг
-        if (x - 2 > 0 && previous != 1) {
-            sidesList.add(0);
+        if (x - 2 > 0 && previous != RIGHT) {
+            sidesList.add(LEFT);
         }
         if (x + 2 < cells[0].length - 1 && previous != LEFT) {
-            sidesList.add(1);
+            sidesList.add(RIGHT);
         }
         if (y - 2 > 0 && previous != UP) {
             sidesList.add(TOP);
