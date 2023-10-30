@@ -2,12 +2,13 @@ package edu.project2_maze.Maze;
 
 import edu.project2_maze.Cell.Cell;
 import edu.project2_maze.Cell.TypeOfCell;
+import edu.project2_maze.Interface.MazeGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("ParameterAssignment")
-public class MazeSessionDepthFirstSearch {
+public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private static final int LEFT = 0;      // Кодовые значения для окружающих клеток
     private static final int RIGHT = 1;
     private static final int TOP = 2;
@@ -27,6 +28,7 @@ public class MazeSessionDepthFirstSearch {
             ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
     }
 
+    @Override
     public Cell[][] move() {
         if (cells == null || cells.length < START_POS || cells[0].length < START_POS) {
             throw new IllegalArgumentException();
@@ -37,11 +39,12 @@ public class MazeSessionDepthFirstSearch {
         mazeSession.drawMaze(cells);
         wayList.add(cells[cell.getX()][cell.getY()]);
         allFields--;
-        cells = mazeDepthFirstSearchGenerator(cell.getX(), cell.getY());
+        cells = mazeGenerator(cell.getX(), cell.getY());
         return cells;
     }
 
-    public Cell[][] mazeDepthFirstSearchGenerator(int x, int y) {
+    @Override
+    public Cell[][] mazeGenerator(int x, int y) {
         List<Integer> moveList = new ArrayList<>();
         Random random = new Random();
         cells[y][x].setType(TypeOfCell.CURRENT);    // Меняем ему тип

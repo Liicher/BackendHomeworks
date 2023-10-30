@@ -10,9 +10,9 @@ import org.apache.logging.log4j.Logger;
 public class MazeSession {
     private final static Logger LOGGER = LogManager.getLogger();
     private UserInterface userInterface;
-    private Cell[][] cells = cellsGeneratorWilson();
-    private static final int MILLISECONDS_PER_FRAME = 1;
-    private static final int HORIZONTAL_CELLS = 21;
+    private Cell[][] cells = cellsGeneratorDepthFirstSearch();
+    private static final int MILLISECONDS_PER_FRAME = 20;
+    private static final int HORIZONTAL_CELLS = 41;
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
 
@@ -22,7 +22,7 @@ public class MazeSession {
         userInterface = new UserInterface();
         userInterface.runWindow(this);
         drawMaze(cells);
-        cells = mazeSessionWilson.move();
+        cells = mazeSessionDepthFirstSearch.move();
 
         try {
             Thread.sleep(PAUSE);
