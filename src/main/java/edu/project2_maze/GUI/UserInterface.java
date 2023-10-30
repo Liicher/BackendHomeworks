@@ -1,8 +1,8 @@
 package edu.project2_maze.GUI;
 
-import edu.project2_maze.Maze.Cell;
+import edu.project2_maze.Cell.Cell;
+import edu.project2_maze.Cell.TypeOfCell;
 import edu.project2_maze.Maze.MazeSession;
-import edu.project2_maze.Maze.TypeOfCell;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -38,7 +38,16 @@ public class UserInterface {
                     cells[i][j].setColor(Color.WHITE);
                 } else if (cells[i][j].getType().equals(TypeOfCell.CURRENT)) {
                     cells[i][j].setColor(Color.YELLOW);
+                } else if (cells[i][j].getType().equals(TypeOfCell.END_POS)) {
+                    cells[i][j].setColor(Color.RED);
+                } else if (cells[i][j].getType().equals(TypeOfCell.WAY_CHECKER)) {
+                    cells[i][j].setColor(Color.YELLOW);
+                } else if (cells[i][j].getType().equals(TypeOfCell.SOLVE_WAY)) {
+                    cells[i][j].setColor(Color.MAGENTA);
                 }
+
+                cells[cells.length - 2][1].setColor(Color.GREEN);
+                cells[1][cells[0].length - 2].setColor(Color.PINK);
             }
         }
         FRAME.repaint();

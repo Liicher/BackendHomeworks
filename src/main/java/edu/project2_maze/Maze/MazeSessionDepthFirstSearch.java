@@ -1,19 +1,21 @@
 package edu.project2_maze.Maze;
 
+import edu.project2_maze.Cell.Cell;
+import edu.project2_maze.Cell.TypeOfCell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("ParameterAssignment")
 public class MazeSessionDepthFirstSearch {
-    private static final int LEFT = 0;                      // Кодовые значения для окружающих клеток
+    private static final int LEFT = 0;      // Кодовые значения для окружающих клеток
     private static final int RIGHT = 1;
     private static final int TOP = 2;
     private static final int DOWN = 3;
     private static final int QUARTER = 4;
 
     private final MazeSession mazeSession;
-    private final Cell[][] cells;
+    private Cell[][] cells;
     private long allFields;
     private final List<Cell> wayList = new ArrayList<>();
 
@@ -24,16 +26,17 @@ public class MazeSessionDepthFirstSearch {
             ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
     }
 
-    public void move() {
+    public Cell[][] move() {
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
         mazeSession.drawMaze(cells);
         wayList.add(cells[cell.getX()][cell.getY()]);
         allFields--;
-        mazeDepthFirstSearchGenerator(cell.getX(), cell.getY());
+        cells = mazeDepthFirstSearchGenerator(cell.getX(), cell.getY());
+        return cells;
     }
 
-    public void mazeDepthFirstSearchGenerator(int x, int y) {
+    public Cell[][] mazeDepthFirstSearchGenerator(int x, int y) {
         List<Integer> moveList = new ArrayList<>();
         Random random = new Random();
         cells[y][x].setType(TypeOfCell.CURRENT);    // Меняем ему тип
@@ -42,7 +45,7 @@ public class MazeSessionDepthFirstSearch {
         // Пока не тупик и не пройдены все поля
         while (allFields > 0) {
             // Алгоритм для шага в случайную сторону
-            List<Integer> sidesList = getSidesList(x, y, moveList);
+            List<Integer> sidesList = getSidesList(x, y);
             int randomMove = sidesList.get(random.nextInt(sidesList.size()));
             for (int i = 0; i < 2; i++) {
                 cells[y][x].setType(TypeOfCell.WAY);
@@ -64,7 +67,7 @@ public class MazeSessionDepthFirstSearch {
             allFields--;
 
             if (isDeadlock(x, y) && allFields > 0) {
-                int index = makeBackwardMove(x, y);
+                int index = doBackwardMove(x, y);
                 x = wayList.get(index).getX();
                 y = wayList.get(index).getY();
                 moveList.add(-1);
@@ -72,9 +75,11 @@ public class MazeSessionDepthFirstSearch {
         }
         remarkCells();
         mazeSession.drawMaze(cells);
+
+        return cells;
     }
 
-    private int makeBackwardMove(int x, int y) {
+    private int doBackwardMove(int x, int y) {
         int index = wayList.size() - 1;
         while (isDeadlock(x, y)) {
             index = index - 2;
@@ -120,7 +125,7 @@ public class MazeSessionDepthFirstSearch {
     }
 
     // Метод, добавляющий возможные шаги
-    private List<Integer> getSidesList(int x, int y, List<Integer> moveList) {
+    private List<Integer> getSidesList(int x, int y) {
         List<Integer> sidesList = new ArrayList<>();
 
         // Проверим возможные стороны для шага

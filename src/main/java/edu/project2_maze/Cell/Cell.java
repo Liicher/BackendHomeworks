@@ -1,11 +1,11 @@
-package edu.project2_maze.Maze;
+package edu.project2_maze.Cell;
 
 import java.awt.Color;
 
 public class Cell {
     // Размеры клеток на интерфейсе
-    public static final int WIDTH = 3;
-    public static final int HEIGHT = 3;
+    public static final int WIDTH = 4;
+    public static final int HEIGHT = 4;
 
     // Координаты клеток
     private final int x;

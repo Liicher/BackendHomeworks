@@ -1,5 +1,7 @@
 package edu.project2_maze.Maze;
 
+import edu.project2_maze.Cell.Cell;
+import edu.project2_maze.Cell.TypeOfCell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

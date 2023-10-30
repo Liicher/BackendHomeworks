@@ -1,6 +1,9 @@
 package edu.project2_maze.Maze;
 
+import edu.project2_maze.Cell.Cell;
+import edu.project2_maze.Cell.TypeOfCell;
 import edu.project2_maze.GUI.UserInterface;
+import edu.project2_maze.MazeSolver.MazeSolverBreadthFirstSearch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,17 +11,26 @@ public class MazeSession {
     private final static Logger LOGGER = LogManager.getLogger();
     UserInterface userInterface;
     private Cell[][] cells = cellsGeneratorDepthFirstSearch();
-    private static final int MILLISECONDS_PER_FRAME = 0;
-    private static final int HORIZONTAL_CELLS = 501;
-    private static final int VERTICAL_CELLS = 301;
+    private static final int MILLISECONDS_PER_FRAME = 1;
+    private static final int HORIZONTAL_CELLS = 201;
+    private static final int VERTICAL_CELLS = 101;
+    private static final int PAUSE = 1000;
 
     public void run() {
-        MazeSessionWilson mazeSessionWilson = new MazeSessionWilson(this, cells);
         MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch = new MazeSessionDepthFirstSearch(this, cells);
         userInterface = new UserInterface();
         userInterface.runWindow(this);
         drawMaze(cells);
-        mazeSessionDepthFirstSearch.move();
+        cells = mazeSessionDepthFirstSearch.move();
+
+        try {
+            Thread.sleep(PAUSE);
+        } catch (InterruptedException e) {
+            LOGGER.info(e);
+        }
+
+        MazeSolverBreadthFirstSearch mazeSolverBreadthFirstSearch = new MazeSolverBreadthFirstSearch(this, cells);
+        mazeSolverBreadthFirstSearch.solve();
     }
 
     private Cell[][] cellsGeneratorWilson() {
