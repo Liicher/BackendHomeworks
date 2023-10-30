@@ -51,6 +51,9 @@ public class MazeSessionDepthFirstSearch {
                     case RIGHT -> x++;
                     case TOP -> y--;
                     case DOWN -> y++;
+                    default -> {
+                        throw new IllegalStateException();
+                    }
                 }
                 // Делаем шаг в случайную сторону
                 wayList.add(cells[y][x]);

@@ -8,7 +8,7 @@ public class MazeSession {
     private final static Logger LOGGER = LogManager.getLogger();
     UserInterface userInterface;
     private Cell[][] cells = cellsGeneratorDepthFirstSearch();
-    private static final int MILLISECONDS_PER_FRAME = 1;
+    private static final int MILLISECONDS_PER_FRAME = 0;
     private static final int HORIZONTAL_CELLS = 501;
     private static final int VERTICAL_CELLS = 301;
 
