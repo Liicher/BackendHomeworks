@@ -14,7 +14,7 @@ public class MazeSolverBreadthFirstSearch {
     private static final int DOWN = 3;
 
     private final MazeSession mazeSession;
-    private Cell[][] cells;
+    private final Cell[][] cells;
     private final List<Cell> wayList = new ArrayList<>();
     private final List<Cell> solveWayList = new ArrayList<>();
 
@@ -69,14 +69,14 @@ public class MazeSolverBreadthFirstSearch {
     }
 
     private void repaintSolveWay() {
-        for (int i = 0; i < solveWayList.size(); i++) {
-            solveWayList.get(i).setType(TypeOfCell.SOLVE_WAY);
+        for (Cell cell : solveWayList) {
+            cell.setType(TypeOfCell.SOLVE_WAY);
         }
 
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                if (cells[i][j].getType().equals(TypeOfCell.WAY)) {
-                    cells[i][j].setType(TypeOfCell.PASSAGE);
+        for (Cell[] cell : cells) {
+            for (Cell value : cell) {
+                if (value.getType().equals(TypeOfCell.WAY)) {
+                    value.setType(TypeOfCell.PASSAGE);
                 }
             }
         }

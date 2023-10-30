@@ -4,8 +4,8 @@ import java.awt.Color;
 
 public class Cell {
     // Размеры клеток на интерфейсе
-    public static final int WIDTH = 4;
-    public static final int HEIGHT = 4;
+    public static final int WIDTH = 15;
+    public static final int HEIGHT = 15;
 
     // Координаты клеток
     private final int x;

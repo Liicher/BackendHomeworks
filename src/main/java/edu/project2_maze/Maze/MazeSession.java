@@ -9,19 +9,20 @@ import org.apache.logging.log4j.Logger;
 
 public class MazeSession {
     private final static Logger LOGGER = LogManager.getLogger();
-    UserInterface userInterface;
-    private Cell[][] cells = cellsGeneratorDepthFirstSearch();
+    private UserInterface userInterface;
+    private Cell[][] cells = cellsGeneratorWilson();
     private static final int MILLISECONDS_PER_FRAME = 1;
-    private static final int HORIZONTAL_CELLS = 201;
-    private static final int VERTICAL_CELLS = 101;
+    private static final int HORIZONTAL_CELLS = 21;
+    private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
 
     public void run() {
         MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch = new MazeSessionDepthFirstSearch(this, cells);
+        MazeSessionWilson mazeSessionWilson = new MazeSessionWilson(this, cells);
         userInterface = new UserInterface();
         userInterface.runWindow(this);
         drawMaze(cells);
-        cells = mazeSessionDepthFirstSearch.move();
+        cells = mazeSessionWilson.move();
 
         try {
             Thread.sleep(PAUSE);
@@ -47,7 +48,7 @@ public class MazeSession {
         cells = new Cell[VERTICAL_CELLS][HORIZONTAL_CELLS];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
-                if ((i % 2 != 0 && j % 2 != 0) /*&& (i < VERTICAL_CELLS - 1 && j < HORIZONTAL_CELLS - 1)*/) {
+                if (i % 2 != 0 && j % 2 != 0) {
                     cells[i][j] = new Cell(j, i, TypeOfCell.PASSAGE);
                 } else {
                     cells[i][j] = new Cell(j, i, TypeOfCell.WALL);

@@ -13,6 +13,7 @@ public class MazeSessionDepthFirstSearch {
     private static final int TOP = 2;
     private static final int DOWN = 3;
     private static final int QUARTER = 4;
+    private static final int START_POS = 5;
 
     private final MazeSession mazeSession;
     private Cell[][] cells;
@@ -27,6 +28,10 @@ public class MazeSessionDepthFirstSearch {
     }
 
     public Cell[][] move() {
+        if (cells == null || cells.length < START_POS || cells[0].length < START_POS) {
+            throw new IllegalArgumentException();
+        }
+
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
         mazeSession.drawMaze(cells);

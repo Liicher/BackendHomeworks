@@ -23,7 +23,11 @@ public class MazeSessionWilson {
         this.cells = cells;
     }
 
-    public void move() {
+    public Cell[][] move() {
+        if (cells == null || cells.length < START_POS || cells[0].length < START_POS) {
+            throw new IllegalArgumentException();
+        }
+
         for (int i = 1; i < START_POS; i++) {
             cells[cells.length - 2][i].setType(TypeOfCell.PASSAGE);
         }
@@ -33,6 +37,8 @@ public class MazeSessionWilson {
             mazeGenerator(cell.getX(), cell.getY());
             cell = findNextCell(cell);
         }
+
+        return cells;
     }
 
     private void mazeGenerator(int x, int y) {
@@ -52,7 +58,8 @@ public class MazeSessionWilson {
         // Добавим нулевой элемент для последующего сравнения
         moveList.add(-1);
 
-        while (true) {
+        boolean isDone = true;
+        while (isDone) {
             // Список, в какую сторону можно сделать шаг
             List<Integer> sidesList = getSidesList(x, y, moveList);
             // Выбираем случайную сторону для шага
@@ -113,7 +120,8 @@ public class MazeSessionWilson {
                         c.setType(TypeOfCell.PASSAGE);
                     }
                     mazeSession.drawMaze(cells);
-                    return;
+                    isDone = false;
+                    break;
                 }
 
                 // Если нет зацикливания, то добавляем в наш список направления, наш ход
