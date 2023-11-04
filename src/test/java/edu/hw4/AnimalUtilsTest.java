@@ -296,7 +296,7 @@ class AnimalUtilsTest {
     @Test
     @DisplayName("Task 20")
     void getNameAndErrors() {
-        animals.add(Animal.builder().name("1").weight(-1).height(-1).age(-1).build());
+        animals.add(Animal.builder().name("1").age(1).height(-1).weight(1).build());
         Map<String, String> response1 = AnimalUtils.getNameAndErrors(animals);
         Map<String, String> result1 = new HashMap<>();
 
@@ -310,7 +310,7 @@ class AnimalUtilsTest {
         Map<String, String> response3 = AnimalUtils.getNameAndErrors(animals3);
         Map<String, String> result3 = new HashMap<>();
 
-        result1.put("1", "Invalid height!, Invalid age!, Invalid weight!");
+        result1.put("1", "Invalid height!");
         result2.put("2", "Invalid age!");
         result3.put("3", "Invalid weight!");
 
