@@ -11,8 +11,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("MagicNumber")
 public class AnimalUtils {
+    private static final int HUNDRED = 100;
+
     private AnimalUtils() {}
 
     /** Задание 1. */
@@ -82,7 +83,7 @@ public class AnimalUtils {
     /** Задача 11. */
     // Список животных, которые могут укусить (bites == true) и рост которых превышает 100 см -> List<Animal>
     public static List<Animal> getAnimalsBitesAndHigherThan100cm(List<Animal> animals) {
-        return animals.stream().filter(Animal::bites).filter(a -> a.height() > 100).toList();
+        return animals.stream().filter(Animal::bites).filter(a -> a.height() > HUNDRED).toList();
     }
 
     /** Задача 12. */
@@ -121,9 +122,10 @@ public class AnimalUtils {
     /** Задача 17. */
     // Правда ли, что пауки кусаются чаще, чем собаки -> Boolean (если данных для ответа недостаточно, вернуть false)
     public static Boolean isSpidersBitesOftenThanDogs(List<Animal> animals) {
-        long spiders = animals.stream().filter(animal -> animal.type() == Animal.Type.SPIDER && animal.bites()).count();
-        long dogs = animals.stream().filter(animal -> animal.type() == Animal.Type.DOG && animal.bites()).count();
-        return spiders > dogs;
+        return animals.stream().filter(
+            animal -> (animal.type() == Animal.Type.SPIDER || animal.type() == Animal.Type.DOG) && animal.bites())
+            .collect(Collectors.collectingAndThen(Collectors.groupingBy(Animal::type, Collectors.counting()),
+                result -> result.get(Animal.Type.SPIDER) > result.get(Animal.Type.DOG)));
     }
 
     /** Задача 18. */

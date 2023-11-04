@@ -12,6 +12,11 @@ public record Animal(
     int weight,
     boolean bites
 ) {
+    private static final int EIGHT_PAWS = 8;
+    private static final int FOUR_PAWS = 4;
+    private static final int TWO_PAWS = 2;
+    private static final int NO_PAWS = 0;
+
     enum Type {
         CAT, DOG, BIRD, FISH, SPIDER
     }
@@ -20,13 +25,12 @@ public record Animal(
         M, F
     }
 
-    @SuppressWarnings("MagicNumber")
     public int paws() {
         return switch (type) {
-            case CAT, DOG -> 4;
-            case BIRD -> 2;
-            case FISH -> 0;
-            case SPIDER -> 8;
+            case CAT, DOG -> FOUR_PAWS;
+            case BIRD -> TWO_PAWS;
+            case FISH -> NO_PAWS;
+            case SPIDER -> EIGHT_PAWS;
         };
     }
 }
