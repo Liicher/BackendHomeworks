@@ -296,19 +296,26 @@ class AnimalUtilsTest {
     @Test
     @DisplayName("Task 20")
     void getNameAndErrors() {
+        animals.add(Animal.builder().name("1").weight(-1).height(-1).age(-1).build());
+        Map<String, String> response1 = AnimalUtils.getNameAndErrors(animals);
+        Map<String, String> result1 = new HashMap<>();
+
         List<Animal> animals2 = new ArrayList<>();
         animals2.add(Animal.builder().name("2").weight(1).height(1).age(-1).build());
         Map<String, String> response2 = AnimalUtils.getNameAndErrors(animals2);
         Map<String, String> result2 = new HashMap<>();
 
-        animals.add(Animal.builder().name("1").weight(-1).height(-1).age(-1).build());
-        Map<String, String> response1 = AnimalUtils.getNameAndErrors(animals);
-        Map<String, String> result1 = new HashMap<>();
+        List<Animal> animals3 = new ArrayList<>();
+        animals3.add(Animal.builder().name("3").weight(-1).height(1).age(1).build());
+        Map<String, String> response3 = AnimalUtils.getNameAndErrors(animals3);
+        Map<String, String> result3 = new HashMap<>();
 
         result1.put("1", "Invalid height!, Invalid age!, Invalid weight!");
         result2.put("2", "Invalid age!");
+        result3.put("3", "Invalid weight!");
 
-        assertThat(response1).usingRecursiveComparison().ignoringCollectionOrder().isEqualTo(result1);
+        assertThat(response1).isEqualTo(result1);
         assertThat(response2).isEqualTo(result2);
+        assertThat(response3).isEqualTo(result3);
     }
 }
