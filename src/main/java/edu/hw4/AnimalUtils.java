@@ -3,7 +3,6 @@ package edu.hw4;
 import edu.hw4.errors.AgeError;
 import edu.hw4.errors.HeightError;
 import edu.hw4.errors.WeightError;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +11,9 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("MagicNumber")
 public class AnimalUtils {
+    private AnimalUtils() {}
 
     /** Задание 1. */
     // Отсортировать животных по росту от самого маленького к самому большому -> List<Animal>
@@ -104,7 +105,7 @@ public class AnimalUtils {
 
     /** Задача 15. */
     // Найти суммарный вес животных каждого вида, которым от k до l лет -> Map<Animal.Type, Integer>
-    public static Map<Animal.Type, Integer> getEveryTypeSSumWeightFromKsToLsAge(List<Animal> animals, int k, int l) {
+    public static Map<Animal.Type, Integer> getEveryTypesSumWeightFromKsToLsAge(List<Animal> animals, int k, int l) {
         return animals.stream().filter(a -> a.age() >= k && a.age() <= l)
             .collect(Collectors.groupingBy(Animal::type, Collectors.summingInt(Animal::weight)));
     }
@@ -138,34 +139,27 @@ public class AnimalUtils {
     public static Map<String, Set<ValidationError>> getNameAndListOfErrors(List<Animal> animals) {
         return animals.stream().collect(Collectors.toMap(Animal::name, AnimalUtils::getValidationErrors));
     }
-    // Задача 20.
-    // Сделать результат предыдущего задания более читабельным: вернуть имя и названия полей с ошибками, объединенные в строку -> Map<String, String>
+
+    /** Задача 20. */
+    // Сделать результат предыдущего задания более читабельным:
+    // вернуть имя и названия полей с ошибками, объединенные в строку -> Map<String, String>
     public static Map<String, String> getNameAndErrors(List<Animal> animals) {
-        return animals.stream()
-            .collect(Collectors.collectingAndThen(
-                Collectors.toMap(
-                    Animal::name,
-                    animal -> getValidationErrors(animal).stream().map(Throwable::toString)
-                        .collect(Collectors.joining(", "))
-                ),
-                map -> {
-                    map.values().removeIf(String::isEmpty);
-                    return map;
-                }
-            ));
+        return animals.stream().collect(Collectors.toMap(
+            Animal::name,
+            animal -> getValidationErrors(animal).stream().map(Throwable::getMessage).collect(Collectors.joining(", "))
+        ));
     }
 
     public static Set<ValidationError> getValidationErrors(Animal animal) {
         Set<ValidationError> errors = new HashSet<>();
-
         if (animal.age() < 0) {
-            errors.add(new AgeError("Invalid age! Must be positive!"));
+            errors.add(new AgeError("Invalid age!"));
         }
         if (animal.height() <= 0) {
-            errors.add(new HeightError("Invalid height! Must be greater than zero!"));
+            errors.add(new HeightError("Invalid height!"));
         }
         if (animal.weight() <= 0) {
-            errors.add(new WeightError("Invalid weight! Must be greater than zero!"));
+            errors.add(new WeightError("Invalid weight!"));
         }
         return errors;
     }

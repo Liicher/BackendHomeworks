@@ -1,5 +1,8 @@
 package edu.hw4;
 
+import lombok.Builder;
+
+@Builder
 public record Animal(
     String name,
     Type type,
@@ -17,6 +20,7 @@ public record Animal(
         M, F
     }
 
+    @SuppressWarnings("MagicNumber")
     public int paws() {
         return switch (type) {
             case CAT, DOG -> 4;
