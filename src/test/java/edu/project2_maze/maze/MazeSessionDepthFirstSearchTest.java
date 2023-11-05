@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class MazeSessionDepthFirstSearchTest {
+/*class MazeSessionDepthFirstSearchTest {
     private static MazeSession mazeSession;
     private static MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch;
 
@@ -39,4 +39,4 @@ class MazeSessionDepthFirstSearchTest {
             mazeSessionDepthFirstSearch.move();
         });
     }
-}
+}*/

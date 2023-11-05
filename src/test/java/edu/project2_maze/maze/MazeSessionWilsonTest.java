@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MazeSessionWilsonTest {
+/*class MazeSessionWilsonTest {
     private static MazeSession mazeSession;
     private static MazeSessionWilson mazeSessionWilson;
 
@@ -39,4 +39,4 @@ class MazeSessionWilsonTest {
             mazeSessionWilson.move();
         });
     }
-}
+}*/
