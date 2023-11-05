@@ -1,8 +1,8 @@
-package edu.project2_maze.Maze;
+package edu.project2_maze.maze;
 
-import edu.project2_maze.Cell.Cell;
-import edu.project2_maze.Cell.TypeOfCell;
-import edu.project2_maze.Interface.MazeGenerator;
+import edu.project2_maze.cell.Cell;
+import edu.project2_maze.cell.TypeOfCell;
+import edu.project2_maze.interfaces.MazeGenerator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

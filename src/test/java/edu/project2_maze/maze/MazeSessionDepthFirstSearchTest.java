@@ -1,6 +1,6 @@
-package edu.project2_maze.Maze;
+package edu.project2_maze.maze;
 
-import edu.project2_maze.Cell.Cell;
+import edu.project2_maze.cell.Cell;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

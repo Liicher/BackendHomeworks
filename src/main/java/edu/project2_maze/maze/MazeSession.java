@@ -1,28 +1,37 @@
-package edu.project2_maze.Maze;
+package edu.project2_maze.maze;
 
-import edu.project2_maze.Cell.Cell;
-import edu.project2_maze.Cell.TypeOfCell;
-import edu.project2_maze.GUI.UserInterface;
-import edu.project2_maze.MazeSolver.MazeSolverBreadthFirstSearch;
+import edu.project2_maze.cell.Cell;
+import edu.project2_maze.cell.TypeOfCell;
+import edu.project2_maze.gui.UserInterface;
+import edu.project2_maze.interfaces.MazeGenerator;
+import edu.project2_maze.mazeSolver.MazeSolverBreadthFirstSearch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MazeSession {
-    private final static Logger LOGGER = LogManager.getLogger();
-    private UserInterface userInterface;
-    private Cell[][] cells = cellsGeneratorDepthFirstSearch();
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final MazeStarterCellsGenerators generator = new MazeStarterCellsGenerators();
+    private static final UserInterface userInterface = new UserInterface();;
     private static final int MILLISECONDS_PER_FRAME = 20;
     private static final int HORIZONTAL_CELLS = 41;
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
 
+    private Cell[][] cells;
+    private MazeGenerator maze;
+
+    public MazeSession() {
+        this.cells = generator.cellsGeneratorDepthFirstSearch(this);
+        this.maze = new MazeSessionDepthFirstSearch(this, cells);
+    }
+
     public void run() {
-        MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch = new MazeSessionDepthFirstSearch(this, cells);
-        MazeSessionWilson mazeSessionWilson = new MazeSessionWilson(this, cells);
-        userInterface = new UserInterface();
+        //MazeGenerator maze = new MazeSessionDepthFirstSearch(this, cells);
+        //MazeSessionWilson mazeSessionWilson = new MazeSessionWilson(this, cells);
+        //userInterface = new UserInterface();
         userInterface.runWindow(this);
         drawMaze(cells);
-        cells = mazeSessionDepthFirstSearch.move();
+        cells = maze.move();
 
         try {
             Thread.sleep(PAUSE);
@@ -69,6 +78,10 @@ public class MazeSession {
 
     public Cell[][] getCells() {
         return cells;
+    }
+
+    public void setCells(Cell[][] cells) {
+        this.cells = cells;
     }
 
     public int getHorizontalCells() {

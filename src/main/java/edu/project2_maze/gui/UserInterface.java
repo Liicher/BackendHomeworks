@@ -1,8 +1,7 @@
-package edu.project2_maze.GUI;
+package edu.project2_maze.gui;
 
-import edu.project2_maze.Cell.Cell;
-import edu.project2_maze.Cell.TypeOfCell;
-import edu.project2_maze.Maze.MazeSession;
+import edu.project2_maze.cell.Cell;
+import edu.project2_maze.maze.MazeSession;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -30,20 +29,15 @@ public class UserInterface {
     public void drawMaze(Cell[][] cells) {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
-                if (cells[i][j].getType().equals(TypeOfCell.WALL)) {
-                    cells[i][j].setColor(Color.BLACK);
-                } else if (cells[i][j].getType().equals(TypeOfCell.WAY)) {
-                    cells[i][j].setColor(Color.RED);
-                } else if (cells[i][j].getType().equals(TypeOfCell.PASSAGE)) {
-                    cells[i][j].setColor(Color.WHITE);
-                } else if (cells[i][j].getType().equals(TypeOfCell.CURRENT)) {
-                    cells[i][j].setColor(Color.YELLOW);
-                } else if (cells[i][j].getType().equals(TypeOfCell.END_POS)) {
-                    cells[i][j].setColor(Color.RED);
-                } else if (cells[i][j].getType().equals(TypeOfCell.WAY_CHECKER)) {
-                    cells[i][j].setColor(Color.YELLOW);
-                } else if (cells[i][j].getType().equals(TypeOfCell.SOLVE_WAY)) {
-                    cells[i][j].setColor(Color.MAGENTA);
+                switch (cells[i][j].getType()) {
+                    case WALL -> cells[i][j].setColor(Color.BLACK);
+                    case WAY -> cells[i][j].setColor(Color.RED);
+                    case PASSAGE -> cells[i][j].setColor(Color.WHITE);
+                    case CURRENT -> cells[i][j].setColor(Color.YELLOW);
+                    case END_POS -> cells[i][j].setColor(Color.PINK);
+                    case WAY_CHECKER -> cells[i][j].setColor(Color.GREEN);
+                    case SOLVE_WAY -> cells[i][j].setColor(Color.MAGENTA);
+
                 }
 
                 cells[cells.length - 2][1].setColor(Color.GREEN);

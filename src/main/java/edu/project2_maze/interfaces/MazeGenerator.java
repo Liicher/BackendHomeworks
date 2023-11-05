@@ -1,6 +1,6 @@
-package edu.project2_maze.Interface;
+package edu.project2_maze.interfaces;
 
-import edu.project2_maze.Cell.Cell;
+import edu.project2_maze.cell.Cell;
 
 public interface MazeGenerator {
     Cell[][] move();

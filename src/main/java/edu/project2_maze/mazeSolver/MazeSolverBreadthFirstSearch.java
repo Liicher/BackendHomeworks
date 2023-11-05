@@ -1,8 +1,8 @@
-package edu.project2_maze.MazeSolver;
+package edu.project2_maze.mazeSolver;
 
-import edu.project2_maze.Cell.Cell;
-import edu.project2_maze.Cell.TypeOfCell;
-import edu.project2_maze.Maze.MazeSession;
+import edu.project2_maze.cell.Cell;
+import edu.project2_maze.cell.TypeOfCell;
+import edu.project2_maze.maze.MazeSession;
 import java.util.ArrayList;
 import java.util.List;
 

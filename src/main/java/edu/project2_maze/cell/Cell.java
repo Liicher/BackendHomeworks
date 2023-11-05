@@ -1,4 +1,4 @@
-package edu.project2_maze.Cell;
+package edu.project2_maze.cell;
 
 import java.awt.Color;
 

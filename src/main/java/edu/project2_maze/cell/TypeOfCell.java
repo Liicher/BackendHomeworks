@@ -1,4 +1,4 @@
-package edu.project2_maze.Cell;
+package edu.project2_maze.cell;
 
 public enum TypeOfCell {
     WALL,
