@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("ParameterAssignment")
-public class MazeSolverBreadthFirstSearch {
+public class MazeSolverRandom {
     private static final int LEFT = 0;       // Кодовые значения для окружающих клеток
     private static final int TOP = 1;
     private static final int RIGHT = 2;
@@ -18,7 +18,7 @@ public class MazeSolverBreadthFirstSearch {
     private final List<Cell> wayList = new ArrayList<>();
     private final List<Cell> solveWayList = new ArrayList<>();
 
-    public MazeSolverBreadthFirstSearch(MazeSession mazeSession) {
+    public MazeSolverRandom(MazeSession mazeSession) {
         this.maze = mazeSession;
         this.cells = maze.getCells();
     }
@@ -30,10 +30,10 @@ public class MazeSolverBreadthFirstSearch {
 
         wayList.add(cells[cell.getX()][cell.getY()]);
         solveWayList.add(cells[cell.getX()][cell.getY()]);
-        mazeSolverBFS(cell.getX(), cell.getY());
+        mazeSolver(cell.getX(), cell.getY());
     }
 
-    private void mazeSolverBFS(int x, int y) {
+    private void mazeSolver(int x, int y) {
         while (cells[y][x].getType() != TypeOfCell.END_POS) {
             List<Integer> sidesList = getSidesList(x, y);
             while (!sidesList.isEmpty()) {

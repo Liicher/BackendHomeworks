@@ -3,7 +3,7 @@ package edu.project2_maze.maze;
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.interfaces.MazeGenerator;
-import edu.project2_maze.mazeSolver.MazeSolverBreadthFirstSearch;
+import edu.project2_maze.mazeSolver.MazeSolverRandom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,8 +35,8 @@ public class MazeSession {
             LOGGER.info(e);
         }
 
-        MazeSolverBreadthFirstSearch mazeSolverBreadthFirstSearch = new MazeSolverBreadthFirstSearch(this);
-        mazeSolverBreadthFirstSearch.solve();
+        MazeSolverRandom mazeSolverRandom = new MazeSolverRandom(this);
+        mazeSolverRandom.solve();
     }
 
     public void drawMaze(Cell[][] cells) {
