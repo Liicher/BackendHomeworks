@@ -27,25 +27,25 @@ public class UserInterface {
     }
 
     public void drawMaze(Cell[][] cells) {
-	    for (Cell[] cell : cells) {
-		    for (Cell value : cell) {
-			    switch (value.getType()) {
-				    case WALL -> value.setColor(Color.BLACK);
-				    case WAY -> value.setColor(Color.RED);
-				    case PASSAGE -> value.setColor(Color.WHITE);
-				    case CURRENT -> value.setColor(Color.YELLOW);
-				    case END_POS -> value.setColor(Color.PINK);
-				    case WAY_CHECKER -> value.setColor(Color.GREEN);
-				    case SOLVE_WAY -> value.setColor(Color.MAGENTA);
-				    default -> {
-					    return;
-				    }
-			    }
+        for (Cell[] cell : cells) {
+            for (Cell value : cell) {
+                switch (value.getType()) {
+                    case WALL -> value.setColor(Color.BLACK);
+                    case WAY -> value.setColor(Color.RED);
+                    case PASSAGE -> value.setColor(Color.WHITE);
+                    case CURRENT -> value.setColor(Color.YELLOW);
+                    case END_POS -> value.setColor(Color.PINK);
+                    case WAY_CHECKER -> value.setColor(Color.GREEN);
+                    case SOLVE_WAY -> value.setColor(Color.MAGENTA);
+                    default -> {
+                        return;
+                    }
+                }
 
-			    cells[cells.length - 2][1].setColor(Color.GREEN);
-			    cells[1][cells[0].length - 2].setColor(Color.PINK);
-		    }
-	    }
+                cells[cells.length - 2][1].setColor(Color.GREEN);
+                cells[1][cells[0].length - 2].setColor(Color.PINK);
+            }
+        }
         FRAME.repaint();
     }
 

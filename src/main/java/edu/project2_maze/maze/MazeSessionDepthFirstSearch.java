@@ -157,13 +157,13 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     }
 
     private void remarkCells() {
-	    for (Cell[] cell : cells) {
-		    for (Cell value : cell) {
-			    if (value.getType() == TypeOfCell.WAY || value.getType() == TypeOfCell.CURRENT) {
-				    value.setType(TypeOfCell.PASSAGE);
-			    }
-		    }
-	    }
+        for (Cell[] cell : cells) {
+            for (Cell value : cell) {
+                if (value.getType() == TypeOfCell.WAY || value.getType() == TypeOfCell.CURRENT) {
+                    value.setType(TypeOfCell.PASSAGE);
+                }
+            }
+        }
     }
 }
 
