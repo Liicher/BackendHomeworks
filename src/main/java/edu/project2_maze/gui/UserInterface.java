@@ -27,25 +27,25 @@ public class UserInterface {
     }
 
     public void drawMaze(Cell[][] cells) {
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                switch (cells[i][j].getType()) {
-                    case WALL -> cells[i][j].setColor(Color.BLACK);
-                    case WAY -> cells[i][j].setColor(Color.RED);
-                    case PASSAGE -> cells[i][j].setColor(Color.WHITE);
-                    case CURRENT -> cells[i][j].setColor(Color.YELLOW);
-                    case END_POS -> cells[i][j].setColor(Color.PINK);
-                    case WAY_CHECKER -> cells[i][j].setColor(Color.GREEN);
-                    case SOLVE_WAY -> cells[i][j].setColor(Color.MAGENTA);
-                    default -> {
-                        return;
-                    }
-                }
+	    for (Cell[] cell : cells) {
+		    for (Cell value : cell) {
+			    switch (value.getType()) {
+				    case WALL -> value.setColor(Color.BLACK);
+				    case WAY -> value.setColor(Color.RED);
+				    case PASSAGE -> value.setColor(Color.WHITE);
+				    case CURRENT -> value.setColor(Color.YELLOW);
+				    case END_POS -> value.setColor(Color.PINK);
+				    case WAY_CHECKER -> value.setColor(Color.GREEN);
+				    case SOLVE_WAY -> value.setColor(Color.MAGENTA);
+				    default -> {
+					    return;
+				    }
+			    }
 
-                cells[cells.length - 2][1].setColor(Color.GREEN);
-                cells[1][cells[0].length - 2].setColor(Color.PINK);
-            }
-        }
+			    cells[cells.length - 2][1].setColor(Color.GREEN);
+			    cells[1][cells[0].length - 2].setColor(Color.PINK);
+		    }
+	    }
         FRAME.repaint();
     }
 

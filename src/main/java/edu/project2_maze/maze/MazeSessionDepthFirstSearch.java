@@ -13,16 +13,16 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private static final int RIGHT = 1;
     private static final int TOP = 2;
     private static final int DOWN = 3;
-    private static final int QUARTER = 4;
-    private static final int START_POS = 5;
+    private static final int QUARTER = 4;   // Часть из формулы для нахождения всех полей
+    private static final int START_POS = 5; // Место для стартовой позиции
 
-    private final MazeSession mazeSession;
+    private final MazeSession maze;
+    private final List<Cell> wayList = new ArrayList<>();
     private Cell[][] cells;
     private long allFields;
-    private final List<Cell> wayList = new ArrayList<>();
 
     public MazeSessionDepthFirstSearch(MazeSession mazeSession, Cell[][] cells) {
-        this.mazeSession = mazeSession;
+        this.maze = mazeSession;
         this.cells = cells;
         this.allFields =
             ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
@@ -36,7 +36,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
 
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
-        mazeSession.drawMaze(cells);
+        maze.drawMaze(cells);
         wayList.add(cells[cell.getX()][cell.getY()]);
         allFields--;
         cells = mazeGenerator(cell.getX(), cell.getY());
@@ -70,7 +70,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
                 wayList.add(cells[y][x]);
                 cells[y][x].setType(TypeOfCell.CURRENT);
                 moveList.add(randomMove);
-                mazeSession.drawMaze(cells);
+                maze.drawMaze(cells);
             }
             allFields--;
 
@@ -82,7 +82,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
             }
         }
         remarkCells();
-        mazeSession.drawMaze(cells);
+        maze.drawMaze(cells);
 
         return cells;
     }
@@ -103,29 +103,29 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
         boolean isLock = true;
         // Left
         if (x - 2 > 0) {
-            if (!(cells[y][x - 2].getType().equals(TypeOfCell.WAY)
-                || cells[y][x - 2].getType().equals(TypeOfCell.CURRENT))) {
+            if (!(cells[y][x - 2].getType() == TypeOfCell.WAY
+                || cells[y][x - 2].getType() == TypeOfCell.CURRENT)) {
                 return false;
             }
         }
         // Right
         if (x + 2 < cells[y].length - 1) {
-            if (!(cells[y][x + 2].getType().equals(TypeOfCell.WAY)
-                || cells[y][x + 2].getType().equals(TypeOfCell.CURRENT))) {
+            if (!(cells[y][x + 2].getType() == TypeOfCell.WAY
+                || cells[y][x + 2].getType() == TypeOfCell.CURRENT)) {
                 return false;
             }
         }
         // Up
         if (y - 2 > 0) {
-            if (!(cells[y - 2][x].getType().equals(TypeOfCell.WAY)
-                || cells[y - 2][x].getType().equals(TypeOfCell.CURRENT))) {
+            if (!(cells[y - 2][x].getType() == TypeOfCell.WAY
+                || cells[y - 2][x].getType() == TypeOfCell.CURRENT)) {
                 return false;
             }
         }
         // Down
         if (y + 2 < cells.length - 1) {
-            if (!(cells[y + 2][x].getType().equals(TypeOfCell.WAY)
-                || cells[y + 2][x].getType().equals(TypeOfCell.CURRENT))) {
+            if (!(cells[y + 2][x].getType() == TypeOfCell.WAY
+                || cells[y + 2][x].getType() == TypeOfCell.CURRENT)) {
                 isLock = false;
             }
         }
@@ -137,18 +137,17 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
         List<Integer> sidesList = new ArrayList<>();
 
         // Проверим возможные стороны для шага
-        // Первая проверка на грань или соседний проход
-        // Вторая проверка на предыдущий шаг
-        if (x - 2 > 0 && !cells[y][x - 2].getType().equals(TypeOfCell.WAY)) {
+        // Проверка на грань или соседнюю клетку
+        if (x - 2 > 0 && cells[y][x - 2].getType() != TypeOfCell.WAY) {
             sidesList.add(LEFT);
         }
-        if (x + 2 < cells[0].length - 1 && !cells[y][x + 2].getType().equals(TypeOfCell.WAY)) {
+        if (x + 2 < cells[0].length - 1 && cells[y][x + 2].getType() != TypeOfCell.WAY) {
             sidesList.add(RIGHT);
         }
-        if (y - 2 > 0 && !cells[y - 2][x].getType().equals(TypeOfCell.WAY)) {
+        if (y - 2 > 0 && cells[y - 2][x].getType() != TypeOfCell.WAY) {
             sidesList.add(TOP);
         }
-        if (y + 2 < cells.length - 1 && !cells[y + 2][x].getType().equals(TypeOfCell.WAY)) {
+        if (y + 2 < cells.length - 1 && cells[y + 2][x].getType() != TypeOfCell.WAY) {
             sidesList.add(DOWN);
         }
         if (sidesList.isEmpty()) {
@@ -158,13 +157,13 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     }
 
     private void remarkCells() {
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                if (cells[i][j].getType().equals(TypeOfCell.WAY) || cells[i][j].getType().equals(TypeOfCell.CURRENT)) {
-                    cells[i][j].setType(TypeOfCell.PASSAGE);
-                }
-            }
-        }
+	    for (Cell[] cell : cells) {
+		    for (Cell value : cell) {
+			    if (value.getType() == TypeOfCell.WAY || value.getType() == TypeOfCell.CURRENT) {
+				    value.setType(TypeOfCell.PASSAGE);
+			    }
+		    }
+	    }
     }
 }
 

@@ -50,14 +50,14 @@ public class MazeSolverBreadthFirstSearch {
                 }
                 wayList.add(cells[y][x]);
                 solveWayList.add(cells[y][x]);
-                if (cells[y][x].getType().equals(TypeOfCell.END_POS)) {
+                if (cells[y][x].getType() == TypeOfCell.END_POS) {
                     break;
                 }
                 cells[y][x].setType(TypeOfCell.WAY_CHECKER);
                 mazeSession.drawMaze(cells);
                 sidesList = getSidesList(x, y);
             }
-            if (!cells[y][x].getType().equals(TypeOfCell.END_POS)) {
+            if (cells[y][x].getType() != TypeOfCell.END_POS) {
                 int index = doBackwardMove(x, y);
                 x = wayList.get(index).getX();
                 y = wayList.get(index).getY();
@@ -106,20 +106,20 @@ public class MazeSolverBreadthFirstSearch {
         // Проверим возможные стороны для шага
         // Первая проверка на грань или соседний проход
         // Вторая проверка на предыдущий шаг
-        if (x - 1 > 0 && (cells[y][x - 1].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y][x - 1].getType().equals(TypeOfCell.END_POS))) {
+        if (x - 1 > 0 && (cells[y][x - 1].getType() == TypeOfCell.PASSAGE
+            || cells[y][x - 1].getType() == TypeOfCell.END_POS)) {
             sidesList.add(LEFT);
         }
-        if (y - 1 > 0 && (cells[y - 1][x].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y - 1][x].getType().equals(TypeOfCell.END_POS))) {
+        if (y - 1 > 0 && (cells[y - 1][x].getType() == TypeOfCell.PASSAGE
+            || cells[y - 1][x].getType() == TypeOfCell.END_POS)) {
             sidesList.add(TOP);
         }
-        if (x + 1 < cells[0].length - 1 && (cells[y][x + 1].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y][x + 1].getType().equals(TypeOfCell.END_POS))) {
+        if (x + 1 < cells[0].length - 1 && (cells[y][x + 1].getType() == TypeOfCell.PASSAGE
+            || cells[y][x + 1].getType() == TypeOfCell.END_POS)) {
             sidesList.add(RIGHT);
         }
-        if (y + 1 < cells.length - 1 && (cells[y + 1][x].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y + 1][x].getType().equals(TypeOfCell.END_POS))) {
+        if (y + 1 < cells.length - 1 && (cells[y + 1][x].getType() == TypeOfCell.PASSAGE
+            || cells[y + 1][x].getType() == TypeOfCell.END_POS)) {
             sidesList.add(DOWN);
         }
         return sidesList;
