@@ -1,8 +1,5 @@
 package edu.hw4;
 
-import edu.hw4.errors.AgeError;
-import edu.hw4.errors.HeightError;
-import edu.hw4.errors.WeightError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -284,9 +281,9 @@ class AnimalUtilsTest {
         animals.add(Animal.builder().name("1").age(-1).height(-1).weight(-1).build());
         Map<String, Set<ValidationError>> result = new HashMap<>();
         result.put("1", Set.of(
-            new AgeError("Invalid age!"),
-            new HeightError("Invalid height!"),
-            new WeightError("Invalid weight!")
+            new ValidationError(ValidationError.TypeOfError.AGE),
+            new ValidationError(ValidationError.TypeOfError.HEIGHT),
+            new ValidationError(ValidationError.TypeOfError.WEIGHT)
         ));
 
         Map<String, Set<ValidationError>> response = AnimalUtils.getNameAndListOfErrors(animals);
