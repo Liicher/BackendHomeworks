@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 
 public class MazeSession {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final MazeStarterCellsGenerators GENERATE = new MazeStarterCellsGenerators();
-    private static final UserInterface GUI = new UserInterface();
-    private static final int MILLISECONDS_PER_FRAME = 20;
+    private static final MazeStarterCellsGenerators INIT = new MazeStarterCellsGenerators();
+    private static final UserInterface UI = new UserInterface();
+    private static final int MILLISECONDS_PER_FRAME = 0;
     private static final int HORIZONTAL_CELLS = 41;
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
@@ -20,12 +20,12 @@ public class MazeSession {
     private final MazeGenerator maze;
 
     public MazeSession() {
-        this.cells = GENERATE.cellsGeneratorDepthFirstSearch(this);
-        this.maze = new MazeSessionDepthFirstSearch(this, cells);
+        this.cells = INIT.cellsGeneratorDepthFirstSearch(this);
+        this.maze = new MazeSessionDepthFirstSearch(this);
     }
 
     public void run() {
-        GUI.runWindow(this);
+        UI.runWindow(this);
         drawMaze(cells);
         cells = maze.move();
 
@@ -35,7 +35,7 @@ public class MazeSession {
             LOGGER.info(e);
         }
 
-        MazeSolverBreadthFirstSearch mazeSolverBreadthFirstSearch = new MazeSolverBreadthFirstSearch(this, cells);
+        MazeSolverBreadthFirstSearch mazeSolverBreadthFirstSearch = new MazeSolverBreadthFirstSearch(this);
         mazeSolverBreadthFirstSearch.solve();
     }
 
@@ -45,11 +45,7 @@ public class MazeSession {
         } catch (InterruptedException e) {
             LOGGER.info(e);
         }
-        GUI.drawMaze(cells);
-    }
-
-    public void setCells(Cell[][] cells) {
-        this.cells = cells;
+        UI.drawMaze(cells);
     }
 
     public Cell[][] getCells() {

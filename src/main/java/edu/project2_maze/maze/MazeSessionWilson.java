@@ -16,12 +16,12 @@ public class MazeSessionWilson implements MazeGenerator {
     private static final int UP = 3;
     private static final int START_POS = 5;                 // Стартовая позиция для обхода
 
-    private final MazeSession mazeSession;
+    private final MazeSession maze;
     private final Cell[][] cells;
 
-    public MazeSessionWilson(MazeSession mazeSession, Cell[][] cells) {
-        this.mazeSession = mazeSession;
-        this.cells = cells;
+    public MazeSessionWilson(MazeSession mazeSession) {
+        this.maze = mazeSession;
+        this.cells = maze.getCells();
     }
 
     @Override
@@ -88,16 +88,16 @@ public class MazeSessionWilson implements MazeGenerator {
                 boolean isLoop = false;
                 // Тяжелый случай.
                 // Проверяем абстрактный шаг на соседние клетки, и если можно зациклить, то ходим туда
-                if (cells[y][x + 1].getType().equals(TypeOfCell.WAY) && randomMove != LEFT) {
+                if (cells[y][x + 1].getType() == TypeOfCell.WAY && randomMove != LEFT) {
                     x++;
                     isLoop = true;
-                } else if (cells[y][x - 1].getType().equals(TypeOfCell.WAY) && randomMove != RIGHT) {
+                } else if (cells[y][x - 1].getType() == TypeOfCell.WAY && randomMove != RIGHT) {
                     x--;
                     isLoop = true;
-                } else if (cells[y + 1][x].getType().equals(TypeOfCell.WAY) && randomMove != TOP) {
+                } else if (cells[y + 1][x].getType() == TypeOfCell.WAY && randomMove != TOP) {
                     y++;
                     isLoop = true;
-                } else if (cells[y - 1][x].getType().equals(TypeOfCell.WAY) && randomMove != UP) {
+                } else if (cells[y - 1][x].getType() == TypeOfCell.WAY && randomMove != UP) {
                     y--;
                     isLoop = true;
                 }
@@ -112,7 +112,7 @@ public class MazeSessionWilson implements MazeGenerator {
 
                     wayList.subList(retrace + 1, wayList.size()).clear();
                     moveList.subList(retrace / 2 + 1, moveList.size()).clear();
-                    mazeSession.drawMaze(cells);
+                    maze.drawMaze(cells);
                     break;
                 }
 
@@ -122,24 +122,24 @@ public class MazeSessionWilson implements MazeGenerator {
                     for (Cell c : wayList) {
                         c.setType(TypeOfCell.PASSAGE);
                     }
-                    mazeSession.drawMaze(cells);
+                    maze.drawMaze(cells);
                     isDone = false;
                     break;
                 }
 
                 // Если нет зацикливания, то добавляем в наш список направления, наш ход
                 moveList.add(randomMove);
-                mazeSession.drawMaze(cells);
+                maze.drawMaze(cells);
             }
         }
         return cells;
     }
 
     private boolean checkPassages(int x, int y) {
-        if ((cells[y][x - 1].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y][x + 1].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y - 1][x].getType().equals(TypeOfCell.PASSAGE)
-            || cells[y + 1][x].getType().equals(TypeOfCell.PASSAGE))) {
+        if ((cells[y][x - 1].getType() == TypeOfCell.PASSAGE
+            || cells[y][x + 1].getType() == TypeOfCell.PASSAGE
+            || cells[y - 1][x].getType() == TypeOfCell.PASSAGE
+            || cells[y + 1][x].getType() == TypeOfCell.PASSAGE)) {
             return true;
         }
         return false;
@@ -189,28 +189,28 @@ public class MazeSessionWilson implements MazeGenerator {
     private int checkAroundCells(int x, int y) {
         int wallCellsAroundCounter = 0;
         // Тяжелый случай №2
-        if (cells[y][x - 1].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y][x - 1].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y][x + 1].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y][x + 1].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y - 1][x].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y - 1][x].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y + 1][x].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y + 1][x].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y - 1][x - 1].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y - 1][x - 1].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y - 1][x + 1].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y - 1][x + 1].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y + 1][x - 1].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y + 1][x - 1].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
-        if (cells[y + 1][x + 1].getType().equals(TypeOfCell.WALL)) {
+        if (cells[y + 1][x + 1].getType() == TypeOfCell.WALL) {
             wallCellsAroundCounter++;
         }
         return wallCellsAroundCounter;

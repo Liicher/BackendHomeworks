@@ -21,11 +21,11 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private Cell[][] cells;
     private long allFields;
 
-    public MazeSessionDepthFirstSearch(MazeSession mazeSession, Cell[][] cells) {
+    public MazeSessionDepthFirstSearch(MazeSession mazeSession) {
         this.maze = mazeSession;
-        this.cells = cells;
+        this.cells = maze.getCells();
         this.allFields =
-            ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
+            ((long) (maze.getVerticalCells() - 1) * (maze.getHorizontalCells() - 1)) / QUARTER;
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
         cells[y][x].setType(TypeOfCell.CURRENT);    // Меняем ему тип
         moveList.add(-1);                           // Тупо для старта
 
-        // Пока не тупик и не пройдены все поля
+        // Пока не пройдены все поля
         while (allFields > 0) {
             // Алгоритм для шага в случайную сторону
             List<Integer> sidesList = getSidesList(x, y);
@@ -136,8 +136,6 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private List<Integer> getSidesList(int x, int y) {
         List<Integer> sidesList = new ArrayList<>();
 
-        // Проверим возможные стороны для шага
-        // Проверка на грань или соседнюю клетку
         if (x - 2 > 0 && cells[y][x - 2].getType() != TypeOfCell.WAY) {
             sidesList.add(LEFT);
         }

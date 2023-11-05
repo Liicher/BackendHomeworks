@@ -13,14 +13,14 @@ public class MazeSolverBreadthFirstSearch {
     private static final int RIGHT = 2;
     private static final int DOWN = 3;
 
-    private final MazeSession mazeSession;
+    private final MazeSession maze;
     private final Cell[][] cells;
     private final List<Cell> wayList = new ArrayList<>();
     private final List<Cell> solveWayList = new ArrayList<>();
 
-    public MazeSolverBreadthFirstSearch(MazeSession mazeSession, Cell[][] cells) {
-        this.mazeSession = mazeSession;
-        this.cells = cells;
+    public MazeSolverBreadthFirstSearch(MazeSession mazeSession) {
+        this.maze = mazeSession;
+        this.cells = maze.getCells();
     }
 
     public void solve() {
@@ -34,7 +34,7 @@ public class MazeSolverBreadthFirstSearch {
     }
 
     private void mazeSolverBFS(int x, int y) {
-        while (!cells[y][x].getType().equals(TypeOfCell.END_POS)) {
+        while (cells[y][x].getType() != TypeOfCell.END_POS) {
             List<Integer> sidesList = getSidesList(x, y);
             while (!sidesList.isEmpty()) {
                 int move = sidesList.get(0);
@@ -54,18 +54,18 @@ public class MazeSolverBreadthFirstSearch {
                     break;
                 }
                 cells[y][x].setType(TypeOfCell.WAY_CHECKER);
-                mazeSession.drawMaze(cells);
+                maze.drawMaze(cells);
                 sidesList = getSidesList(x, y);
             }
             if (cells[y][x].getType() != TypeOfCell.END_POS) {
                 int index = doBackwardMove(x, y);
                 x = wayList.get(index).getX();
                 y = wayList.get(index).getY();
-                mazeSession.drawMaze(cells);
+                maze.drawMaze(cells);
             }
         }
         repaintSolveWay();
-        mazeSession.drawMaze(cells);
+        maze.drawMaze(cells);
     }
 
     private void repaintSolveWay() {
@@ -103,9 +103,6 @@ public class MazeSolverBreadthFirstSearch {
     private List<Integer> getSidesList(int x, int y) {
         List<Integer> sidesList = new ArrayList<>();
 
-        // Проверим возможные стороны для шага
-        // Первая проверка на грань или соседний проход
-        // Вторая проверка на предыдущий шаг
         if (x - 1 > 0 && (cells[y][x - 1].getType() == TypeOfCell.PASSAGE
             || cells[y][x - 1].getType() == TypeOfCell.END_POS)) {
             sidesList.add(LEFT);
