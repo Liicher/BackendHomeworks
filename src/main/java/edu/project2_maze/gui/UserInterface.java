@@ -37,7 +37,9 @@ public class UserInterface {
                     case END_POS -> cells[i][j].setColor(Color.PINK);
                     case WAY_CHECKER -> cells[i][j].setColor(Color.GREEN);
                     case SOLVE_WAY -> cells[i][j].setColor(Color.MAGENTA);
-
+                    default -> {
+                        return;
+                    }
                 }
 
                 cells[cells.length - 2][1].setColor(Color.GREEN);
