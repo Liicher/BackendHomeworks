@@ -1,8 +1,6 @@
 package edu.hw4;
 
-import edu.hw4.errors.AgeError;
-import edu.hw4.errors.HeightError;
-import edu.hw4.errors.WeightError;
+import edu.hw4.ValidationError.TypeOfError;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -14,7 +12,8 @@ import java.util.stream.Collectors;
 public class AnimalUtils {
     private static final int HUNDRED = 100;
 
-    private AnimalUtils() {}
+    private AnimalUtils() {
+    }
 
     /** Задание 1. */
     // Отсортировать животных по росту от самого маленького к самому большому -> List<Animal>
@@ -123,9 +122,11 @@ public class AnimalUtils {
     // Правда ли, что пауки кусаются чаще, чем собаки -> Boolean (если данных для ответа недостаточно, вернуть false)
     public static Boolean isSpidersBitesOftenThanDogs(List<Animal> animals) {
         return animals.stream().filter(
-            animal -> (animal.type() == Animal.Type.SPIDER || animal.type() == Animal.Type.DOG) && animal.bites())
-            .collect(Collectors.collectingAndThen(Collectors.groupingBy(Animal::type, Collectors.counting()),
-                result -> result.get(Animal.Type.SPIDER) > result.get(Animal.Type.DOG)));
+                animal -> (animal.type() == Animal.Type.SPIDER || animal.type() == Animal.Type.DOG) && animal.bites())
+            .collect(Collectors.collectingAndThen(
+                Collectors.groupingBy(Animal::type, Collectors.counting()),
+                result -> result.get(Animal.Type.SPIDER) > result.get(Animal.Type.DOG)
+            ));
     }
 
     /** Задача 18. */
@@ -148,20 +149,21 @@ public class AnimalUtils {
     public static Map<String, String> getNameAndErrors(List<Animal> animals) {
         return animals.stream().collect(Collectors.toMap(
             Animal::name,
-            animal -> getValidationErrors(animal).stream().map(Throwable::getMessage).collect(Collectors.joining(", "))
+            animal -> getValidationErrors(animal).stream().map(ValidationError::getError)
+                .collect(Collectors.joining(", "))
         ));
     }
 
     public static Set<ValidationError> getValidationErrors(Animal animal) {
         Set<ValidationError> errors = new HashSet<>();
         if (animal.age() < 0) {
-            errors.add(new AgeError("Invalid age!"));
+            errors.add(new ValidationError(TypeOfError.AGE));
         }
         if (animal.height() <= 0) {
-            errors.add(new HeightError("Invalid height!"));
+            errors.add(new ValidationError(TypeOfError.HEIGHT));
         }
         if (animal.weight() <= 0) {
-            errors.add(new WeightError("Invalid weight!"));
+            errors.add(new ValidationError(TypeOfError.WEIGHT));
         }
         return errors;
     }
