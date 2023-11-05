@@ -2,6 +2,7 @@ package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
+import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.interfaces.MazeGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +17,14 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private static final int QUARTER = 4;   // Часть из формулы для нахождения всех полей
     private static final int START_POS = 5; // Место для стартовой позиции
 
-    private final MazeSession maze;
     private final List<Cell> wayList = new ArrayList<>();
     private Cell[][] cells;
     private long allFields;
 
     public MazeSessionDepthFirstSearch(MazeSession mazeSession) {
-        this.maze = mazeSession;
-        this.cells = maze.getCells();
+        this.cells = mazeSession.getCells();
         this.allFields =
-            ((long) (maze.getVerticalCells() - 1) * (maze.getHorizontalCells() - 1)) / QUARTER;
+            ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
     }
 
     @Override
@@ -36,7 +35,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
 
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
-        maze.drawMaze(cells);
+        UserInterface.drawMaze(cells);
         wayList.add(cells[cell.getX()][cell.getY()]);
         allFields--;
         cells = mazeGenerator(cell.getX(), cell.getY());
@@ -45,10 +44,8 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
 
     @Override
     public Cell[][] mazeGenerator(int x, int y) {
-        List<Integer> moveList = new ArrayList<>();
         Random random = new Random();
         cells[y][x].setType(TypeOfCell.CURRENT);    // Меняем ему тип
-        moveList.add(-1);                           // Тупо для старта
 
         // Пока не пройдены все поля
         while (allFields > 0) {
@@ -69,8 +66,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
                 // Делаем шаг в случайную сторону
                 wayList.add(cells[y][x]);
                 cells[y][x].setType(TypeOfCell.CURRENT);
-                moveList.add(randomMove);
-                maze.drawMaze(cells);
+                UserInterface.drawMaze(cells);
             }
             allFields--;
 
@@ -78,11 +74,10 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
                 int index = doBackwardMove(x, y);
                 x = wayList.get(index).getX();
                 y = wayList.get(index).getY();
-                moveList.add(-1);
             }
         }
         remarkCells();
-        maze.drawMaze(cells);
+        UserInterface.drawMaze(cells);
 
         return cells;
     }

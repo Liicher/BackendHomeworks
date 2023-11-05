@@ -2,6 +2,7 @@ package edu.project2_maze.mazeSolver;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
+import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.maze.MazeSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +14,12 @@ public class MazeSolverRandom {
     private static final int RIGHT = 2;
     private static final int DOWN = 3;
 
-    private final MazeSession maze;
     private final Cell[][] cells;
     private final List<Cell> wayList = new ArrayList<>();
     private final List<Cell> solveWayList = new ArrayList<>();
 
     public MazeSolverRandom(MazeSession mazeSession) {
-        this.maze = mazeSession;
-        this.cells = maze.getCells();
+        this.cells = mazeSession.getCells();
     }
 
     public void solve() {
@@ -54,18 +53,18 @@ public class MazeSolverRandom {
                     break;
                 }
                 cells[y][x].setType(TypeOfCell.WAY_CHECKER);
-                maze.drawMaze(cells);
+                UserInterface.drawMaze(cells);
                 sidesList = getSidesList(x, y);
             }
             if (cells[y][x].getType() != TypeOfCell.END_POS) {
                 int index = doBackwardMove(x, y);
                 x = wayList.get(index).getX();
                 y = wayList.get(index).getY();
-                maze.drawMaze(cells);
+                UserInterface.drawMaze(cells);
             }
         }
         repaintSolveWay();
-        maze.drawMaze(cells);
+        UserInterface.drawMaze(cells);
     }
 
     private void repaintSolveWay() {
@@ -75,7 +74,7 @@ public class MazeSolverRandom {
 
         for (Cell[] cell : cells) {
             for (Cell value : cell) {
-                if (value.getType().equals(TypeOfCell.WAY)) {
+                if (value.getType() == (TypeOfCell.WAY)) {
                     value.setType(TypeOfCell.PASSAGE);
                 }
             }
@@ -89,12 +88,15 @@ public class MazeSolverRandom {
         while (checker.isEmpty()) {
             solveWayList.remove(solverIndex);
             wayList.remove(solverIndex);
+
             index = index - 1;
             solverIndex = solverIndex - 1;
+
             cells[y][x].setType(TypeOfCell.WAY);
             x = wayList.get(index).getX();
             y = wayList.get(index).getY();
             cells[y][x].setType(TypeOfCell.WAY_CHECKER);
+
             checker = getSidesList(x, y);
         }
         return index;

@@ -2,6 +2,7 @@ package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
+import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.interfaces.MazeGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,19 +10,17 @@ import java.util.Random;
 
 @SuppressWarnings({"ParameterAssignment", "CyclomaticComplexity"})
 public class MazeSessionWilson implements MazeGenerator {
-    private static final int AROUND_CELLS = 8;              // Клетки вокруг
-    private static final int LEFT = 0;                      // Кодовые значения для окружающих клеток
+    private static final int AROUND_CELLS = 8;      // Клетки вокруг
+    private static final int LEFT = 0;              // Кодовые значения для окружающих клеток
     private static final int RIGHT = 1;
     private static final int TOP = 2;
     private static final int UP = 3;
-    private static final int START_POS = 5;                 // Стартовая позиция для обхода
+    private static final int START_POS = 5;         // Стартовая позиция для обхода
 
-    private final MazeSession maze;
     private final Cell[][] cells;
 
     public MazeSessionWilson(MazeSession mazeSession) {
-        this.maze = mazeSession;
-        this.cells = maze.getCells();
+        this.cells = mazeSession.getCells();
     }
 
     @Override
@@ -112,7 +111,7 @@ public class MazeSessionWilson implements MazeGenerator {
 
                     wayList.subList(retrace + 1, wayList.size()).clear();
                     moveList.subList(retrace / 2 + 1, moveList.size()).clear();
-                    maze.drawMaze(cells);
+                    UserInterface.drawMaze(cells);
                     break;
                 }
 
@@ -122,14 +121,14 @@ public class MazeSessionWilson implements MazeGenerator {
                     for (Cell c : wayList) {
                         c.setType(TypeOfCell.PASSAGE);
                     }
-                    maze.drawMaze(cells);
+                    UserInterface.drawMaze(cells);
                     isDone = false;
                     break;
                 }
 
                 // Если нет зацикливания, то добавляем в наш список направления, наш ход
                 moveList.add(randomMove);
-                maze.drawMaze(cells);
+                UserInterface.drawMaze(cells);
             }
         }
         return cells;

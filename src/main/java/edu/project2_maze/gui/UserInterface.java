@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class UserInterface {
     private static final int SIZE_VER = 40;
     private static final int SIZE_GOR = 15;
+    private static final int MILLISECONDS_PER_FRAME = 5;
     private static final JFrame FRAME = new JFrame("Maze");
 
     public void runWindow(MazeSession mazeSession) {
@@ -26,7 +27,13 @@ public class UserInterface {
         FRAME.setVisible(true);
     }
 
-    public void drawMaze(Cell[][] cells) {
+    public static void drawMaze(Cell[][] cells) {
+        try {
+            Thread.sleep(MILLISECONDS_PER_FRAME);
+        } catch (InterruptedException e) {
+            System.exit(0);
+        }
+
         for (Cell[] cell : cells) {
             for (Cell value : cell) {
                 switch (value.getType()) {

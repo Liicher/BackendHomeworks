@@ -11,7 +11,6 @@ public class MazeSession {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final MazeStarterCellsGenerators INIT = new MazeStarterCellsGenerators();
     private static final UserInterface UI = new UserInterface();
-    private static final int MILLISECONDS_PER_FRAME = 0;
     private static final int HORIZONTAL_CELLS = 41;
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
@@ -26,7 +25,7 @@ public class MazeSession {
 
     public void run() {
         UI.runWindow(this);
-        drawMaze(cells);
+        UserInterface.drawMaze(cells);
         cells = maze.move();
 
         try {
@@ -37,15 +36,6 @@ public class MazeSession {
 
         MazeSolverRandom mazeSolverRandom = new MazeSolverRandom(this);
         mazeSolverRandom.solve();
-    }
-
-    public void drawMaze(Cell[][] cells) {
-        try {
-            Thread.sleep(MILLISECONDS_PER_FRAME);
-        } catch (InterruptedException e) {
-            LOGGER.info(e);
-        }
-        UI.drawMaze(cells);
     }
 
     public Cell[][] getCells() {
