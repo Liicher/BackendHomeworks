@@ -2,7 +2,6 @@ package edu.project2_maze.mazeSolver;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
-import edu.project2_maze.gui.UserInterface;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,18 +49,18 @@ public class MazeSolverRandom {
                     break;
                 }
                 cells[y][x].setType(TypeOfCell.WAY_CHECKER);
-                UserInterface.drawMaze(cells);
+                //UserInterface.drawMaze(cells);
                 sidesList = getSidesList(x, y);
             }
             if (cells[y][x].getType() != TypeOfCell.END_POS) {
                 int index = doBackwardMove(x, y);
                 x = wayList.get(index).getX();
                 y = wayList.get(index).getY();
-                UserInterface.drawMaze(cells);
+                //UserInterface.drawMaze(cells);
             }
         }
         Cell.remarkSolveWay(solveWayList, cells);
-        UserInterface.drawMaze(cells);
+        //UserInterface.drawMaze(cells);
     }
 
     private int doBackwardMove(int x, int y) {

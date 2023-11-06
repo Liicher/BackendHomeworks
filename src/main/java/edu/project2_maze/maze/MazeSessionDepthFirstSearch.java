@@ -2,7 +2,6 @@ package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
-import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.interfaces.MazeGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
 
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
-        UserInterface.drawMaze(cells);
+        //UserInterface.drawMaze(cells);
         wayList.add(cells[cell.getX()][cell.getY()]);
         allFields--;
         cells = mazeGenerator(cell.getX(), cell.getY());
@@ -69,7 +68,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
                 // Делаем шаг в случайную сторону
                 wayList.add(cells[y][x]);
                 cells[y][x].setType(TypeOfCell.CURRENT);
-                UserInterface.drawMaze(cells);
+                //UserInterface.drawMaze(cells);
             }
             allFields--;
 
@@ -80,7 +79,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
             }
         }
         Cell.remarkCellsDFS(cells);
-        UserInterface.drawMaze(cells);
+        //UserInterface.drawMaze(cells);
 
         return cells;
     }

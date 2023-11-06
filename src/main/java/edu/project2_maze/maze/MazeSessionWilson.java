@@ -2,7 +2,6 @@ package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
-import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.interfaces.MazeGenerator;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +95,7 @@ public class MazeSessionWilson implements MazeGenerator {
                 // если все клетки вокруг - проходы, то переопределяем путь в - PASSAGE
                 if (/*i == 0 &&*/ checkPassages(x, y)) {
                     Cell.remarkCellsWilson(wayList);
-                    UserInterface.drawMaze(cells);
+                    //UserInterface.drawMaze(cells);
                     wayList.clear();
                     moveList.clear();
                     isDone = false;
@@ -104,7 +103,7 @@ public class MazeSessionWilson implements MazeGenerator {
                 }
 
                 moveList.add(randomMove);       // Если нет зацикливания, то добавляем в наш список направления, наш ход
-                UserInterface.drawMaze(cells);
+                //UserInterface.drawMaze(cells);
             }
         }
         return cells;
@@ -116,7 +115,7 @@ public class MazeSessionWilson implements MazeGenerator {
         }
         wayList.subList(retrace + 1, wayList.size()).clear();
         moveList.subList(retrace / 2 + 1, moveList.size()).clear();
-        UserInterface.drawMaze(cells);
+        //UserInterface.drawMaze(cells);
     }
 
     private boolean checkPassages(int x, int y) {

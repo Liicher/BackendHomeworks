@@ -17,7 +17,7 @@ public class UserInterface {
     public UserInterface() {
     }
 
-    public void runWindow(MazeSession mazeSession) {
+    public static void runWindow(MazeSession mazeSession) {
         FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel panel = new Panel(mazeSession);
         FRAME.getContentPane().add(BorderLayout.CENTER, panel);
