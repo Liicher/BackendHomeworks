@@ -15,7 +15,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private static final int TOP = 2;
     private static final int DOWN = 3;
     private static final int QUARTER = 4;   // Часть из формулы для нахождения всех полей
-    private static final int START_POS = 5; // Место для стартовой позиции
+    private static final int START_POS = 4; // Место для стартовой позиции
 
     private final List<Cell> wayList = new ArrayList<>();
     private Cell[][] cells;

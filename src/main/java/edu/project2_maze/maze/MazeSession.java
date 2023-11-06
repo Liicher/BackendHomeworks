@@ -19,8 +19,8 @@ public class MazeSession {
     private static MazeGenerator maze;
 
     public MazeSession() {
-        cells = INIT.cellsGeneratorWilson();
-        maze = new MazeSessionWilson();
+        cells = null; // INIT.cellsGeneratorWilson();
+        maze = null; // new MazeSessionWilson();
     }
 
     public void run() {
