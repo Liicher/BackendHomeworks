@@ -3,7 +3,6 @@ package edu.project2_maze.mazeSolver;
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.cell.TypeOfCell;
 import edu.project2_maze.gui.UserInterface;
-import edu.project2_maze.maze.MazeSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +13,12 @@ public class MazeSolverRandom {
     private static final int RIGHT = 2;
     private static final int DOWN = 3;
 
-    private final Cell[][] cells;
+    private Cell[][] cells;
     private final List<Cell> wayList = new ArrayList<>();
     private final List<Cell> solveWayList = new ArrayList<>();
 
-    public MazeSolverRandom() {
-        this.cells = MazeSession.getCells();
-    }
-
-    public Cell[][] solve() {
+    public Cell[][] solve(Cell[][] cells) {
+        this.cells = cells;
         cells[cells.length - 2][1].setType(TypeOfCell.START_POS);
         cells[1][cells[1].length - 2].setType(TypeOfCell.END_POS);
         Cell cell = cells[cells.length - 2][1];
@@ -64,7 +60,7 @@ public class MazeSolverRandom {
                 UserInterface.drawMaze(cells);
             }
         }
-        Cell.remarkSolveWay(solveWayList);
+        Cell.remarkSolveWay(solveWayList, cells);
         UserInterface.drawMaze(cells);
     }
 

@@ -35,7 +35,7 @@ public class MazeSession {
         }
 
         MazeSolverRandom mazeSolverRandom = new MazeSolverRandom();
-        mazeSolverRandom.solve();
+        mazeSolverRandom.solve(cells);
     }
 
     public static Cell[][] getCells() {

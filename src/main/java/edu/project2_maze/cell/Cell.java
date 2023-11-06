@@ -3,6 +3,7 @@ package edu.project2_maze.cell;
 import edu.project2_maze.maze.MazeSession;
 import java.awt.Color;
 import java.util.List;
+import java.util.Objects;
 
 public class Cell {
     // Размеры клеток на интерфейсе
@@ -24,12 +25,11 @@ public class Cell {
         this.color = Color.BLACK;
     }
 
-    public static void remarkSolveWay(List<Cell> solveWayList) {
+    public static void remarkSolveWay(List<Cell> solveWayList, Cell[][] cells) {
         for (Cell cell : solveWayList) {
             cell.setType(TypeOfCell.SOLVE_WAY);
         }
 
-        Cell[][] cells = MazeSession.getCells();
         for (Cell[] cell : cells) {
             for (Cell value : cell) {
                 if (value.getType() == (TypeOfCell.WAY)) {
@@ -77,6 +77,23 @@ public class Cell {
 
     public TypeOfCell getType() {
         return this.type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Cell cell = (Cell) o;
+        return x == cell.x && y == cell.y && type == cell.type && Objects.equals(color, cell.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, type, color);
     }
 }
 
