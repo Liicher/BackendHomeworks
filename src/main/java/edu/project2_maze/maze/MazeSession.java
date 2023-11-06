@@ -38,6 +38,10 @@ public class MazeSession {
         mazeSolverRandom.solve();
     }
 
+    public static void setMaze(MazeGenerator maze) {
+        MazeSession.maze = maze;
+    }
+
     public static void setCells(Cell[][] cells) {
         MazeSession.cells = cells;
     }

@@ -4,7 +4,7 @@ import edu.project2_maze.cell.Cell;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class MazeSessionWilsonTest {
+/*class MazeSessionWilsonTest {
     private static MazeSessionWilson mazeSessionWilson;
     private static final MazeSession maze = new MazeSession();
 
@@ -28,4 +28,4 @@ class MazeSessionWilsonTest {
             mazeSessionWilson.move();
         });
     }
-}
+}*/

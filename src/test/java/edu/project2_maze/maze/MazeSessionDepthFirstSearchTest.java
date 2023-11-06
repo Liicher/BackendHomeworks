@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MazeSessionDepthFirstSearchTest {
     private static MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch;
-    private static final MazeSession maze = new MazeSession();
     private Cell[][] inputCells = null;
     private Cell[][] outputCells = null;
 
@@ -32,7 +31,22 @@ class MazeSessionDepthFirstSearchTest {
 
     @Test
     void invalidInputs() {
+        MazeSession mazeSession = new MazeSession();
+        MazeSessionDepthFirstSearch maze = new MazeSessionDepthFirstSearch();
+        MazeSession.setMaze(maze);
+
+        MazeSession.setCells(null);
+        assertThrows(IllegalArgumentException.class, maze::move);
+
         MazeSession.setCells(new Cell[0][10]);
+        assertThrows(IllegalArgumentException.class, maze::move);
+
+        MazeSession.setCells(new Cell[10][0]);
+        assertThrows(IllegalArgumentException.class, maze::move);
+
+
+
+        /*MazeSession.setCells(new Cell[0][10]);
         mazeSessionDepthFirstSearch = new MazeSessionDepthFirstSearch();
         assertThrows(IllegalArgumentException.class, () -> {
             mazeSessionDepthFirstSearch.move();
@@ -48,6 +62,6 @@ class MazeSessionDepthFirstSearchTest {
         mazeSessionDepthFirstSearch = new MazeSessionDepthFirstSearch();
         assertThrows(IllegalArgumentException.class, () -> {
             mazeSessionDepthFirstSearch.move();
-        });
+        });*/
     }
 }
