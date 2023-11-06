@@ -1,5 +1,6 @@
 package edu.project2_maze;
 
+import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.maze.MazeSession;
 
 public class Main {
@@ -7,7 +8,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        MazeSession mazeSession = new MazeSession();
+        UserInterface ui = new UserInterface();
+        MazeSession mazeSession = new MazeSession(ui);
         mazeSession.run();
     }
 }
