@@ -1,7 +1,6 @@
 package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
-import edu.project2_maze.cell.TypeOfCell;
 import edu.project2_maze.mazeSolver.MazeSolverRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,13 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MazeSessionDepthFirstSearchTest {
-    private static MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch;
-    private Cell[][] inputCells = null;
-    private Cell[][] outputCells = null;
+    private Cell[][] inputCells;
 
     @BeforeEach
     void init() {
-        MazeSession mazeSession = new MazeSession();
         inputCells = new Cell[][]{
             {new Cell(0, 0, WALL), new Cell(0, 1, WALL),        new Cell(0, 2, WALL),       new Cell(0, 3, WALL),       new Cell(0, 4, WALL)},
             {new Cell(1, 0, WALL), new Cell(1, 1, PASSAGE),     new Cell(1, 2, PASSAGE),    new Cell(1, 3, END_POS),    new Cell(1, 4, WALL)},
