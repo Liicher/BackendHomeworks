@@ -1,18 +1,12 @@
 package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MazeSessionDepthFirstSearchTest {
     private static MazeSessionDepthFirstSearch mazeSessionDepthFirstSearch;
-    private static MazeSession mazeSession;
-
-    @BeforeEach
-    public void init() {
-        mazeSession = new MazeSession();
-    }
+    private static final MazeSession maze = new MazeSession();
 
     @Test
     void invalidInputs() {
