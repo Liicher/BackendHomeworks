@@ -22,7 +22,7 @@ public class MazeSolverRandom {
         this.cells = MazeSession.getCells();
     }
 
-    public void solve() {
+    public Cell[][] solve() {
         cells[cells.length - 2][1].setType(TypeOfCell.START_POS);
         cells[1][cells[1].length - 2].setType(TypeOfCell.END_POS);
         Cell cell = cells[cells.length - 2][1];
@@ -30,6 +30,7 @@ public class MazeSolverRandom {
         wayList.add(cells[cells.length - 2][1]);
         solveWayList.add(cells[cells.length - 2][1]);
         mazeSolver(cell.getX(), cell.getY());
+        return cells;
     }
 
     private void mazeSolver(int x, int y) {
