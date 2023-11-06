@@ -21,8 +21,8 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private Cell[][] cells;
     private long allFields;
 
-    public MazeSessionDepthFirstSearch() {
-        this.cells = MazeSession.getCells();
+    public MazeSessionDepthFirstSearch(MazeSession maze) {
+        this.cells = maze.getCells();
     }
 
     @Override
@@ -32,7 +32,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
         }
 
         allFields =
-            ((long) (MazeSession.getCells().length - 1) * (MazeSession.getCells()[0].length - 1)) / QUARTER;
+            ((long) (MazeSession.getHorizontalCells()- 1) * (MazeSession.getVerticalCells() - 1)) / QUARTER;
 
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
@@ -77,7 +77,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
                 y = wayList.get(index).getY();
             }
         }
-        Cell.remarkCellsDFS();
+        Cell.remarkCellsDFS(cells);
         UserInterface.drawMaze(cells);
 
         return cells;

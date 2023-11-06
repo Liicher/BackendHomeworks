@@ -24,6 +24,6 @@ class MazeSolverRandomTest {
 
         MazeSolverRandom solver = new MazeSolverRandom();
         Cell[][] response = solver.solve(input);
-        assertThat(response).isEqualTo(input);
+        assertThat(response).isEqualTo(output);
     }
 }

@@ -15,12 +15,12 @@ public class MazeSession {
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
 
-    private static Cell[][] cells;
-    private static MazeGenerator maze;
+    private Cell[][] cells;
+    private final MazeGenerator maze;
 
     public MazeSession() {
         cells = INIT.cellsGeneratorWilson();
-        maze = new MazeSessionWilson();
+        maze = new MazeSessionWilson(this);
     }
 
     public void run() {
@@ -38,7 +38,7 @@ public class MazeSession {
         mazeSolverRandom.solve(cells);
     }
 
-    public static Cell[][] getCells() {
+    public Cell[][] getCells() {
         return cells;
     }
 

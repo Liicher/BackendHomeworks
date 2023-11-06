@@ -39,8 +39,8 @@ public class Cell {
         }
     }
 
-    public static void remarkCellsDFS() {
-        for (Cell[] cell : MazeSession.getCells()) {
+    public static void remarkCellsDFS(Cell[][] cells) {
+        for (Cell[] cell : cells) {
             for (Cell value : cell) {
                 if (value.getType() == TypeOfCell.WAY || value.getType() == TypeOfCell.CURRENT) {
                     value.setType(TypeOfCell.PASSAGE);

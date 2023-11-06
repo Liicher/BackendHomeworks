@@ -61,7 +61,7 @@ public class UserInterface {
 
         private Panel(MazeSession mazeSession) {
             this.mazeSession = mazeSession;
-            this.cells = MazeSession.getCells();
+            this.cells = mazeSession.getCells();
         }
 
         @Override

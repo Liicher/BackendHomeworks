@@ -21,8 +21,8 @@ public class MazeSessionWilson implements MazeGenerator {
     private final List<Cell> wayList = new ArrayList<>();       // Список, хранит проверяемый путь из "клеток"
     private final List<Integer> moveList = new ArrayList<>();   // Список, хранит случайные направления
 
-    public MazeSessionWilson() {
-        this.cells = MazeSession.getCells();
+    public MazeSessionWilson(MazeSession maze) {
+        this.cells = maze.getCells();
     }
 
     @Override
