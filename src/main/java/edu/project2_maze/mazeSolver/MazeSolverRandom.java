@@ -24,11 +24,11 @@ public class MazeSolverRandom {
 
     public void solve() {
         cells[cells.length - 2][1].setType(TypeOfCell.START_POS);
-        cells[1][cells[0].length - 2].setType(TypeOfCell.END_POS);
+        cells[1][cells[1].length - 2].setType(TypeOfCell.END_POS);
         Cell cell = cells[cells.length - 2][1];
 
-        wayList.add(cells[cell.getX()][cell.getY()]);
-        solveWayList.add(cells[cell.getX()][cell.getY()]);
+        wayList.add(cells[cells.length - 2][1]);
+        solveWayList.add(cells[cells.length - 2][1]);
         mazeSolver(cell.getX(), cell.getY());
     }
 

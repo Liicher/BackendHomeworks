@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-@SuppressWarnings({"ParameterAssignment", "CyclomaticComplexity"})
+@SuppressWarnings("ParameterAssignment")
 public class MazeSessionWilson implements MazeGenerator {
     private static final int AROUND_CELLS = 8;      // Клетки вокруг
     private static final int LEFT = 0;              // Кодовые значения для окружающих клеток
@@ -18,6 +18,8 @@ public class MazeSessionWilson implements MazeGenerator {
     private static final int START_POS = 5;         // Стартовая позиция для обхода
 
     private final Cell[][] cells;
+    private final List<Cell> wayList = new ArrayList<>();       // Список, хранит проверяемый путь из "клеток"
+    private final List<Integer> moveList = new ArrayList<>();   // Список, хранит случайные направления
 
     public MazeSessionWilson() {
         this.cells = MazeSession.getCells();
@@ -45,17 +47,14 @@ public class MazeSessionWilson implements MazeGenerator {
 
     @Override
     public Cell[][] mazeGenerator(int x, int y) {
-        List<Cell> wayList = new ArrayList<>();     // Список, хранит проверяемый путь из "клеток"
-        List<Integer> moveList = new ArrayList<>(); // Список, хранит случайные направления
         Random random = new Random();
-
         wayList.add(cells[y][x]);               // Добавляем первую входную клетку в наш путь
         cells[y][x].setType(TypeOfCell.WAY);    // WAY - Проверяемый путь
         moveList.add(-1);                       // Добавим нулевой элемент для последующего сравнения
 
         boolean isDone = true;
         while (isDone) {
-            List<Integer> sidesList = getSidesList(x, y, moveList);
+            List<Integer> sidesList = getSidesList(x, y);
             int randomMove = sidesList.get(random.nextInt(sidesList.size()));   // Шаг в случайную сторону
 
             // Цикл, чтобы делать два шага, для образования "толстых" стен
@@ -65,60 +64,59 @@ public class MazeSessionWilson implements MazeGenerator {
                     case RIGHT -> x++;
                     case TOP -> y--;
                     case UP -> y++;
-                    default -> wayList.add(cells[y][x]);
+                    default -> {
+                        throw new IllegalStateException();
+                    }
                 }
 
                 // Добавляем наш шаг в список с путем
                 wayList.add(cells[y][x]);
                 cells[y][x].setType(TypeOfCell.WAY);
 
-                // Булиан для проверки
-                boolean isLoop = false;
                 // Тяжелый случай.
                 // Проверяем абстрактный шаг на соседние клетки, и если можно зациклить, то ходим туда
                 if (cells[y][x + 1].getType() == TypeOfCell.WAY && randomMove != LEFT) {
                     x++;
-                    isLoop = true;
+                    retraceAndClearWay(wayList.indexOf(cells[y][x]));
+                    break;
                 } else if (cells[y][x - 1].getType() == TypeOfCell.WAY && randomMove != RIGHT) {
                     x--;
-                    isLoop = true;
+                    retraceAndClearWay(wayList.indexOf(cells[y][x]));
+                    break;
                 } else if (cells[y + 1][x].getType() == TypeOfCell.WAY && randomMove != TOP) {
                     y++;
-                    isLoop = true;
+                    retraceAndClearWay(wayList.indexOf(cells[y][x]));
+                    break;
                 } else if (cells[y - 1][x].getType() == TypeOfCell.WAY && randomMove != UP) {
                     y--;
-                    isLoop = true;
-                }
-
-                // Если цикл
-                if (isLoop) {
-                    // индекс "клетки" куда пришли
-                    int retrace = wayList.indexOf(cells[y][x]);
-                    for (int j = retrace + 1; j < wayList.size(); j++) {
-                        wayList.get(j).setType(TypeOfCell.WALL);
-                    }
-
-                    wayList.subList(retrace + 1, wayList.size()).clear();
-                    moveList.subList(retrace / 2 + 1, moveList.size()).clear();
-                    UserInterface.drawMaze(cells);
+                    retraceAndClearWay(wayList.indexOf(cells[y][x]));
                     break;
                 }
 
-                // если все клетки вокруг - проходы
-                // переопределяем путь в - PASSAGE
-                if (i == 0 && checkPassages(x, y)) {
+                // если все клетки вокруг - проходы, то переопределяем путь в - PASSAGE
+                if (/*i == 0 && */checkPassages(x, y)) {
                     Cell.remarkCellsWilson(wayList);
                     UserInterface.drawMaze(cells);
+                    wayList.clear();
+                    moveList.clear();
                     isDone = false;
                     break;
                 }
 
-                // Если нет зацикливания, то добавляем в наш список направления, наш ход
-                moveList.add(randomMove);
+                moveList.add(randomMove);       // Если нет зацикливания, то добавляем в наш список направления, наш ход
                 UserInterface.drawMaze(cells);
             }
         }
         return cells;
+    }
+
+    private void retraceAndClearWay(int retrace) {
+        for (int j = retrace + 1; j < wayList.size(); j++) {
+            wayList.get(j).setType(TypeOfCell.WALL);
+        }
+        wayList.subList(retrace + 1, wayList.size()).clear();
+        moveList.subList(retrace / 2 + 1, moveList.size()).clear();
+        UserInterface.drawMaze(cells);
     }
 
     private boolean checkPassages(int x, int y) {
@@ -129,7 +127,7 @@ public class MazeSessionWilson implements MazeGenerator {
     }
 
     // Метод, добавляющий возможные шаги
-    private List<Integer> getSidesList(int x, int y, List<Integer> moveList) {
+    private List<Integer> getSidesList(int x, int y) {
         List<Integer> sidesList = new ArrayList<>();
         int previous = moveList.get(moveList.size() - 1);
 

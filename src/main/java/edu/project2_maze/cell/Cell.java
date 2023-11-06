@@ -25,7 +25,7 @@ public class Cell {
     }
 
     public static void remarkSolveWay(List<Cell> solveWayList) {
-        solveWayList.remove(0);
+        //solveWayList.remove(0);
         for (Cell cell : solveWayList) {
             cell.setType(TypeOfCell.SOLVE_WAY);
         }

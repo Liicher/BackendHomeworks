@@ -11,7 +11,7 @@ public class MazeSession {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final MazeStarterCellsGenerators INIT = new MazeStarterCellsGenerators();
     private static final UserInterface UI = new UserInterface();
-    private static final int HORIZONTAL_CELLS = 41;
+    private static final int HORIZONTAL_CELLS = 51;
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
 
