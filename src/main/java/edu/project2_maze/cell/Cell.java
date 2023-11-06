@@ -1,6 +1,8 @@
 package edu.project2_maze.cell;
 
+import edu.project2_maze.maze.MazeSession;
 import java.awt.Color;
+import java.util.List;
 
 public class Cell {
     // Размеры клеток на интерфейсе
@@ -20,6 +22,38 @@ public class Cell {
         this.y = y;
         this.type = type;
         this.color = Color.BLACK;
+    }
+
+    public static void remarkSolveWay(List<Cell> solveWayList) {
+        solveWayList.remove(0);
+        for (Cell cell : solveWayList) {
+            cell.setType(TypeOfCell.SOLVE_WAY);
+        }
+
+        Cell[][] cells = MazeSession.getCells();
+        for (Cell[] cell : cells) {
+            for (Cell value : cell) {
+                if (value.getType() == (TypeOfCell.WAY)) {
+                    value.setType(TypeOfCell.PASSAGE);
+                }
+            }
+        }
+    }
+
+    public static void remarkCellsDFS() {
+        for (Cell[] cell : MazeSession.getCells()) {
+            for (Cell value : cell) {
+                if (value.getType() == TypeOfCell.WAY || value.getType() == TypeOfCell.CURRENT) {
+                    value.setType(TypeOfCell.PASSAGE);
+                }
+            }
+        }
+    }
+
+    public static void remarkCellsWilson(List<Cell> wayList) {
+        for (Cell cell : wayList) {
+            cell.setType(TypeOfCell.PASSAGE);
+        }
     }
 
     public Color getColor() {

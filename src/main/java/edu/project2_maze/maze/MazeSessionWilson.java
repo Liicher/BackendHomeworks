@@ -19,8 +19,8 @@ public class MazeSessionWilson implements MazeGenerator {
 
     private final Cell[][] cells;
 
-    public MazeSessionWilson(MazeSession mazeSession) {
-        this.cells = mazeSession.getCells();
+    public MazeSessionWilson() {
+        this.cells = MazeSession.getCells();
     }
 
     @Override
@@ -29,6 +29,7 @@ public class MazeSessionWilson implements MazeGenerator {
             throw new IllegalArgumentException();
         }
 
+        // Немного стартового пути, чтобы генерация была побыстрее
         for (int i = 1; i < START_POS; i++) {
             cells[cells.length - 2][i].setType(TypeOfCell.PASSAGE);
         }
@@ -44,33 +45,21 @@ public class MazeSessionWilson implements MazeGenerator {
 
     @Override
     public Cell[][] mazeGenerator(int x, int y) {
-        // Список, хранит проверяемый путь из "клеток"
-        List<Cell> wayList = new ArrayList<>();
-        // Список, хранит случайные направления
-        // 0 - лево, 1 - право
-        // 2 - низ, 3 - верх
-        List<Integer> moveList = new ArrayList<>();
+        List<Cell> wayList = new ArrayList<>();     // Список, хранит проверяемый путь из "клеток"
+        List<Integer> moveList = new ArrayList<>(); // Список, хранит случайные направления
         Random random = new Random();
 
-        // Добавляем первую входную клетку в наш путь
-        wayList.add(cells[y][x]);
-        // WAY - Проверяемый путь
-        // PASSAGE - Уже закрепленный путь
-        cells[y][x].setType(TypeOfCell.WAY);
-        // Добавим нулевой элемент для последующего сравнения
-        moveList.add(-1);
+        wayList.add(cells[y][x]);               // Добавляем первую входную клетку в наш путь
+        cells[y][x].setType(TypeOfCell.WAY);    // WAY - Проверяемый путь
+        moveList.add(-1);                       // Добавим нулевой элемент для последующего сравнения
 
         boolean isDone = true;
         while (isDone) {
-            // Список, в какую сторону можно сделать шаг
             List<Integer> sidesList = getSidesList(x, y, moveList);
-            // Выбираем случайную сторону для шага
-            int randomMove = sidesList.get(random.nextInt(sidesList.size()));
+            int randomMove = sidesList.get(random.nextInt(sidesList.size()));   // Шаг в случайную сторону
 
-            // Цикл, чтобы делать два шага, так как при одном шаге
-            // метод будет всегда считать что он создал цикл с предыдущим деревом
+            // Цикл, чтобы делать два шага, для образования "толстых" стен
             for (int i = 0; i < 2; i++) {
-                // Делаем шаг в выпавшую сторону
                 switch (randomMove) {
                     case LEFT -> x--;
                     case RIGHT -> x++;
@@ -118,9 +107,7 @@ public class MazeSessionWilson implements MazeGenerator {
                 // если все клетки вокруг - проходы
                 // переопределяем путь в - PASSAGE
                 if (i == 0 && checkPassages(x, y)) {
-                    for (Cell c : wayList) {
-                        c.setType(TypeOfCell.PASSAGE);
-                    }
+                    Cell.remarkCellsWilson(wayList);
                     UserInterface.drawMaze(cells);
                     isDone = false;
                     break;
@@ -135,22 +122,17 @@ public class MazeSessionWilson implements MazeGenerator {
     }
 
     private boolean checkPassages(int x, int y) {
-        if ((cells[y][x - 1].getType() == TypeOfCell.PASSAGE
+        return cells[y][x - 1].getType() == TypeOfCell.PASSAGE
             || cells[y][x + 1].getType() == TypeOfCell.PASSAGE
             || cells[y - 1][x].getType() == TypeOfCell.PASSAGE
-            || cells[y + 1][x].getType() == TypeOfCell.PASSAGE)) {
-            return true;
-        }
-        return false;
+            || cells[y + 1][x].getType() == TypeOfCell.PASSAGE;
     }
 
+    // Метод, добавляющий возможные шаги
     private List<Integer> getSidesList(int x, int y, List<Integer> moveList) {
         List<Integer> sidesList = new ArrayList<>();
         int previous = moveList.get(moveList.size() - 1);
 
-        // Проверим возможные стороны для шага
-        // Первая проверка на грань или соседний проход
-        // Вторая проверка на предыдущий шаг
         if (x - 2 > 0 && previous != RIGHT) {
             sidesList.add(LEFT);
         }

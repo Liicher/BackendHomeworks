@@ -18,8 +18,8 @@ public class MazeSolverRandom {
     private final List<Cell> wayList = new ArrayList<>();
     private final List<Cell> solveWayList = new ArrayList<>();
 
-    public MazeSolverRandom(MazeSession mazeSession) {
-        this.cells = mazeSession.getCells();
+    public MazeSolverRandom() {
+        this.cells = MazeSession.getCells();
     }
 
     public void solve() {
@@ -63,22 +63,8 @@ public class MazeSolverRandom {
                 UserInterface.drawMaze(cells);
             }
         }
-        repaintSolveWay();
+        Cell.remarkSolveWay(solveWayList);
         UserInterface.drawMaze(cells);
-    }
-
-    private void repaintSolveWay() {
-        for (Cell cell : solveWayList) {
-            cell.setType(TypeOfCell.SOLVE_WAY);
-        }
-
-        for (Cell[] cell : cells) {
-            for (Cell value : cell) {
-                if (value.getType() == (TypeOfCell.WAY)) {
-                    value.setType(TypeOfCell.PASSAGE);
-                }
-            }
-        }
     }
 
     private int doBackwardMove(int x, int y) {

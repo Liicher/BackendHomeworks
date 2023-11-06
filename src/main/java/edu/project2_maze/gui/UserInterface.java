@@ -19,8 +19,8 @@ public class UserInterface {
         Panel panel = new Panel(mazeSession);
         FRAME.getContentPane().add(BorderLayout.CENTER, panel);
         FRAME.setSize(
-            mazeSession.getHorizontalCells() * Cell.WIDTH + SIZE_GOR,
-            mazeSession.getVerticalCells() * Cell.HEIGHT + SIZE_VER
+            MazeSession.getHorizontalCells() * Cell.WIDTH + SIZE_GOR,
+            MazeSession.getVerticalCells() * Cell.HEIGHT + SIZE_VER
         );
         FRAME.setLocationByPlatform(true);
         FRAME.setResizable(false);
@@ -40,9 +40,8 @@ public class UserInterface {
                     case WALL -> value.setColor(Color.BLACK);
                     case WAY -> value.setColor(Color.RED);
                     case PASSAGE -> value.setColor(Color.WHITE);
-                    case CURRENT -> value.setColor(Color.YELLOW);
+                    case CURRENT, WAY_CHECKER -> value.setColor(Color.YELLOW);
                     case END_POS -> value.setColor(Color.PINK);
-                    case WAY_CHECKER -> value.setColor(Color.GREEN);
                     case SOLVE_WAY -> value.setColor(Color.MAGENTA);
                     default -> {
                         return;
@@ -62,7 +61,7 @@ public class UserInterface {
 
         private Panel(MazeSession mazeSession) {
             this.mazeSession = mazeSession;
-            this.cells = mazeSession.getCells();
+            this.cells = MazeSession.getCells();
         }
 
         @Override

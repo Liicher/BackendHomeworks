@@ -21,10 +21,10 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private Cell[][] cells;
     private long allFields;
 
-    public MazeSessionDepthFirstSearch(MazeSession mazeSession) {
-        this.cells = mazeSession.getCells();
+    public MazeSessionDepthFirstSearch() {
+        this.cells = MazeSession.getCells();
         this.allFields =
-            ((long) (mazeSession.getVerticalCells() - 1) * (mazeSession.getHorizontalCells() - 1)) / QUARTER;
+            ((long) (MazeSession.getVerticalCells() - 1) * (MazeSession.getHorizontalCells() - 1)) / QUARTER;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
                 y = wayList.get(index).getY();
             }
         }
-        remarkCells();
+        Cell.remarkCellsDFS();
         UserInterface.drawMaze(cells);
 
         return cells;
@@ -147,16 +147,6 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
             sidesList.add(-1);
         }
         return sidesList;
-    }
-
-    private void remarkCells() {
-        for (Cell[] cell : cells) {
-            for (Cell value : cell) {
-                if (value.getType() == TypeOfCell.WAY || value.getType() == TypeOfCell.CURRENT) {
-                    value.setType(TypeOfCell.PASSAGE);
-                }
-            }
-        }
     }
 }
 

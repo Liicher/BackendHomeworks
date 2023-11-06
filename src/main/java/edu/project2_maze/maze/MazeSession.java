@@ -15,12 +15,12 @@ public class MazeSession {
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
 
-    private Cell[][] cells;
-    private final MazeGenerator maze;
+    private static Cell[][] cells;
+    private static MazeGenerator maze;
 
     public MazeSession() {
-        this.cells = INIT.cellsGeneratorDepthFirstSearch(this);
-        this.maze = new MazeSessionDepthFirstSearch(this);
+        cells = INIT.cellsGeneratorWilson();
+        maze = new MazeSessionWilson();
     }
 
     public void run() {
@@ -34,19 +34,19 @@ public class MazeSession {
             LOGGER.info(e);
         }
 
-        MazeSolverRandom mazeSolverRandom = new MazeSolverRandom(this);
+        MazeSolverRandom mazeSolverRandom = new MazeSolverRandom();
         mazeSolverRandom.solve();
     }
 
-    public Cell[][] getCells() {
+    public static Cell[][] getCells() {
         return cells;
     }
 
-    public int getHorizontalCells() {
+    public static int getHorizontalCells() {
         return HORIZONTAL_CELLS;
     }
 
-    public int getVerticalCells() {
+    public static int getVerticalCells() {
         return VERTICAL_CELLS;
     }
 }
