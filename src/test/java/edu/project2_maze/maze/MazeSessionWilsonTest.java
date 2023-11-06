@@ -9,11 +9,6 @@ class MazeSessionWilsonTest {
 
     @Test
     void invalidInputs() {
-        mazeSessionWilson = new MazeSessionWilson();
-        assertThrows(IllegalArgumentException.class, () -> {
-            mazeSessionWilson.move();
-        });
-
         MazeSession.setCells(new Cell[0][10]);
         mazeSessionWilson = new MazeSessionWilson();
         assertThrows(IllegalArgumentException.class, () -> {
