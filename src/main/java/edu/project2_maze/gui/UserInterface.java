@@ -19,8 +19,8 @@ public class UserInterface {
         Panel panel = new Panel(mazeSession);
         FRAME.getContentPane().add(BorderLayout.CENTER, panel);
         FRAME.setSize(
-            MazeSession.getHorizontalCells() * Cell.WIDTH + SIZE_GOR,
-            MazeSession.getVerticalCells() * Cell.HEIGHT + SIZE_VER
+            mazeSession.getHorizontalCells() * Cell.WIDTH + SIZE_GOR,
+            mazeSession.getVerticalCells() * Cell.HEIGHT + SIZE_VER
         );
         FRAME.setLocationByPlatform(true);
         FRAME.setResizable(false);

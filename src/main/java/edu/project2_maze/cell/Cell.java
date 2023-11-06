@@ -1,6 +1,5 @@
 package edu.project2_maze.cell;
 
-import edu.project2_maze.maze.MazeSession;
 import java.awt.Color;
 import java.util.List;
 import java.util.Objects;

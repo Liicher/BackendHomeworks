@@ -6,8 +6,8 @@ import edu.project2_maze.cell.TypeOfCell;
 public class MazeStarterCellsGenerators {
     private Cell[][] cells;
 
-    public Cell[][] cellsGeneratorDepthFirstSearch() {
-        cells = new Cell[MazeSession.getVerticalCells()][MazeSession.getHorizontalCells()];
+    public Cell[][] cellsGeneratorDepthFirstSearch(int Ver, int Hor) {
+        cells = new Cell[Ver][Hor];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 if (i % 2 != 0 && j % 2 != 0) {
@@ -20,8 +20,8 @@ public class MazeStarterCellsGenerators {
         return cells;
     }
 
-    public Cell[][] cellsGeneratorWilson() {
-        cells = new Cell[MazeSession.getVerticalCells()][MazeSession.getHorizontalCells()];
+    public Cell[][] cellsGeneratorWilson(int Ver, int Hor) {
+        cells = new Cell[Ver][Hor];
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell(j, i, TypeOfCell.WALL);

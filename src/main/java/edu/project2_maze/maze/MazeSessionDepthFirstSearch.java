@@ -17,12 +17,14 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
     private static final int QUARTER = 4;   // Часть из формулы для нахождения всех полей
     private static final int START_POS = 4; // Место для стартовой позиции
 
+    private final MazeSession maze;
     private final List<Cell> wayList = new ArrayList<>();
     private Cell[][] cells;
     private long allFields;
 
     public MazeSessionDepthFirstSearch(MazeSession maze) {
         this.cells = maze.getCells();
+        this.maze = maze;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class MazeSessionDepthFirstSearch implements MazeGenerator {
         }
 
         allFields =
-            ((long) (MazeSession.getHorizontalCells()- 1) * (MazeSession.getVerticalCells() - 1)) / QUARTER;
+            ((long) (maze.getHorizontalCells() - 1) * (maze.getVerticalCells() - 1)) / QUARTER;
 
         cells[cells.length - 2][1].setType(TypeOfCell.WAY);
         Cell cell = cells[cells.length - 2][1];
