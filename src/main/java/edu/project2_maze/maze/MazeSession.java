@@ -26,7 +26,7 @@ public class MazeSession {
         UserInterface.runWindow(this);
         UserInterface.drawMaze(cells);
         cells = maze.move();
-
+        UserInterface.drawMaze(cells);
         try {
             Thread.sleep(PAUSE);
         } catch (InterruptedException e) {
@@ -35,6 +35,7 @@ public class MazeSession {
 
         MazeSolverRandom mazeSolverRandom = new MazeSolverRandom();
         mazeSolverRandom.solve(cells);
+        UserInterface.drawMaze(cells);
     }
 
     public Cell[][] getCells() {

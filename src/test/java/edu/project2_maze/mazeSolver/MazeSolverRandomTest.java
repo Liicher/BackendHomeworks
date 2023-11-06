@@ -1,7 +1,6 @@
 package edu.project2_maze.mazeSolver;
 
 import edu.project2_maze.cell.Cell;
-import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.maze.MazeSession;
 import org.junit.jupiter.api.Test;
 import static edu.project2_maze.cell.TypeOfCell.END_POS;

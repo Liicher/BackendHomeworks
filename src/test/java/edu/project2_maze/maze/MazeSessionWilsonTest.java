@@ -1,7 +1,6 @@
 package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
-import edu.project2_maze.gui.UserInterface;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
