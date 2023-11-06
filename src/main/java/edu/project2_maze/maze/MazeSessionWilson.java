@@ -94,7 +94,7 @@ public class MazeSessionWilson implements MazeGenerator {
                 }
 
                 // если все клетки вокруг - проходы, то переопределяем путь в - PASSAGE
-                if (/*i == 0 && */checkPassages(x, y)) {
+                if (/*i == 0 &&*/ checkPassages(x, y)) {
                     Cell.remarkCellsWilson(wayList);
                     UserInterface.drawMaze(cells);
                     wayList.clear();

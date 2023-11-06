@@ -3,7 +3,6 @@ package edu.project2_maze.cell;
 import edu.project2_maze.maze.MazeSession;
 import java.awt.Color;
 import java.util.List;
-import java.util.Objects;
 
 public class Cell {
     // Размеры клеток на интерфейсе
@@ -78,22 +77,6 @@ public class Cell {
 
     public TypeOfCell getType() {
         return this.type;
-    }
-
-    @Override public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Cell cell = (Cell) o;
-        return type == cell.type;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(type);
     }
 }
 
