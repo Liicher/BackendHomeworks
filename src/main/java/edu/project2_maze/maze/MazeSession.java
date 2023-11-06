@@ -13,19 +13,18 @@ public class MazeSession {
     private static final int VERTICAL_CELLS = 21;
     private static final int PAUSE = 1000;
     private static final MazeStarterCellsGenerators INIT = new MazeStarterCellsGenerators();
-    private static UserInterface userInterface;
+    private static final UserInterface UI = new UserInterface();
 
     private Cell[][] cells;
     private final MazeGenerator maze;
 
-    public MazeSession(UserInterface ui) {
+    public MazeSession() {
         cells = INIT.cellsGeneratorWilson(VERTICAL_CELLS, HORIZONTAL_CELLS);
         maze = new MazeSessionWilson(this);
-        userInterface = ui;
     }
 
     public void run() {
-        userInterface.runWindow(this);
+        UI.runWindow(this);
         UserInterface.drawMaze(cells);
         cells = maze.move();
 

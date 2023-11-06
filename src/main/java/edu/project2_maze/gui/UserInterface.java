@@ -14,6 +14,9 @@ public class UserInterface {
     private static final int MILLISECONDS_PER_FRAME = 5;
     private static final JFrame FRAME = new JFrame("Maze");
 
+    public UserInterface() {
+    }
+
     public void runWindow(MazeSession mazeSession) {
         FRAME.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Panel panel = new Panel(mazeSession);

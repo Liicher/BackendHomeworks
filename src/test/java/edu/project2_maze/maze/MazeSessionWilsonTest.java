@@ -4,7 +4,7 @@ import edu.project2_maze.cell.Cell;
 import edu.project2_maze.gui.UserInterface;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MazeSessionWilsonTest {
     private static MazeSession mazeSession;
@@ -12,7 +12,7 @@ class MazeSessionWilsonTest {
 
     @BeforeAll
     static void init() {
-        mazeSession = new MazeSession(new UserInterface());
+        mazeSession = new MazeSession();
     }
 
     @Test

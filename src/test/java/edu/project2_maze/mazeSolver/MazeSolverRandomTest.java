@@ -4,15 +4,18 @@ import edu.project2_maze.cell.Cell;
 import edu.project2_maze.gui.UserInterface;
 import edu.project2_maze.maze.MazeSession;
 import org.junit.jupiter.api.Test;
-import static edu.project2_maze.cell.TypeOfCell.*;
+import static edu.project2_maze.cell.TypeOfCell.END_POS;
+import static edu.project2_maze.cell.TypeOfCell.PASSAGE;
+import static edu.project2_maze.cell.TypeOfCell.SOLVE_WAY;
+import static edu.project2_maze.cell.TypeOfCell.START_POS;
+import static edu.project2_maze.cell.TypeOfCell.WALL;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MazeSolverRandomTest {
 
     @Test
     void solve() {
-        MazeSession mazeSession = new MazeSession(new UserInterface());
+        MazeSession mazeSession = new MazeSession();
 
         Cell[][] input = {  { new Cell(0, 0, WALL), new Cell(0, 1, WALL),       new Cell(0, 2, WALL),       new Cell(0, 3, WALL),       new Cell(0, 4, WALL) },
                             { new Cell(1, 0, WALL), new Cell(1, 1, PASSAGE),    new Cell(1, 2, PASSAGE),    new Cell(1, 3, END_POS),    new Cell(1, 4, WALL) },
