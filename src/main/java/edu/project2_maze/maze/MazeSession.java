@@ -49,4 +49,12 @@ public class MazeSession {
     public static int getVerticalCells() {
         return VERTICAL_CELLS;
     }
+
+    public static void setCells(Cell[][] cells) {
+        MazeSession.cells = cells;
+    }
+
+    public static void setMaze(MazeGenerator maze) {
+        MazeSession.maze = maze;
+    }
 }
