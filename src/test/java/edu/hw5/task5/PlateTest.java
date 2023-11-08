@@ -21,9 +21,7 @@ class PlateTest {
 
     @Test
     void isAllowedRussianCarPlate() {
-        boolean response = plate.isAllowedRussianCarPlate("1234");
         assertThat(plate.isAllowedRussianCarPlate("1234")).isFalse();
         assertThat(plate.isAllowedRussianCarPlate("P021OM152")).isTrue();
-
     }
 }
