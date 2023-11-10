@@ -46,7 +46,8 @@ public class Dates {
             try {
                 date = LocalDate.parse(string, dateTimeFormatter);
                 dateResult = Optional.of(date);
-            } catch (DateTimeParseException ignored) {}
+            } catch (DateTimeParseException ignored) {
+            }
         }
 
         switch (string) {
