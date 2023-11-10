@@ -2,6 +2,7 @@ package edu.hw5.task3;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,8 +46,7 @@ public class Dates {
             try {
                 date = LocalDate.parse(string, dateTimeFormatter);
                 dateResult = Optional.of(date);
-            } catch (Exception ignored) {
-            }
+            } catch (DateTimeParseException ignored) {}
         }
 
         switch (string) {
