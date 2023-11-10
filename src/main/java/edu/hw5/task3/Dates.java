@@ -6,6 +6,8 @@ import java.time.format.DateTimeParseException;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Существует много способов указать дату, например:
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
  */
 
 public class Dates {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static final String TOMORROW = "tomorrow";
     private static final String TODAY = "today";
     private static final String YESTERDAY = "yesterday";
@@ -46,7 +49,8 @@ public class Dates {
             try {
                 date = LocalDate.parse(string, dateTimeFormatter);
                 dateResult = Optional.of(date);
-            } catch (DateTimeParseException ignored) {
+            } catch (DateTimeParseException e) {
+                LOGGER.info(e);
             }
         }
 
