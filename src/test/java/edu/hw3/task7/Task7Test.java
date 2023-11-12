@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * В результате у вас должен работать следующий код:
  * TreeMap<String, String> tree = ...;
- * tree.add(null, "test");
+ * tree.add(null, "testFile");
  * assertThat(tree.contains(null)).isTrue();
  */
 class Task7Test {
@@ -22,7 +22,7 @@ class Task7Test {
     @Test
     void treeNullKeyExample() {
         String key = null;
-        String value = "test";
+        String value = "testFile";
         Map<String, String> tree = task7.nullTree(key, value);
         assertThat(tree.containsKey(null)).isTrue();
     }
