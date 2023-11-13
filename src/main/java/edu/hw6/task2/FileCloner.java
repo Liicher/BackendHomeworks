@@ -7,6 +7,16 @@ import java.nio.file.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Напишите функцию cloneFile(Path path), которая создает копию файла с новым именем.
+ * Например, файл называется Tinkoff Bank Biggest Secret.txt.
+ * Тогда новые имена файлов должны выглядеть следующим образом:
+ * Tinkoff Bank Biggest Secret.txt
+ * Tinkoff Bank Biggest Secret — копия.txt
+ * Tinkoff Bank Biggest Secret — копия (2).txt
+ * Tinkoff Bank Biggest Secret — копия (3).txt
+ */
+
 public class FileCloner {
     private final static Logger LOGGER = LogManager.getLogger();
 
