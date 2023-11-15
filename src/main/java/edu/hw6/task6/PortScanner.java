@@ -7,6 +7,14 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Напишите программу, которая сканирует порты и определяет заняты они или нет.
+ * Для этого нужно зарегистрировать ServerSocket и DatagramSocket на всех TCP/UDP-портах от 0 до 49151.
+ * В случае успеха порт свободен, в противном случае он занят.
+ * Дополнительно выведите информацию о потенциальном приложении, которое использует этот порт
+ * Выберите несколько, не нужно брать всё
+ */
+
 public class PortScanner {
     private final static Logger LOGGER = LogManager.getLogger();
     private final static int PORT_MIN = 0;
