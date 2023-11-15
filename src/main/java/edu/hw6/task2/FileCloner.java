@@ -44,9 +44,4 @@ public class FileCloner {
             LOGGER.info("Error copying file: " + e.getMessage());
         }
     }
-
-    /*public static void main(String[] args) {
-        Path filePath = Paths.get("src/main/java/edu/hw6/task2/Tinkoff Bank Biggest Secret.txt");
-        new FileCloner().cloneFile(filePath);
-    }*/
 }

@@ -138,12 +138,4 @@ public class DiskMap implements Map<String, String> {
             LOGGER.info(e);
         }
     }
-
-    public String getFirstLineFromFile(Path filePath) {
-        try (BufferedReader reader = Files.newBufferedReader(filePath)) {
-            return reader.readLine();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
