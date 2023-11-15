@@ -28,5 +28,9 @@ class PortScannerTest {
         // Этого порта нет в нашей библиотеке "популярных" портов, поэтому мы не можем узнать кем он используется
         response = portScanner.scan(Set.of(111));
         assertThat(response).isEqualTo(0);
+
+        // 222 and 555 won't be checked
+        response = portScanner.scan(Set.of(135, 137, 139, 222, 445, 555, 843));
+        assertThat(response).isEqualTo(5);
     }
 }
