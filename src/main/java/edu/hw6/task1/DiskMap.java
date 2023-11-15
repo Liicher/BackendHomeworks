@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 public class DiskMap implements Map<String, String> {
     private final static Logger LOGGER = LogManager.getLogger();
+    private final static String COLON = ":";
     private final File file;
 
     public DiskMap(String filePath) {
@@ -113,7 +114,7 @@ public class DiskMap implements Map<String, String> {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] keyValue = line.split(":");
+                String[] keyValue = line.split(COLON);
                 if (keyValue.length == 2) {
                     map.put(keyValue[0], keyValue[1]);
                 }
@@ -127,11 +128,11 @@ public class DiskMap implements Map<String, String> {
     public void writeFile(Map<String, String> map) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Entry<String, String> entry : map.entrySet()) {
-                if (entry.getKey().contains(":") || entry.getValue().contains(":")) {
+                if (entry.getKey().contains(COLON) || entry.getValue().contains(COLON)) {
                     throw new IllegalArgumentException();
                 }
 
-                writer.write(entry.getKey() + ":" + entry.getValue());
+                writer.write(entry.getKey() + COLON + entry.getValue());
                 writer.newLine();
             }
         } catch (IOException e) {
