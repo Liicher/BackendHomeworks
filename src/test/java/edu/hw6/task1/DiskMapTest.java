@@ -1,8 +1,8 @@
 package edu.hw6.task1;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,23 +15,28 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class DiskMapTest {
+    private static DiskMap diskMap;
+
+    @BeforeAll
+    static void init(){
+        diskMap = new DiskMap("src/test/java/edu/hw6/task1/task1TestFile");
+    }
 
     @Test
     void createFile() {
-        DiskMap diskMap = new DiskMap("src/test/java/edu/hw6/task1/task1TestFile");
         boolean response = Files.exists(Path.of("src/test/java/edu/hw6/task1/task1TestFile"));
         assertThat(response).isTrue();
+        diskMap.clear();
     }
 
     @Test
     void writeFile() {
-        DiskMap diskMap = new DiskMap("src/test/java/edu/hw6/task1/task1TestFile2");
         diskMap.put("key_1", "value_1");
         diskMap.put("key_2", "value_2");
         diskMap.put("key_3", "value_3");
 
         Map<String, String> responseMap = diskMap.readFile();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/test/java/edu/hw6/task1/task1TestFile2"))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/test/java/edu/hw6/task1/task1TestFile"))){
             Map<String, String> map = new HashMap<>();
             String line;
             int size = 0;
@@ -46,6 +51,23 @@ class DiskMapTest {
         } catch (IOException e) {
 	        throw new RuntimeException(e);
         }
+        diskMap.clear();
     }
 
+    @Test
+    void readFile() {
+        diskMap.clear();
+        diskMap.put("key_1", "value_1");
+        diskMap.put("key_2", "value_2");
+        assertThat(diskMap.readFile()).isEqualTo(Map.of("key_1", "value_1", "key_2", "value_2"));
+
+        diskMap.put("key_3", "value_3");
+        assertThat(diskMap.readFile()).isEqualTo(Map.of("key_1", "value_1", "key_2", "value_2", "key_3", "value_3"));
+
+        diskMap.remove("key_3");
+        assertThat(diskMap.readFile()).isEqualTo(Map.of("key_1", "value_1", "key_2", "value_2"));
+
+        diskMap.clear();
+        assertThat(diskMap.readFile()).isEqualTo(Map.of());
+    }
 }
