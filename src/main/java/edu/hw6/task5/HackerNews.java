@@ -67,12 +67,5 @@ public class HackerNews {
         }
         return "TITLE NOT FOUND!";
     }
-
-    /*public static void main(String[] args) {
-        HackerNews hackerNews = new HackerNews();
-        System.out.println(Arrays.toString(hackerNews.hackerNewsTopStories()));
-        String newsTitle = hackerNews.news(37570037);
-        System.out.println(newsTitle);
-    }*/
 }
 

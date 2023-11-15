@@ -49,9 +49,4 @@ public class CompositionOfOutputStream {
             LOGGER.info("Error: " + e + e.getMessage());
         }
     }
-
-    /*public static void main(String[] args) throws IOException {
-        CompositionOfOutputStream c = new CompositionOfOutputStream();
-        c.streamComposition(Path.of("src/main/java/edu/hw6/task4/task4Test"));
-    }*/
 }
