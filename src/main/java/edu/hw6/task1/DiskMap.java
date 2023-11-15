@@ -28,6 +28,16 @@ public class DiskMap implements Map<String, String> {
 
     public DiskMap(String filePath) {
         this.file = new File(filePath);
+
+        if (Files.exists(Path.of(filePath))) {
+            return;
+        }
+
+        try {
+            Files.createFile(Path.of(filePath));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -98,7 +108,7 @@ public class DiskMap implements Map<String, String> {
         return readFile().entrySet();
     }
 
-    private Map<String, String> readFile() {
+    public Map<String, String> readFile() {
         Map<String, String> map = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
@@ -114,7 +124,7 @@ public class DiskMap implements Map<String, String> {
         return map;
     }
 
-    private void writeFile(Map<String, String> map) {
+    public void writeFile(Map<String, String> map) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (Entry<String, String> entry : map.entrySet()) {
                 if (entry.getKey().contains(":") || entry.getValue().contains(":")) {
@@ -136,20 +146,4 @@ public class DiskMap implements Map<String, String> {
             throw new RuntimeException(e);
         }
     }
-
-    /*public static void main(String[] args) {
-        DiskMap diskMap = new DiskMap("src/main/java/edu/hw6/task1/task1Test");
-        diskMap.put("1", "2");
-        diskMap.put("3", "4");
-        diskMap.put("5", "6");
-
-        try(BufferedReader r = new BufferedReader(new FileReader("src/main/java/edu/hw6/task1/task1Test"))) {
-            String line;
-            while ((line = r.readLine()) != null) {
-                System.out.println(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }*/
 }
