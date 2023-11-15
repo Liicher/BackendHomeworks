@@ -20,6 +20,9 @@ class PortScannerTest {
         assertThat(response).isEqualTo(portsMap.size());
 
         response = portScanner.scan(Set.of());
+        assertThat(response).isEqualTo(portsMap.size());
+
+        response = portScanner.scan(Set.of(-1));
         assertThat(response).isEqualTo(0);
 
         // Этого порта нет в нашей библиотеке "популярных" портов, поэтому мы не можем узнать кем он используется

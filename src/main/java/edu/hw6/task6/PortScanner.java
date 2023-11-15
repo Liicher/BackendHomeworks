@@ -34,11 +34,12 @@ public class PortScanner {
     );
 
     // Возвращаю количество проверенных портов, которые имеют приложение, которое их использует
+    // При вводе пустого сета будут выведены все проверены все порты и выведены все использующие их приложения
     public int scan(Set<Integer> inputPorts) {
         int inputPortScannedCounter = 0;
         for (int port = PORT_MIN; port <= PORT_MAX; port++) {
             String portService = POPULAR_PORTS.getOrDefault(port, "");
-            int popularPort = inputPorts.contains(port) ? port : -1;
+            int popularPort = (inputPorts.isEmpty() || inputPorts.contains(port)) ? port : -1;
 
             if (!portService.isEmpty() && popularPort != -1) {
                 // TCP
