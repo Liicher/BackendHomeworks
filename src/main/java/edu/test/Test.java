@@ -1,4 +1,4 @@
 package edu.test;
 
-public class test {
+public class Test {
 }
