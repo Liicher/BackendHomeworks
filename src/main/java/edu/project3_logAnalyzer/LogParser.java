@@ -1,5 +1,6 @@
 package edu.project3_logAnalyzer;
 
+import edu.project3_logAnalyzer.mdOutput.PrintMD;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,7 +15,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import edu.project3_logAnalyzer.mdOutput.PrintMD;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +26,6 @@ public class LogParser {
 
     public void parse(File logFile, LocalDate fromDate, LocalDate toDate, String format) {
         List<String> logList = filterLogsByDate(logFile, fromDate, toDate);
-        String outFormat = parseFormat(format);
 
         int amountOfRequests = logList.size();                                      // Общее количество запросов
         Map<String, Integer> addressesStatistic = parseAddress(logList);            // Количество запросов по адресам
@@ -34,8 +33,8 @@ public class LogParser {
         Map<String, Integer> mostCodeStatusStatistic = countCodeStatus(logList);    // Частые коды ответа
         int averageResponseSize = countResponseSize(logList);                       // Средний размер ответа
 
-        switch (outFormat) {
-            case ".md" -> new PrintMD().print();
+        switch (format) {
+            case "markdown" -> new PrintMD().print();
             default -> {
                 return;
             }
@@ -103,20 +102,6 @@ public class LogParser {
             }
         }
         return statistic;
-    }
-
-    private String parseFormat(String format) {
-        switch (format) {
-            case "markdown" -> {
-                return ".md";
-            }
-            case "adoc" -> {
-                return ".adoc";
-            }
-            default -> {
-                return null;
-            }
-        }
     }
 
     private List<String> filterLogsByDate(File logFile, LocalDate fromDate, LocalDate toDate) {
