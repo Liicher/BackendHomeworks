@@ -13,9 +13,9 @@ public class LogAnalyzer {
 
     public void analyze(String[] args) {
         Path pathToLogFile = null;      // Путь до лога
-        LocalDate from = null;          // Дата "с"
-        LocalDate to = null;            // Дата "до"
-        String outputType = null;       // Тип вывода статистики
+        LocalDate from = LocalDate.MIN; // Дата "с"
+        LocalDate to = LocalDate.MAX;   // Дата "до"
+        String formatType = null;       // Тип вывода статистики
 
         // Пройдемся по всем входным аргументам
         for (int i = 0; i < args.length; i++) {
@@ -24,7 +24,7 @@ public class LogAnalyzer {
                 case "--path" -> pathToLogFile = Path.of(args[i + 1]);
                 case "--from" -> from = LocalDate.parse(args[i + 1]);
                 case "--to" -> to = LocalDate.parse(args[i + 1]);
-                case "--format" -> outputType = args[i + 1];
+                case "--format" -> formatType = args[i + 1];
             }
         }
 
@@ -32,7 +32,6 @@ public class LogAnalyzer {
             throw new IllegalArgumentException();
         }
         File logFile = pathToLogFile.toFile();
-
-        logParser.parseLogs(logFile, from, to);
+        logParser.parse(logFile, from, to, formatType);
     }
 }
