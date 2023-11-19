@@ -34,7 +34,11 @@ public class LogParser {
         int averageResponseSize = countResponseSize(logList);                       // Средний размер ответа
 
         switch (format) {
-            case "markdown" -> new PrintMD().print();
+            case "markdown" -> {
+                File file = new File("src/main/java/edu/project3_logAnalyzer/outputs/output.md");
+                PrintMD printMD = new PrintMD();
+                printMD.print(file, fromDate, toDate, amountOfRequests, averageResponseSize);
+            }
             default -> {
                 return;
             }
