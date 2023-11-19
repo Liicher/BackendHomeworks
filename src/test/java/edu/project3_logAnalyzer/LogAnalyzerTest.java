@@ -47,4 +47,15 @@ class LogAnalyzerTest {
         assertThat(fileAdoc).isFile();
         assertThat(fileAdoc.getName()).isEqualTo("output.adoc");
     }
+
+    @Test
+    void markdownPlusFromToToOutput() {
+        logAnalyzer.analyze(new String[] {
+            "java", "-jar", "nginx-log-stats.jar", "--path",
+            testLogPath, "--from", "2015-05-24", "--to", "2015-05-26", "--format", "markdown"
+        });
+
+        assertThat(fileMd).isFile();
+        assertThat(fileMd.getName()).isEqualTo("output.md");
+    }
 }
