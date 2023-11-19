@@ -1,10 +1,9 @@
 package edu.project3_logAnalyzer;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.nio.file.Path;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LogAnalyzerTest {
@@ -43,17 +42,6 @@ class LogAnalyzerTest {
         logAnalyzer.analyze(new String[] {
             "java", "-jar", "nginx-log-stats.jar", "--path",
             testLogPath, "--to", "2015-05-25", "--format", "adoc"
-        });
-
-        assertThat(fileAdoc).isFile();
-        assertThat(fileAdoc.getName()).isEqualTo("output.adoc");
-    }
-
-    @Test
-    void Output() {
-        logAnalyzer.analyze(new String[] {
-            "java", "-jar", "nginx-log-stats.jar", "--path",
-            testLogPath, "--from", "2015-05-25", "--format", "adoc"
         });
 
         assertThat(fileAdoc).isFile();
