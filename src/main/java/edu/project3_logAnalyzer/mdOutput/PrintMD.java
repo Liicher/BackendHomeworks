@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /*
 #### Общая информация
@@ -22,14 +24,16 @@ import java.time.format.DateTimeFormatter;
 @SuppressWarnings("MultipleStringLiterals")
 public class PrintMD {
     private static final String DATE = "dd.MM.yyyy";
+    private static final int TOP = 5;
 
-    public void print(
-        File file,
+    public File print(
+        File logFile,
         LocalDate fromDate,
         LocalDate toDate,
         int amountOfRequests,
         int averageResponseSize
     ) {
+        File file = new File("src/main/java/edu/project3_logAnalyzer/outputs/output.md");
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
             String from = "-";
             String to = "-";
@@ -46,7 +50,7 @@ public class PrintMD {
             writer.print("|:---------------------:|");
             writer.print("-------------:|\n");
             writer.print("|       Файл(-ы)        |");
-            writer.print(file.getName() + " |\n");
+            writer.print(logFile.getName() + " |\n");
             writer.print("|    Начальная дата     |");
             writer.print(from + "|\n");
             writer.print("|     Конечная дата     |");
@@ -55,6 +59,37 @@ public class PrintMD {
             writer.print(amountOfRequests + "|\n");
             writer.print("| Средний размер ответа |");
             writer.print(averageResponseSize + "b|\n");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return file;
+    }
+
+    public void printAmountOfAddressesRequestsMD(File file, Map<String, Integer> amount) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
+            writer.print("#### Адреса\n");
+            writer.print("|        Адрес        |");
+            writer.print("     Количество запросов |\n");
+            writer.print("|:---------------------:|");
+            writer.print("-------------:|\n");
+
+            Map<String, Integer> sortedMap = new LinkedHashMap<>();
+            amount.entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
+
+            int count = TOP;
+            for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+                if (count == 0) {
+                    break;
+                }
+                String ip = entry.getKey();
+                int requests = entry.getValue();
+                writer.print("|\t" + ip + "\t|");
+                writer.print(requests + "|\n");
+                count--;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

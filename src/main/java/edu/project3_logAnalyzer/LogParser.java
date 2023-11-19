@@ -35,9 +35,9 @@ public class LogParser {
 
         switch (format) {
             case "markdown" -> {
-                File file = new File("src/main/java/edu/project3_logAnalyzer/outputs/output.md");
                 PrintMD printMD = new PrintMD();
-                printMD.print(file, fromDate, toDate, amountOfRequests, averageResponseSize);
+                File file = printMD.print(logFile, fromDate, toDate, amountOfRequests, averageResponseSize);
+                printMD.printAmountOfAddressesRequestsMD(file, addressesStatistic);
             }
             default -> {
                 return;
