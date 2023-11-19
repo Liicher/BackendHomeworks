@@ -122,7 +122,7 @@ public class LogParser {
                     filteredLogList.add(log);
                 }
             }
-        }  catch (IOException e) {
+        } catch (IOException e) {
             LOGGER.info(e);
         }
 

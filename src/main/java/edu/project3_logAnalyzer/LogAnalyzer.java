@@ -28,6 +28,10 @@ public class LogAnalyzer {
             }
         }
 
+        if (formatType == null) {
+            formatType = "";
+        }
+
         if (pathToLogFile == null) {
             throw new IllegalArgumentException();
         }
