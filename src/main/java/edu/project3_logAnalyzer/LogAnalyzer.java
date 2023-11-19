@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 
 // {0}java {1}-jar {2}nginx-log-stats.jar {3}--path {4}logs/2023*
-// {5}--from {6}2023-08-31 {7}--to {8}time {9}--format {10}{length-1}markdown
+// {5}--from {6}2023-08-31 {7}--to {8}date {9}--format {10}{length-1}markdown
 // Проблемы свитча
 @SuppressWarnings({"MissingSwitchDefault", "InnerAssignment"})
 public class LogAnalyzer {
