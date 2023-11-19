@@ -38,17 +38,12 @@ public class LogParser {
                 PrintMD printMD = new PrintMD();
                 File file = printMD.print(logFile, fromDate, toDate, amountOfRequests, averageResponseSize);
                 printMD.printAmountOfAddressesRequestsMD(file, addressesStatistic);
+                printMD.printMostRequestedStatistic(file, mostRequestedStatistic);
+                printMD.printMostCodeStatusStatistic(file, mostCodeStatusStatistic);
             }
             default -> {
-                return;
             }
         }
-
-        LOGGER.info(amountOfRequests);
-        LOGGER.info(addressesStatistic.toString());
-        LOGGER.info(mostRequestedStatistic.toString());
-        LOGGER.info(mostCodeStatusStatistic.toString());
-        LOGGER.info(averageResponseSize);
     }
 
     private int countResponseSize(List<String> logList) {

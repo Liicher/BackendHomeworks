@@ -94,4 +94,59 @@ public class PrintMD {
             throw new RuntimeException(e);
         }
     }
+
+    public void printMostRequestedStatistic(File file, Map<String, Integer> amount) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
+            writer.print("#### Ресурсы\n");
+            writer.print("|        Ресурс        |");
+            writer.print("     Количество |\n");
+            writer.print("|:---------------------:|");
+            writer.print("-------------:|\n");
+
+            Map<String, Integer> sortedMap = new LinkedHashMap<>();
+            amount.entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
+
+            int count = TOP;
+            for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+                if (count == 0) {
+                    break;
+                }
+                String resource = entry.getKey();
+                int requests = entry.getValue();
+                writer.print("|\t" + resource + "\t|");
+                writer.print(requests + "|\n");
+                count--;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void printMostCodeStatusStatistic(File file, Map<String, Integer> amount) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
+            writer.print("#### Коды\n");
+            writer.print("|        Код        |");
+            writer.print("     Количество |\n");
+            writer.print("|:---------------------:|");
+            writer.print("-------------:|\n");
+
+            Map<String, Integer> sortedMap = new LinkedHashMap<>();
+            amount.entrySet()
+                .stream()
+                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
+
+            for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
+                String code = entry.getKey();
+                int requests = entry.getValue();
+                writer.print("|\t" + code + "\t|");
+                writer.print(requests + "|\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
