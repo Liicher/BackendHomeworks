@@ -1,5 +1,6 @@
 package edu.project3_logAnalyzer;
 
+import edu.project3_logAnalyzer.adocOutput.PrintAdoc;
 import edu.project3_logAnalyzer.mdOutput.PrintMD;
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,6 +41,13 @@ public class LogParser {
                 printMD.printAmountOfAddressesRequestsMD(file, addressesStatistic);
                 printMD.printMostRequestedStatistic(file, mostRequestedStatistic);
                 printMD.printMostCodeStatusStatistic(file, mostCodeStatusStatistic);
+            }
+            case "adoc" -> {
+                PrintAdoc printAdoc = new PrintAdoc();
+                File file = printAdoc.print(logFile, fromDate, toDate, amountOfRequests, averageResponseSize);
+                printAdoc.printAmountOfAddressesRequestsMD(file, addressesStatistic);
+                printAdoc.printMostRequestedStatistic(file, mostRequestedStatistic);
+                printAdoc.printMostCodeStatusStatistic(file, mostCodeStatusStatistic);
             }
             default -> {
             }

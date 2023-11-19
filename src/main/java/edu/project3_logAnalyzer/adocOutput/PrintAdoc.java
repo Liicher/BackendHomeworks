@@ -1,4 +1,4 @@
-package edu.project3_logAnalyzer.mdOutput;
+package edu.project3_logAnalyzer.adocOutput;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -21,8 +21,19 @@ import java.util.Map;
 | Средний размер ответа |         500b |
 */
 
+/*
+|===
+| Метрика | Значение
+| Файл(-ы) | access.log
+| Начальная дата | 31.08.2023
+| Конечная дата | -
+| Количество запросов | 10_000
+| Средний размер ответа | 500b
+|===
+*/
+
 @SuppressWarnings("MultipleStringLiterals")
-public class PrintMD {
+public class PrintAdoc {
     private static final String DATE = "dd.MM.yyyy";
     private static final int TOP = 5;
 
@@ -33,7 +44,7 @@ public class PrintMD {
         int amountOfRequests,
         int averageResponseSize
     ) {
-        File file = new File("src/main/java/edu/project3_logAnalyzer/outputs/output.md");
+        File file = new File("src/main/java/edu/project3_logAnalyzer/outputs/output.adoc");
         try (PrintWriter writer = new PrintWriter(new FileWriter(file))) {
             String from = "-";
             String to = "-";
@@ -45,20 +56,16 @@ public class PrintMD {
             }
 
             writer.print("#### Общая информация\n");
-            writer.print("|        Метрика        |");
-            writer.print("     Значение |\n");
-            writer.print("|:---------------------:|");
-            writer.print("-------------:|\n");
-            writer.print("|       Файл(-ы)        |");
-            writer.print(logFile.getName() + " |\n");
-            writer.print("|    Начальная дата     |");
-            writer.print(from + "|\n");
-            writer.print("|     Конечная дата     |");
-            writer.print(to + "|\n");
-            writer.print("|  Количество запросов  |");
-            writer.print(amountOfRequests + "|\n");
-            writer.print("| Средний размер ответа |");
-            writer.print(averageResponseSize + "b|\n");
+            writer.print("[cols=2]\n");
+            writer.print("|===\n");
+            writer.print("| Метрика | Значение\n");
+            writer.print("| Файл(-ы) |" + logFile.getName() + "\n");
+            writer.print("| Начальная дата | " + from + "\n");
+            writer.print("| Конечная дата | " + to + "\n");
+            writer.print("| Количество запросов | " + amountOfRequests + "\n");
+            writer.print("| Средний размер ответа |" + averageResponseSize + "\n");
+            writer.print("|===\n");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -68,10 +75,9 @@ public class PrintMD {
     public void printAmountOfAddressesRequestsMD(File file, Map<String, Integer> amount) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
             writer.print("#### Адреса\n");
-            writer.print("|        Адрес        |");
-            writer.print("     Количество запросов |\n");
-            writer.print("|:---------------------:|");
-            writer.print("-------------:|\n");
+            writer.print("[cols=2]\n");
+            writer.print("|===\n");
+            writer.print("|        Адрес        | Количество запросов\n");
 
             Map<String, Integer> sortedMap = new LinkedHashMap<>();
             amount.entrySet()
@@ -86,10 +92,11 @@ public class PrintMD {
                 }
                 String ip = entry.getKey();
                 int requests = entry.getValue();
-                writer.print("|\t" + ip + "\t|");
-                writer.print(requests + "|\n");
+                writer.print("|\t" + ip);
+                writer.print("|\t" + requests + "\n");
                 count--;
             }
+            writer.print("|===\n");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -98,10 +105,9 @@ public class PrintMD {
     public void printMostRequestedStatistic(File file, Map<String, Integer> amount) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
             writer.print("#### Ресурсы\n");
-            writer.print("|        Ресурс        |");
-            writer.print("     Количество |\n");
-            writer.print("|:---------------------:|");
-            writer.print("-------------:|\n");
+            writer.print("[cols=2]\n");
+            writer.print("|===\n");
+            writer.print("|Ресурс   |Количество\n");
 
             Map<String, Integer> sortedMap = new LinkedHashMap<>();
             amount.entrySet()
@@ -116,10 +122,11 @@ public class PrintMD {
                 }
                 String resource = entry.getKey();
                 int requests = entry.getValue();
-                writer.print("|\t" + resource + "\t|");
-                writer.print(requests + "|\n");
+                writer.print("|\t" + resource);
+                writer.print("|\t" + requests + "\n");
                 count--;
             }
+            writer.print("|===\n");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -128,10 +135,9 @@ public class PrintMD {
     public void printMostCodeStatusStatistic(File file, Map<String, Integer> amount) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
             writer.print("#### Коды\n");
-            writer.print("|        Код        |");
-            writer.print("     Количество |\n");
-            writer.print("|:---------------------:|");
-            writer.print("-------------:|\n");
+            writer.print("[cols=2]\n");
+            writer.print("|===\n");
+            writer.print("|Код  |Количество\n");
 
             Map<String, Integer> sortedMap = new LinkedHashMap<>();
             amount.entrySet()
@@ -142,9 +148,10 @@ public class PrintMD {
             for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
                 String code = entry.getKey();
                 int requests = entry.getValue();
-                writer.print("|\t" + code + "\t|");
-                writer.print(requests + "|\n");
+                writer.print("|\t" + code);
+                writer.print("|\t" + requests + "\n");
             }
+            writer.print("|===\n");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
