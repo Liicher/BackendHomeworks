@@ -41,7 +41,7 @@ public class PrintMD {
                 from = fromDate.format(DateTimeFormatter.ofPattern(DATE));
             }
             if (toDate != LocalDate.MAX) {
-                to = fromDate.format(DateTimeFormatter.ofPattern(DATE));
+                to = toDate.format(DateTimeFormatter.ofPattern(DATE));
             }
 
             writer.print("#### Общая информация\n");

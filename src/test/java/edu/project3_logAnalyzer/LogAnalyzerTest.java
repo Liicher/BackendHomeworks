@@ -28,10 +28,10 @@ class LogAnalyzerTest {
     }
 
     @Test
-    void markdownOutput() {
+    void markdownPlusFromOutput() {
         logAnalyzer.analyze(new String[] {
-            "java","-jar","nginx-log-stats.jar","--path",
-            testLogPath, "--from","2015-05-25","--format", "markdown"
+            "java", "-jar", "nginx-log-stats.jar", "--path",
+            testLogPath, "--from", "2015-05-25", "--format", "markdown"
         });
 
         assertThat(fileMd).isFile();
@@ -39,10 +39,21 @@ class LogAnalyzerTest {
     }
 
     @Test
-    void adocOutput() {
+    void adocPlusToOutput() {
         logAnalyzer.analyze(new String[] {
-            "java","-jar","nginx-log-stats.jar","--path",
-            testLogPath, "--from","2015-05-25","--format", "adoc"
+            "java", "-jar", "nginx-log-stats.jar", "--path",
+            testLogPath, "--to", "2015-05-25", "--format", "adoc"
+        });
+
+        assertThat(fileAdoc).isFile();
+        assertThat(fileAdoc.getName()).isEqualTo("output.adoc");
+    }
+
+    @Test
+    void Output() {
+        logAnalyzer.analyze(new String[] {
+            "java", "-jar", "nginx-log-stats.jar", "--path",
+            testLogPath, "--from", "2015-05-25", "--format", "adoc"
         });
 
         assertThat(fileAdoc).isFile();
