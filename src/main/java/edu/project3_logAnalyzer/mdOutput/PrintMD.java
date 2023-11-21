@@ -27,17 +27,18 @@ public class PrintMD {
     private static final int TOP = 5;
     private static final String GENERAL_TEMPLATE =
         "#### Общая информация\n"
-            + "| Метрика | Значение |\n"
+            + "| Метрика                | Значение |\n"
             + "|:---------------------:|-------------:|\n"
-            + "| Файл(-ы) | %s |\n"
-            + "| Начальная дата | %s |\n"
-            + "| Конечная дата | %s |\n"
-            + "| Количество запросов | %d |\n"
-            + "| Средний размер ответа | %db |\n";
+            + "| Файл(-ы)               | %s |\n"
+            + "| Начальная дата         | %s |\n"
+            + "| Конечная дата          | %s |\n"
+            + "| Количество запросов    | %d |\n"
+            + "| Средний размер ответа  | %db |\n";
     private static final String TABLE_OPEN =
         "#### %s\n"
             + "| %s | Количество\n"
             + "|:---------------------:|-------------:|\n";
+    private static final String TABLE_ROW = "| %s | %d |\n";
 
     public File print(
         File logFile,
@@ -72,10 +73,7 @@ public class PrintMD {
                 if (count == 0) {
                     break;
                 }
-                String ip = entry.getKey();
-                int requests = entry.getValue();
-                writer.print("|\t" + ip + "\t|");
-                writer.print(requests + "|\n");
+                writer.printf(TABLE_ROW, entry.getKey(), entry.getValue());
                 count--;
             }
         } catch (IOException e) {
@@ -92,10 +90,7 @@ public class PrintMD {
                 if (count == 0) {
                     break;
                 }
-                String resource = entry.getKey();
-                int requests = entry.getValue();
-                writer.print("|\t" + resource + "\t|");
-                writer.print(requests + "|\n");
+                writer.printf(TABLE_ROW, entry.getKey(), entry.getValue());
                 count--;
             }
         } catch (IOException e) {
@@ -108,10 +103,7 @@ public class PrintMD {
             writer.printf(TABLE_OPEN, "Коды", "Код");
             Map<String, Integer> sortedMap = sortStat(amount);
             for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
-                String code = entry.getKey();
-                int requests = entry.getValue();
-                writer.print("|\t" + code + "\t|");
-                writer.print(requests + "|\n");
+                writer.printf(TABLE_ROW, entry.getKey(), entry.getValue());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

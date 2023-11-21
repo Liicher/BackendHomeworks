@@ -40,12 +40,12 @@ public class PrintAdoc {
         "#### Общая информация \n"
             + "[cols=2]\n"
             + "|===\n"
-            + "| Метрика | Значение \n"
-            + "| Файл(-ы) | %s \n"
-            + "| Начальная дата | %s \n"
-            + "| Конечная дата | %s \n"
-            + "| Количество запросов | %d \n"
-            + "| Средний размер ответа | %d \n"
+            + "| Метрика                | Значение \n"
+            + "| Файл(-ы)               | %s \n"
+            + "| Начальная дата         | %s \n"
+            + "| Конечная дата          | %s \n"
+            + "| Количество запросов    | %d \n"
+            + "| Средний размер ответа  | %d \n"
             + "|===\n";
     private static final String TABLE_OPEN =
         "#### %s \n"
@@ -53,6 +53,7 @@ public class PrintAdoc {
             + "|===\n"
             + "| %s | Количество\n";
     private static final String TABLE_CLOSE = "|===\n";
+    private static final String TABLE_ROW = "| %s | %d \n";
 
     public File print(
         File logFile,
@@ -87,10 +88,7 @@ public class PrintAdoc {
                 if (count == 0) {
                     break;
                 }
-                String ip = entry.getKey();
-                int requests = entry.getValue();
-                writer.print("|\t" + ip);
-                writer.print("|\t" + requests + "\n");
+                writer.printf(TABLE_ROW, entry.getKey(), entry.getValue());
                 count--;
             }
             writer.printf(TABLE_CLOSE);
@@ -108,10 +106,7 @@ public class PrintAdoc {
                 if (count == 0) {
                     break;
                 }
-                String resource = entry.getKey();
-                int requests = entry.getValue();
-                writer.print("|\t" + resource);
-                writer.print("|\t" + requests + "\n");
+                writer.printf(TABLE_ROW, entry.getKey(), entry.getValue());
                 count--;
             }
             writer.printf(TABLE_CLOSE);
@@ -125,10 +120,7 @@ public class PrintAdoc {
             writer.printf(TABLE_OPEN, "Коды", "Код");
             Map<String, Integer> sortedMap = sortStat(amount);
             for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
-                String code = entry.getKey();
-                int requests = entry.getValue();
-                writer.print("|\t" + code);
-                writer.print("|\t" + requests + "\n");
+                writer.printf(TABLE_ROW, entry.getKey(), entry.getValue());
             }
             writer.printf(TABLE_CLOSE);
         } catch (IOException e) {
