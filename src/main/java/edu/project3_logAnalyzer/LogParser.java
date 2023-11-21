@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -143,5 +144,14 @@ public class LogParser {
             logDate = LocalDate.parse(date, dateTimeFormatter);
         }
         return logDate;
+    }
+
+    public static Map<String, Integer> sortStat(Map<String, Integer> map) {
+        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+        map.entrySet()
+            .stream()
+            .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
+            .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
+        return sortedMap;
     }
 }

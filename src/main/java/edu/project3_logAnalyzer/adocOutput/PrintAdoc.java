@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import static edu.project3_logAnalyzer.LogParser.sortStat;
 
 /*
 #### Общая информация
@@ -36,6 +36,23 @@ import java.util.Map;
 public class PrintAdoc {
     private static final String DATE = "dd.MM.yyyy";
     private static final int TOP = 5;
+    private static final String GENERAL_TEMPLATE =
+        "#### Общая информация \n"
+            + "[cols=2]\n"
+            + "|===\n"
+            + "| Метрика | Значение \n"
+            + "| Файл(-ы) | %s \n"
+            + "| Начальная дата | %s \n"
+            + "| Конечная дата | %s \n"
+            + "| Количество запросов | %d \n"
+            + "| Средний размер ответа | %d \n"
+            + "|===\n";
+    private static final String TABLE_OPEN =
+        "#### %s \n"
+            + "[cols=2]\n"
+            + "|===\n"
+            + "| %s | Количество\n";
+    private static final String TABLE_CLOSE = "|===\n";
 
     public File print(
         File logFile,
@@ -54,18 +71,7 @@ public class PrintAdoc {
             if (toDate != LocalDate.MAX) {
                 to = toDate.format(DateTimeFormatter.ofPattern(DATE));
             }
-
-            writer.print("#### Общая информация\n");
-            writer.print("[cols=2]\n");
-            writer.print("|===\n");
-            writer.print("| Метрика | Значение\n");
-            writer.print("| Файл(-ы) |" + logFile.getName() + "\n");
-            writer.print("| Начальная дата | " + from + "\n");
-            writer.print("| Конечная дата | " + to + "\n");
-            writer.print("| Количество запросов | " + amountOfRequests + "\n");
-            writer.print("| Средний размер ответа |" + averageResponseSize + "\n");
-            writer.print("|===\n");
-
+            writer.printf(GENERAL_TEMPLATE, logFile.getName(), from, to, amountOfRequests, averageResponseSize);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -74,17 +80,8 @@ public class PrintAdoc {
 
     public void printAmountOfAddressesRequestsMD(File file, Map<String, Integer> amount) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
-            writer.print("#### Адреса\n");
-            writer.print("[cols=2]\n");
-            writer.print("|===\n");
-            writer.print("|        Адрес        | Количество запросов\n");
-
-            Map<String, Integer> sortedMap = new LinkedHashMap<>();
-            amount.entrySet()
-                .stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
-
+            writer.printf(TABLE_OPEN, "Адреса", "Адрес");
+            Map<String, Integer> sortedMap = sortStat(amount);
             int count = TOP;
             for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
                 if (count == 0) {
@@ -96,7 +93,7 @@ public class PrintAdoc {
                 writer.print("|\t" + requests + "\n");
                 count--;
             }
-            writer.print("|===\n");
+            writer.printf(TABLE_CLOSE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -104,17 +101,8 @@ public class PrintAdoc {
 
     public void printMostRequestedStatistic(File file, Map<String, Integer> amount) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
-            writer.print("#### Ресурсы\n");
-            writer.print("[cols=2]\n");
-            writer.print("|===\n");
-            writer.print("|Ресурс   |Количество\n");
-
-            Map<String, Integer> sortedMap = new LinkedHashMap<>();
-            amount.entrySet()
-                .stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
-
+            writer.printf(TABLE_OPEN, "Ресурсы", "Ресурс");
+            Map<String, Integer> sortedMap = sortStat(amount);
             int count = TOP;
             for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
                 if (count == 0) {
@@ -126,7 +114,7 @@ public class PrintAdoc {
                 writer.print("|\t" + requests + "\n");
                 count--;
             }
-            writer.print("|===\n");
+            writer.printf(TABLE_CLOSE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -134,24 +122,15 @@ public class PrintAdoc {
 
     public void printMostCodeStatusStatistic(File file, Map<String, Integer> amount) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(file, true))) {
-            writer.print("#### Коды\n");
-            writer.print("[cols=2]\n");
-            writer.print("|===\n");
-            writer.print("|Код  |Количество\n");
-
-            Map<String, Integer> sortedMap = new LinkedHashMap<>();
-            amount.entrySet()
-                .stream()
-                .sorted(Map.Entry.<String, Integer>comparingByValue().reversed())
-                .forEach(e -> sortedMap.put(e.getKey(), e.getValue()));
-
+            writer.printf(TABLE_OPEN, "Коды", "Код");
+            Map<String, Integer> sortedMap = sortStat(amount);
             for (Map.Entry<String, Integer> entry : sortedMap.entrySet()) {
                 String code = entry.getKey();
                 int requests = entry.getValue();
                 writer.print("|\t" + code);
                 writer.print("|\t" + requests + "\n");
             }
-            writer.print("|===\n");
+            writer.printf(TABLE_CLOSE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

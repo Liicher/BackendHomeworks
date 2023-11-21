@@ -20,6 +20,11 @@ public class LogAnalyzer {
         // Пройдемся по всем входным аргументам
         for (int i = 0; i < args.length; i++) {
             String value = args[i];
+
+            if (i + 1 == args.length) {
+                break;
+            }
+
             switch (value) {
                 case "--path" -> pathToLogFile = Path.of(args[i + 1]);
                 case "--from" -> from = LocalDate.parse(args[i + 1]);
