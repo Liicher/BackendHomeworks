@@ -17,9 +17,9 @@ public class Task1 {
     private final static int SPRINT_COUNT = 100;
     private final List<Thread> threads =  new ArrayList<>();
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new Task1().countBattle(2);
-    }
+    }*/
 
     public void countBattle(int amountOfThreads) {
         for (int i = 0; i < amountOfThreads; i++) {
@@ -36,12 +36,12 @@ public class Task1 {
             threads.add(t);
         }
 
-	    for (Thread thread : threads) {
-		    try {
-			    thread.join();
-		    } catch (InterruptedException e) {
-			    throw new RuntimeException(e);
-		    }
-	    }
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
