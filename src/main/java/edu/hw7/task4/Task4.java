@@ -39,6 +39,7 @@ public class Task4 {
 
         // Разница результатов в зависимости от количества симуляций
         // 10_000_000 - 100_000_000 - 1_000_000_000
+        amountOfPoints = 10_000_000L;
         amountOfThreads = 12;
         for (int i = 0; i < LAPS; i++) {
             double timeMulti = timeRateMultiThread();
@@ -53,17 +54,17 @@ public class Task4 {
 
     private double timeRateSingleThread() {
         long timeStart = System.nanoTime();
-        LOGGER.info("Single thread calculations result: "
-            + new SingleThreadCalc().piCalculation(amountOfPoints));
+        double response = new SingleThreadCalc().piCalculation(amountOfPoints);
         long timeEnd = System.nanoTime();
+        LOGGER.info("Single thread calculations result: " + response);
         return (double) (timeEnd - timeStart) / 1_000_000_000L;
     }
 
     private double timeRateMultiThread() {
         long timeStart = System.nanoTime();
-        LOGGER.info("Multi thread calculations result: "
-            + new MultiThreadCalc().piCalculation(amountOfPoints, amountOfThreads));
+        double response = new MultiThreadCalc().piCalculation(amountOfPoints, amountOfThreads);
         long timeEnd = System.nanoTime();
+        LOGGER.info("Multi thread calculations result: " + response);
         return (double) (timeEnd - timeStart) / 1_000_000_000L;
     }
 }
