@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
  * а так же уровень погрешности для симуляции в 10млн, 100млн и 1млрд симуляций.
  */
 
+// Класс просто для вывода замеров вычислений
+// Никакой смысловой нагрузки не несет
+// Скрин результатов прикреплен в комментах на гите
 @SuppressWarnings({"MagicNumber", "MultipleStringLiterals"})
 public class Task4 {
     private final static Logger LOGGER = LogManager.getLogger();
@@ -50,7 +53,8 @@ public class Task4 {
 
     private double timeRateSingleThread() {
         long timeStart = System.nanoTime();
-        LOGGER.info("Single thread calculations result: " + new SingleThreadCalc().piCalculation(amountOfPoints));
+        LOGGER.info("Single thread calculations result: "
+            + new SingleThreadCalc().piCalculation(amountOfPoints));
         long timeEnd = System.nanoTime();
         return (double) (timeEnd - timeStart) / 1_000_000_000L;
     }
