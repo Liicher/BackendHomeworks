@@ -10,7 +10,7 @@ class CacheServiceTest {
     private CacheService cacheService;
 
     @BeforeEach
-    void setUp() {
+    void init() {
         cacheService = new CacheService();
     }
 
