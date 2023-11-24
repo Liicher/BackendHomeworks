@@ -14,19 +14,14 @@ import org.apache.logging.log4j.Logger;
 public class Task1 {
     private final static Logger LOGGER = LogManager.getLogger();
     private final static AtomicInteger COUNT = new AtomicInteger(0);
-    private final static int SPRINT_COUNT = 100;
     private final List<Thread> threads =  new ArrayList<>();
 
-    /*public static void main(String[] args) {
-        new Task1().countBattle(2);
-    }*/
-
-    public void countBattle(int amountOfThreads) {
+    public void countBattle(int sprintCount, int amountOfThreads) {
         for (int i = 0; i < amountOfThreads; i++) {
             Thread t = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    for (int j = 0; j < SPRINT_COUNT; j++) {
+                    for (int j = 0; j < sprintCount / amountOfThreads; j++) {
                         COUNT.incrementAndGet();
                         LOGGER.info("Thread - " + COUNT);
                     }
@@ -43,5 +38,9 @@ public class Task1 {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public int getCount() {
+        return COUNT.get();
     }
 }
