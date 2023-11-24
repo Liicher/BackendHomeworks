@@ -8,12 +8,13 @@ import java.util.List;
  */
 
 public class Task2 {
-    private final List<Integer> factList = new ArrayList<>();
+    private final List<Long> factList = new ArrayList<>();
 
-    public int multithreadingFactorial(int factValue) {
-        for (int i = 0; i < factValue; i++) {
+    public long multithreadingFactorial(int factValue) {
+        factList.clear();
+        for (long i = 0; i < factValue; i++) {
             factList.add(i + 1);
         }
-        return factList.parallelStream().reduce(1, (x, y) -> x * y);
+        return factList.parallelStream().reduce(1L, (x, y) -> x * y);
     }
 }
