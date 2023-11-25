@@ -16,13 +16,16 @@ class CacheServiceTest {
 
     @Test
     void findTests() {
-        cacheService.add(new Person(1, "name_1", "address_1", "phone_1"));
-        cacheService.add(new Person(2, "name_2", "address_2", "phone_2"));
-        cacheService.add(new Person(3, "name_3", "address_3", "phone_3"));
+        Person person_1 = new Person(1, "name_1", "address_1", "phone_1");
+        Person person_2 = new Person(2, "name_2", "address_2", "phone_2");
+        Person person_3 = new Person(3, "name_3", "address_3", "phone_3");
+        cacheService.add(person_1);
+        cacheService.add(person_2);
+        cacheService.add(person_3);
 
-        assertThat(cacheService.findByName("name_1")).isEqualTo(new Person(1, "name_1", "address_1", "phone_1"));
-        assertThat(cacheService.findByAddress("address_2")).isEqualTo(new Person(2, "name_2", "address_2", "phone_2"));
-        assertThat(cacheService.findByPhone("phone_3")).isEqualTo(new Person(3, "name_3", "address_3", "phone_3"));
+        assertThat(cacheService.findByName("name_1")).isEqualTo(person_1);
+        assertThat(cacheService.findByAddress("address_2")).isEqualTo(person_2);
+        assertThat(cacheService.findByPhone("phone_3")).isEqualTo(person_3);
     }
 
     @Test
