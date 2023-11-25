@@ -23,7 +23,7 @@ public class Task1 {
                 public void run() {
                     for (int j = 0; j < sprintCount / amountOfThreads; j++) {
                         COUNT.incrementAndGet();
-                        LOGGER.info("Thread - " + COUNT);
+                        LOGGER.info("Thread - {}", COUNT);
                     }
                 }
             });

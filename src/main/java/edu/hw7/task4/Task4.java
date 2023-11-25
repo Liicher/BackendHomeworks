@@ -18,20 +18,20 @@ public class Task4 {
     private final static Logger LOGGER = LogManager.getLogger();
     private final static int LAPS = 3;
     private static int amountOfThreads = 2;
-    private static long amountOfPoints = 10_000_000L;
+    private static long amountOfPoints = 100_000L;
 
     public void ratePiCalculationConsoleOutput() {
         // Среднее время в зависимости от потоков (с выводом результата расчета пи)
         double timeSingle = timeRateSingleThread();
         LOGGER.info("Amount of threads: 1");
-        LOGGER.info("Amount of points: " + amountOfPoints);
-        LOGGER.info("Time requires: " + timeSingle);
+        LOGGER.info("Amount of points: {}", amountOfPoints);
+        LOGGER.info("Time requires: {}", timeSingle);
         LOGGER.info("");
         for (int i = 0; i < LAPS; i++) {
             double timeMulti = timeRateMultiThread();
-            LOGGER.info("Amount of threads: " + amountOfThreads);
-            LOGGER.info("Amount of points: " + amountOfPoints);
-            LOGGER.info("Time requires: " + timeMulti);
+            LOGGER.info("Amount of threads: {}", amountOfThreads);
+            LOGGER.info("Amount of points: {}", amountOfPoints);
+            LOGGER.info("Time requires: {}", timeMulti);
 
             amountOfThreads *= 2;
             LOGGER.info("");
@@ -43,9 +43,9 @@ public class Task4 {
         amountOfThreads = 12;
         for (int i = 0; i < LAPS; i++) {
             double timeMulti = timeRateMultiThread();
-            LOGGER.info("Amount of threads: " + amountOfThreads);
-            LOGGER.info("Amount of points: " + amountOfPoints);
-            LOGGER.info("Time requires: " + timeMulti);
+            LOGGER.info("Amount of threads: {}", amountOfThreads);
+            LOGGER.info("Amount of points: {}", amountOfPoints);
+            LOGGER.info("Time requires: {}", timeMulti);
 
             amountOfPoints *= 10;
             LOGGER.info("");
@@ -56,7 +56,7 @@ public class Task4 {
         long timeStart = System.nanoTime();
         double response = new SingleThreadCalc().piCalculation(amountOfPoints);
         long timeEnd = System.nanoTime();
-        LOGGER.info("Single thread calculations result: " + response);
+        LOGGER.info("Single thread calculations result: {}", response);
         return (double) (timeEnd - timeStart) / 1_000_000_000L;
     }
 
@@ -64,7 +64,7 @@ public class Task4 {
         long timeStart = System.nanoTime();
         double response = new MultiThreadCalc().piCalculation(amountOfPoints, amountOfThreads);
         long timeEnd = System.nanoTime();
-        LOGGER.info("Multi thread calculations result: " + response);
+        LOGGER.info("Multi thread calculations result: {}", response);
         return (double) (timeEnd - timeStart) / 1_000_000_000L;
     }
 }
