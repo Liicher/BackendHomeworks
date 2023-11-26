@@ -4,10 +4,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultiThreadCalc {
-    private static final int X0 = 1;
-    private static final int Y0 = 1;
-    private static final int RADIUS = 1;
     private static final int FOUR_CONST = 4;
+    private static final Circle circle = new Circle();
 
     public double piCalculation(long totalCount, int amountOfThreads) {
         AtomicInteger circleCount = new AtomicInteger();
@@ -35,7 +33,7 @@ public class MultiThreadCalc {
                 for (long i = 0; i < totalCount / amountOfThreads; i++) {
                     float x = ThreadLocalRandom.current().nextFloat(0, 2);
                     float y = ThreadLocalRandom.current().nextFloat(0, 2);
-                    if (Math.pow(x - X0, 2) + Math.pow(y - Y0, 2) <= Math.pow(RADIUS, 2)) {
+                    if (circle.isInCircle(x, y)) {
                         circleCount.incrementAndGet();
                     }
                 }
