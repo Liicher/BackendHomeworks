@@ -16,13 +16,21 @@ public class CacheService implements PersonDatabase {
             throw new IllegalArgumentException();
         }
         idCache.put(person.id(), person);
-        putName(person.id(), person.name());
-        putAddress(person.id(), person.address());
-        putPhone(person.id(), person.phoneNumber());
+        setName(person.id(), person.name());
+        setAddress(person.id(), person.address());
+        setPhone(person.id(), person.phoneNumber());
+    }
+
+    // Проверка, что человек с таким id существует в базе
+    private void checkIdForChangingData(int id) {
+        if (!idCache.containsKey(id)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     // Классы для добавления/изменения данных в кэшах
-    public synchronized void putName(int id, String name) {
+    public synchronized void setName(int id, String name) {
+        checkIdForChangingData(id);
         Person person = idCache.get(id);
         if (nameCache.containsKey(name)) {
             throw new IllegalArgumentException();
@@ -31,7 +39,8 @@ public class CacheService implements PersonDatabase {
         }
     }
 
-    public synchronized void putAddress(int id, String address) {
+    public synchronized void setAddress(int id, String address) {
+        checkIdForChangingData(id);
         Person person = idCache.get(id);
         if (addressCache.containsKey(address)) {
             throw new IllegalArgumentException();
@@ -40,7 +49,8 @@ public class CacheService implements PersonDatabase {
         }
     }
 
-    public synchronized void putPhone(int id, String phoneNumber) {
+    public synchronized void setPhone(int id, String phoneNumber) {
+        checkIdForChangingData(id);
         Person person = idCache.get(id);
         if (phoneCache.containsKey(phoneNumber)) {
             throw new IllegalArgumentException();
