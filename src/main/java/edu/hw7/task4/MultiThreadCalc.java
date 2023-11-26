@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultiThreadCalc {
     private static final int FOUR_CONST = 4;
-    private static final Circle circle = new Circle();
+    private static final Circle CIRCLE = new Circle();
 
     public double piCalculation(long totalCount, int amountOfThreads) {
         AtomicInteger circleCount = new AtomicInteger();
@@ -33,7 +33,7 @@ public class MultiThreadCalc {
                 for (long i = 0; i < totalCount / amountOfThreads; i++) {
                     float x = ThreadLocalRandom.current().nextFloat(0, 2);
                     float y = ThreadLocalRandom.current().nextFloat(0, 2);
-                    if (circle.isInCircle(x, y)) {
+                    if (CIRCLE.isInCircle(x, y)) {
                         circleCount.incrementAndGet();
                     }
                 }

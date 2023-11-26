@@ -8,14 +8,14 @@ public class SingleThreadCalc {
     // Координаты центра окружности/квадрата и радиус
     private static final int FOUR_CONST = 4;
     private static final SecureRandom RANDOM = new SecureRandom();
-    private static final Circle circle = new Circle();
+    private static final Circle CIRCLE = new Circle();
 
     public double piCalculation(long totalCount) {
         int circleCount = 0;
         for (long i = 0; i < totalCount; i++) {
             float x = RANDOM.nextFloat(0, 2);
             float y = RANDOM.nextFloat(0, 2);
-            if (circle.isInCircle(x, y)) {
+            if (CIRCLE.isInCircle(x, y)) {
                 circleCount++;
             }
         }
