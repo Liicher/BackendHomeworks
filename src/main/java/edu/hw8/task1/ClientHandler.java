@@ -9,6 +9,12 @@ import java.net.Socket;
 @SuppressWarnings({"MultipleStringLiterals", "MissingSwitchDefault", "LineLength"})
 public class ClientHandler implements Runnable {
     private static final String[] WORDS = {"личности", "оскорбления", "глупый", "интеллект"};
+    private static final String[] QUOTES = {"Не переходи на личности там, где их нет",
+        "Если твои противники перешли на личные оскорбления, будь уверена — твоя победа не за горами",
+        "А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... Ты просто бог идиотизма.",
+        "Чем ниже интеллект, тем громче оскорбления. Ты в этом убедился на собственном примере."
+    };
+
     private final Socket socket;
 
     public ClientHandler(Socket socket) {
@@ -22,9 +28,11 @@ public class ClientHandler implements Runnable {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true)
         ) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                String response = getResponse(line);
+            String response;
+            while (!"exit".equals((line = reader.readLine()))) {
+                response = getResponse(line);
                 writer.println(response);
+                writer.flush();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -34,19 +42,19 @@ public class ClientHandler implements Runnable {
     private String getResponse(String input) {
         String response = null;
         for (String insult : WORDS) {
-            if (input.contains(insult)) {
+            if (input != null && input.contains(insult)) {
                 switch (insult) {
-                    case "глупый":
-                        response = "А я тебе говорил, что ты глупый? Так вот, я забираю свои слова обратно... Ты просто бог идиотизма.";
-                        break;
-                    case "интеллект":
-                        response = "Чем ниже интеллект, тем громче оскорбления.";
-                        break;
                     case "личности":
-                        response = "Не переходи на личности там, где их нет.";
+                        response = QUOTES[0];
                         break;
                     case "оскорбления":
-                        response = "Если твои противники перешли на личные оскорбления, будь уверена — твоя победа не за горами.";
+                        response = QUOTES[1];
+                        break;
+                    case "глупый":
+                        response = QUOTES[2];
+                        break;
+                    case "интеллект":
+                        response = QUOTES[3];
                         break;
                 }
             }
