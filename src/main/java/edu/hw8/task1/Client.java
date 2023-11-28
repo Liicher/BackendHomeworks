@@ -6,8 +6,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("InnerAssignment")
 public class Client {
+    private final static Logger LOGGER = LogManager.getLogger();
     private static final String HOST = "localhost";
     private static final int PORT = 1234;
 
@@ -18,19 +22,19 @@ public class Client {
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader serverReader = new BufferedReader(new InputStreamReader(socket.getInputStream()))
         ) {
-            System.out.println("Введите ключевое слово:");
+            LOGGER.info("Введите ключевое слово: ");
             String keyword;
             while (!"close".equals(keyword = reader.readLine())) {
                 writer.println(keyword);
                 writer.flush();
-                System.out.println("Server: " + serverReader.readLine());
+                LOGGER.info("Server: {}", serverReader.readLine());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new Client().startConnection();
-    }
+    }*/
 }

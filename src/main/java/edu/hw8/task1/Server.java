@@ -24,7 +24,7 @@ public class Server extends Thread {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new Server().startServer();
-    }
+    }*/
 }

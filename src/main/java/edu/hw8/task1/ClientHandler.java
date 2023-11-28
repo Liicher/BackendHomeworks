@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-@SuppressWarnings({"MultipleStringLiterals", "MissingSwitchDefault", "LineLength"})
+@SuppressWarnings({"MultipleStringLiterals", "MissingSwitchDefault", "LineLength", "InnerAssignment"})
 public class ClientHandler implements Runnable {
     private static final String[] WORDS = {"личности", "оскорбления", "глупый", "интеллект"};
     private static final String[] QUOTES = {"Не переходи на личности там, где их нет",
@@ -40,26 +40,12 @@ public class ClientHandler implements Runnable {
     }
 
     private String getResponse(String input) {
-        String response = null;
-        for (String insult : WORDS) {
-            if (input != null && input.contains(insult)) {
-                switch (insult) {
-                    case "личности":
-                        response = QUOTES[0];
-                        break;
-                    case "оскорбления":
-                        response = QUOTES[1];
-                        break;
-                    case "глупый":
-                        response = QUOTES[2];
-                        break;
-                    case "интеллект":
-                        response = QUOTES[3];
-                        break;
-                }
-            }
-            if (response != null) {
-                return response;
+        if (input == null || input.isEmpty()) {
+            return "Ничего не найдено.";
+        }
+        for (int i = 0; i < WORDS.length; i++) {
+            if (input.contains(WORDS[i])) {
+                return QUOTES[i];
             }
         }
         return "Ничего не найдено.";
