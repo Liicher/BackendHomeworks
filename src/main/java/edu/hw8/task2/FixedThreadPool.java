@@ -7,23 +7,35 @@ package edu.hw8.task2;
  */
 
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class FixedThreadPool implements ThreadPool {
-    private final BlockingQueue<Runnable> threadsQueue;
     private final int amountOfThreads;
     private final Thread[] threads;
+    private final BlockingQueue<Runnable> threadsQueue;
 
     public FixedThreadPool(int amountOfThreads) {
-        this.threadsQueue = new LinkedBlockingDeque<>();
         this.amountOfThreads = amountOfThreads;
-        threads = new Thread[amountOfThreads];
+        this.threads = new Thread[amountOfThreads];
+        this.threadsQueue = new LinkedBlockingQueue<>();
     }
 
     @Override
     public void start() {
         for (int i = 0; i < amountOfThreads; i++) {
-            threads[i] = new Thread();
+            threads[i] = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (!Thread.currentThread().isInterrupted()) {
+                        try {
+                            Runnable task = threadsQueue.take();
+                            task.run();
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+            });
             threads[i].start();
         }
     }
@@ -33,13 +45,14 @@ public class FixedThreadPool implements ThreadPool {
         try {
             threadsQueue.put(runnable);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
         }
     }
 
     @Override
     public void close() {
         for (int i = 0; i < amountOfThreads; i++) {
+            //threads[i].interrupt();
             if (threads[i] != null && threads[i].isAlive()) {
                 threads[i].interrupt();
             }

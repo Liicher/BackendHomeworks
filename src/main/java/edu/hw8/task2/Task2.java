@@ -13,36 +13,34 @@ package edu.hw8.task2;
 
 @SuppressWarnings("MagicNumber")
 public class Task2 {
-    private static long[] results;
-
-    /*public static void main(String[] args) {
+    /*public static void main(String[] args) throws InterruptedException {
         Task2 task2 = new Task2();
         FixedThreadPool fixedThreadPool = new FixedThreadPool(4);
         fixedThreadPool.start();
+        List<Integer> res = new ArrayList<>();
+        CountDownLatch latch = new CountDownLatch(10);
 
         int n = 92;
-        var latch = new CountDownLatch(n + 1);
-        for (int i = 0; i <= n; i++) {
+        for (int i = 0; i <= 10; i++) {
             final int index = i;
             fixedThreadPool.execute(() -> {
-                results[index] = task2.fibonacci(index);
+                res.add(task2.fibonacci(index));
                 latch.countDown();
             });
         }
 
-        System.out.println(Arrays.toString(results));
+        latch.await();
+
+        fixedThreadPool.close();
+        System.out.println(res);
     }*/
 
-    private long fibonacci(int n) {
+    private int fibonacci(int n) {
         if (n < 0 || n > 92) {
             throw new IllegalArgumentException();
         } else if (n <= 1) {
             return n;
         }
-
-        if (results[n] == 0) {
-            results[n] = fibonacci(n - 1) + fibonacci(n - 2);
-        }
-        return results[n];
+        return fibonacci(n - 1) + fibonacci(n - 2);
     }
 }
