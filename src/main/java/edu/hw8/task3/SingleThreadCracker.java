@@ -12,21 +12,21 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("MultipleStringLiterals")
 public class SingleThreadCracker {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final String PASSWORDS_FILE = "src/main/java/edu/hw8/task3/test/passwords.txt";
-    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
-    private static final List<Character> ALPHABET_ARRAY = ALPHABET.chars().mapToObj(e -> (char) e).toList();
     private static final int MIN_PASSWORD_SIZE = 4;
     private static final int MAX_PASSWORD_SIZE = 6;
+    private static final String PASSWORDS_FILE = "src/main/java/edu/hw8/task3/test/passwords.txt";
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
+    private static final List<Character> ALPHABET_LIST = ALPHABET.chars().mapToObj(e -> (char) e).toList();
 
     public void crack() {
         Map<String, String> passwords = readPassword(PASSWORDS_FILE);
         Map<String, String> result = new HashMap<>();
 
         String password = null;
-        LEN:
-        for (int len = MIN_PASSWORD_SIZE; len <= MAX_PASSWORD_SIZE; len++) {
+        LEN: for (int len = MIN_PASSWORD_SIZE; len <= MAX_PASSWORD_SIZE; len++) {
             while (!passwords.isEmpty()) {
                 password = nextPassword(password, len);
                 String hash = md5(password);
@@ -48,6 +48,10 @@ public class SingleThreadCracker {
             return "aaaa";
         } else if (length < MIN_PASSWORD_SIZE || length > MAX_PASSWORD_SIZE) {
             throw new IllegalArgumentException();
+        } else if (previousPassword.equals("9999")) {
+            return "aaaaa";
+        } else if (previousPassword.equals("99999")) {
+            return "aaaaaa";
         }
 
         char[] previous = previousPassword.toCharArray();
@@ -55,8 +59,8 @@ public class SingleThreadCracker {
             if (previous[i] == '9') {
                 previous[i] = 'a';
             } else {
-                int alphaIndex = ALPHABET_ARRAY.indexOf(previous[i]);
-                previous[i] = ALPHABET_ARRAY.get(alphaIndex + 1);
+                int alphaIndex = ALPHABET_LIST.indexOf(previous[i]);
+                previous[i] = ALPHABET_LIST.get(alphaIndex + 1);
                 break;
             }
         }
