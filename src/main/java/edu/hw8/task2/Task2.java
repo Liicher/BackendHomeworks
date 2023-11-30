@@ -1,9 +1,5 @@
 package edu.hw8.task2;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-
 /**
  * Реализуйте свой собственный интерфейс ThreadPool:
  * public interface ThreadPool extends AutoCloseable {
