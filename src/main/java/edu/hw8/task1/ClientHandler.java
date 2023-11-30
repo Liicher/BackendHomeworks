@@ -16,6 +16,7 @@ public class ClientHandler implements Runnable {
     };
 
     private final Socket socket;
+    private static String lastOutput;
 
     public ClientHandler(Socket socket) {
         this.socket = socket;
@@ -45,9 +46,14 @@ public class ClientHandler implements Runnable {
         }
         for (int i = 0; i < WORDS.length; i++) {
             if (input.contains(WORDS[i])) {
+                lastOutput = QUOTES[i];
                 return QUOTES[i];
             }
         }
         return "Ничего не найдено. ";
+    }
+
+    public static String getLastOutput() {
+        return lastOutput;
     }
 }

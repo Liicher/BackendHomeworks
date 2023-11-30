@@ -7,20 +7,33 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Server extends Thread {
-    private static final int PORT = 1234;
-    private static final int MAX_CONNECTIONS = 2;
+    private final ExecutorService executor;
+    private final int port;
+    private final int maxConnections;
 
-    public void startServer() {
+    public Server(int port, int maxConnections) {
+        this.port = port;
+        this.maxConnections = maxConnections;
+        executor = Executors.newFixedThreadPool(maxConnections);
+    }
+
+    @Override
+    public void run() {
         try (
-                ServerSocket serverSocket = new ServerSocket(PORT);
-                ExecutorService executor = Executors.newFixedThreadPool(MAX_CONNECTIONS)
+                ServerSocket serverSocket = new ServerSocket(port)
             ) {
-            while (true) {
+            int clients = 0;
+            while (clients < maxConnections) {
                 Socket socket = serverSocket.accept();
                 executor.execute(new ClientHandler(socket));
+                clients++;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void shutdown() {
+        executor.shutdown();
     }
 }

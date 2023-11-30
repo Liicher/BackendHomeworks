@@ -10,19 +10,24 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("InnerAssignment")
-public class Client {
+public class Client extends Thread {
     private final static Logger LOGGER = LogManager.getLogger();
-    private static final String HOST = "localhost";
-    private static final int PORT = 1234;
+    private final static String HOST = "localhost";
+    private final int port;
 
-    public void startConnection() {
+    public Client(int port) {
+        this.port = port;
+    }
+
+    @Override
+    public void run() {
         try (
-            Socket socket = new Socket(HOST, PORT);
+            Socket socket = new Socket(HOST, port);
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader serverReader = new BufferedReader(new InputStreamReader(socket.getInputStream()))
         ) {
-            LOGGER.info("Введите ключевое слово: ");
+            LOGGER.info("Enter message: ");
             String keyword;
             while (!"close".equals(keyword = reader.readLine())) {
                 writer.println(keyword);
