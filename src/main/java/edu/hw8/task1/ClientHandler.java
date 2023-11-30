@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-@SuppressWarnings({"MultipleStringLiterals", "MissingSwitchDefault", "LineLength", "InnerAssignment"})
+@SuppressWarnings("InnerAssignment")
 public class ClientHandler implements Runnable {
     private static final String[] WORDS = {"личности", "оскорбления", "глупый", "интеллект"};
     private static final String[] QUOTES = {"Не переходи на личности там, где их нет",
@@ -48,6 +48,6 @@ public class ClientHandler implements Runnable {
                 return QUOTES[i];
             }
         }
-        return "Ничего не найдено.";
+        return "Ничего не найдено. ";
     }
 }

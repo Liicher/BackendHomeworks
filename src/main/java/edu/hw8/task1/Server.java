@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 public class Server extends Thread {
     private static final int PORT = 1234;
-    private static final int MAX_CONNECTIONS = 5;
+    private static final int MAX_CONNECTIONS = 2;
 
     public void startServer() {
         try (
@@ -23,8 +23,4 @@ public class Server extends Thread {
             throw new RuntimeException(e);
         }
     }
-
-    /*public static void main(String[] args) {
-        new Server().startServer();
-    }*/
 }
