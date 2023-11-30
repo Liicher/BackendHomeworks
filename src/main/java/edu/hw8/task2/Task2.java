@@ -1,5 +1,9 @@
 package edu.hw8.task2;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Реализуйте свой собственный интерфейс ThreadPool:
  * public interface ThreadPool extends AutoCloseable {
@@ -13,29 +17,7 @@ package edu.hw8.task2;
 
 @SuppressWarnings("MagicNumber")
 public class Task2 {
-    /*public static void main(String[] args) throws InterruptedException {
-        Task2 task2 = new Task2();
-        FixedThreadPool fixedThreadPool = new FixedThreadPool(4);
-        fixedThreadPool.start();
-        List<Integer> res = new ArrayList<>();
-        CountDownLatch latch = new CountDownLatch(10);
-
-        int n = 92;
-        for (int i = 0; i <= 10; i++) {
-            final int index = i;
-            fixedThreadPool.execute(() -> {
-                res.add(task2.fibonacci(index));
-                latch.countDown();
-            });
-        }
-
-        latch.await();
-
-        fixedThreadPool.close();
-        System.out.println(res);
-    }*/
-
-    private int fibonacci(int n) {
+    public int fibonacci(int n) {
         if (n < 0 || n > 92) {
             throw new IllegalArgumentException();
         } else if (n <= 1) {
