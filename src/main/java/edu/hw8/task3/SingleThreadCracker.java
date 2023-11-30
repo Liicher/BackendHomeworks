@@ -11,18 +11,26 @@ import java.util.List;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+//"src/main/java/edu/hw8/task3/test/passwords.txt"
 
 @SuppressWarnings("MultipleStringLiterals")
 public class SingleThreadCracker {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int MIN_PASSWORD_SIZE = 4;
     private static final int MAX_PASSWORD_SIZE = 6;
-    private static final String PASSWORDS_FILE = "src/main/java/edu/hw8/task3/test/passwords.txt";
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static final List<Character> ALPHABET_LIST = ALPHABET.chars().mapToObj(e -> (char) e).toList();
 
+    private final String passwordFilePath;
+    private final Map<String, String> crackedPasswords;
+
+    public SingleThreadCracker(String passwordFilePath) {
+        this.passwordFilePath = passwordFilePath;
+        crackedPasswords = new HashMap<>();
+    }
+
     public void crack() {
-        Map<String, String> passwords = readPassword(PASSWORDS_FILE);
+        Map<String, String> passwords = readPassword(passwordFilePath);
         Map<String, String> result = new HashMap<>();
 
         String password = null;
@@ -31,7 +39,7 @@ public class SingleThreadCracker {
                 password = nextPassword(password, len);
                 String hash = md5(password);
                 if (passwords.containsKey(hash)) {
-                    result.put(passwords.get(hash), password);
+                    crackedPasswords.put(passwords.get(hash), password);
                     passwords.remove(hash);
                 }
 
@@ -40,7 +48,11 @@ public class SingleThreadCracker {
                 }
             }
         }
-        LOGGER.info(result);
+        LOGGER.info(crackedPasswords);
+    }
+
+    public Map<String, String> getCrackedPasswords() {
+        return crackedPasswords;
     }
 
     private static String nextPassword(String previousPassword, int length) {

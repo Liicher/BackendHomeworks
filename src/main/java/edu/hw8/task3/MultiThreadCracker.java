@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,14 +25,18 @@ public class MultiThreadCracker {
     private static final char FIRST_CHAR = ALPHABET_LIST.get(0);
 
     private final int amountOfThreads;
+    private final String passwordFilePath;
+    private final Map<String, String> crackedPasswords;
 
-    public MultiThreadCracker(int amountOfThreads) {
+    public MultiThreadCracker(String passwordFilePath, int amountOfThreads) {
+        this.passwordFilePath = passwordFilePath;
         this.amountOfThreads = amountOfThreads;
+        crackedPasswords = new HashMap<>();
     }
 
     public void crack() {
         Thread[] threads = new Thread[amountOfThreads];
-        Map<String, String> passwords = readPassword(PASSWORDS_FILE);
+        Map<String, String> passwords = readPassword(passwordFilePath);
         Map<String, String> result = new ConcurrentHashMap<>();
 
         int part = (int) Math.floor((double) ALPHABET_LIST.size() / amountOfThreads);
@@ -54,9 +59,9 @@ public class MultiThreadCracker {
                         String hash = md5(password);
 
                         if (passwords.containsKey(hash)) {
-                            synchronized (result) {
+                            synchronized (crackedPasswords) {
                                 synchronized (passwords) {
-                                    result.put(passwords.get(hash), password);
+                                    crackedPasswords.put(passwords.get(hash), password);
                                     passwords.remove(hash);
                                 }
                             }
@@ -79,7 +84,11 @@ public class MultiThreadCracker {
             throw new RuntimeException(e);
         }
 
-        LOGGER.info(result);
+        LOGGER.info(crackedPasswords);
+    }
+
+    public Map<String, String> getCrackedPasswords() {
+        return crackedPasswords;
     }
 
     private static String nextPassword(String previousPassword, char startPosChar, String endPosString) {

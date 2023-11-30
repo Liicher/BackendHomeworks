@@ -1,8 +1,6 @@
 package edu.hw8.task2;
 
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
