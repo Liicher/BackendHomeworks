@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SuppressWarnings({"ParameterAssignment", "RegexpSinglelineJava"})
+@SuppressWarnings({"ParameterAssignment"})
 public class MultiThreadCracker {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int MIN_PASSWORD_SIZE = 4;
@@ -20,7 +20,8 @@ public class MultiThreadCracker {
     private static final String PASSWORDS_FILE = "src/main/java/edu/hw8/task3/test/passwords.txt";
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz0123456789";
     private static final List<Character> ALPHABET_LIST = ALPHABET.chars().mapToObj(e -> (char) e).toList();
-    private static final char NINE = ALPHABET_LIST.get(ALPHABET_LIST.size() - 1);
+    private static final char LAST_CHAR = ALPHABET_LIST.get(ALPHABET_LIST.size() - 1);
+    private static final char FIRST_CHAR = ALPHABET_LIST.get(0);
 
     private final int amountOfThreads;
 
@@ -38,40 +39,31 @@ public class MultiThreadCracker {
             int fromLetter = part * i;
             int toLetter = (i == amountOfThreads - 1) ? ALPHABET_LIST.size() - 1 : part * (i + 1) - 1;
 
-            int finalI = i;
-
             threads[i] = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     String password = null;
 
-                    char endPosChar = ALPHABET_LIST.get(toLetter);      // s
-                    char startPosChar = ALPHABET_LIST.get(fromLetter);  // 9
+                    char endPosChar = ALPHABET_LIST.get(toLetter);
+                    char startPosChar = ALPHABET_LIST.get(fromLetter);
+                    String endPosString = "" + endPosChar + LAST_CHAR + LAST_CHAR + LAST_CHAR;
+                    String startPosString = "" + startPosChar + FIRST_CHAR + FIRST_CHAR + FIRST_CHAR;
 
-                    String endPosString = "" + endPosChar + NINE + NINE + NINE; // 9999
-                    String startPosString = "" + startPosChar + startPosChar + startPosChar + startPosChar;     // ssss
+                    while (!passwords.isEmpty()) {
+                        password = nextPassword(password, startPosChar, endPosString);
+                        String hash = md5(password);
 
-                    LEN:
-                    for (int len = MIN_PASSWORD_SIZE; len <= MAX_PASSWORD_SIZE; len++) {
-                        while (!passwords.isEmpty()) {
-                            password = nextPassword(password, len, startPosChar, endPosString);
-                            String hash = md5(password);
-
-                            System.out.println(threads[finalI].getName() + " - " + password);
-
-                            if (passwords.containsKey(hash)) {
-                                synchronized (result) {
+                        if (passwords.containsKey(hash)) {
+                            synchronized (result) {
+                                synchronized (passwords) {
                                     result.put(passwords.get(hash), password);
                                     passwords.remove(hash);
                                 }
                             }
+                        }
 
-                            if (password.equals(endPosString) || password.equals(endPosString + endPosChar)) {
-                                password = startPosString + startPosChar;
-                                continue LEN;
-                            } else if (password.equals("-")) {
-                                break LEN;
-                            }
+                        if (password.equals(startPosString + startPosChar)) {
+                            endPosString += LAST_CHAR;
                         }
                     }
                 }
@@ -90,13 +82,13 @@ public class MultiThreadCracker {
         LOGGER.info(result);
     }
 
-    private static String nextPassword(String previousPassword, int length, char fromChar, String toString) {
+    private static String nextPassword(String previousPassword, char startPosChar, String endPosString) {
         if (previousPassword == null) {
-            return "" + fromChar + fromChar + fromChar + fromChar;
-        } else if (length < MIN_PASSWORD_SIZE || length > MAX_PASSWORD_SIZE) {
+            return "" + startPosChar + FIRST_CHAR + FIRST_CHAR + FIRST_CHAR;
+        } else if (previousPassword.equals(endPosString)) {
+            return String.valueOf(startPosChar).repeat(Math.max(0, previousPassword.length() + 1));
+        } else if (previousPassword.length() < MIN_PASSWORD_SIZE || previousPassword.length() > MAX_PASSWORD_SIZE) {
             throw new IllegalArgumentException();
-        } else if (previousPassword.equals(toString)) {
-            previousPassword += fromChar;
         }
 
         char[] previous = previousPassword.toCharArray();
@@ -111,8 +103,8 @@ public class MultiThreadCracker {
         }
 
         StringBuilder result = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            result.append(previous[i]);
+        for (char c : previous) {
+            result.append(c);
         }
         return result.toString();
     }
@@ -149,9 +141,4 @@ public class MultiThreadCracker {
         }
         return passwords;
     }
-
-    /*public static void main(String[] args) {
-        MultiThreadCracker multiThreadCracker = new MultiThreadCracker(2);
-        multiThreadCracker.crack();
-    }*/
 }
