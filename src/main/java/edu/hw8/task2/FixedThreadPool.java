@@ -6,13 +6,14 @@ package edu.hw8.task2;
  * Внутри класса должны использоваться "голые" потоки -- Thread[].
  */
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class FixedThreadPool implements ThreadPool {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final int TIMEOUT = 1000;
     private final int amountOfThreads;
     private final Thread[] threads;
     private final BlockingQueue<Runnable> threadsQueue;
@@ -55,11 +56,10 @@ public class FixedThreadPool implements ThreadPool {
     @Override
     public void close() {
         for (int i = 0; i < amountOfThreads; i++) {
-
             try {
-                threads[i].join(1000);
+                threads[i].join(TIMEOUT);
             } catch (InterruptedException e) {
-	            throw new RuntimeException(e);
+                throw new RuntimeException(e);
             }
 
             if (threads[i] != null && threads[i].isAlive()) {
