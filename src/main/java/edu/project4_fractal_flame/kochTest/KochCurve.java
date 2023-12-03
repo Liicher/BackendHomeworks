@@ -1,8 +1,9 @@
 package edu.project4_fractal_flame.kochTest;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Graphics;
+import javax.swing.JFrame;
 
+@SuppressWarnings("MagicNumber")
 public class KochCurve extends JFrame {
     private int level = 0;
 
@@ -44,9 +45,9 @@ public class KochCurve extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         KochCurve kochCurve = new KochCurve();
         kochCurve.level = Integer.parseInt(JOptionPane.showInputDialog("Enter Level: "));
         kochCurve.repaint();
-    }
+    }*/
 }
