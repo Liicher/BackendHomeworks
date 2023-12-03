@@ -5,6 +5,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
+        FractalFlameSession fractalFlameSession = new FractalFlameSession();
+        fractalFlameSession.run();
     }
 }
