@@ -1,11 +1,13 @@
 package edu.project4_fractal_flame;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import edu.project4_fractal_flame.FlameParts.Pixel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+@SuppressWarnings("MagicNumber")
 public class GraphicUserInterface {
     private static final int FHD_X = 1920;
     private static final int FHD_Y = 1080;
@@ -33,19 +35,19 @@ public class GraphicUserInterface {
             Pixel[][] pixels = new Pixel[1920][1080];
 
             // Просто стартовый градиент
-            for (int i = 0; i < pixels.length; i++) {
+            /*for (int i = 0; i < pixels.length; i++) {
                 for (int j = 0; j < pixels[i].length; j++) {
                     pixels[i][j] = new Pixel(i, j, new Color((i + j) / 15, (i + j) / 50, (i + j) / 95));
                 }
-            }
+            }*/
 
             // Отрисовка пикселей на экране
-            for (int i = 0; i < pixels.length; i++) {
+            /*for (int i = 0; i < pisxels.length; i++) {
                 for (int j = 0; j < pixels[i].length; j++) {
                     g.setColor(pixels[i][j].getColor());
                     g.fillRect(pixels[i][j].getX(), pixels[i][j].getY(), 1, 1);
                 }
-            }
+            }*/
         }
     }
 }

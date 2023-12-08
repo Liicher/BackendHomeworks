@@ -1,12 +1,12 @@
-package edu.project4_fractal_flame;
+package edu.project4_fractal_flame.FlameParts;
 
 // Расположение точки по координатам
 // Класс для хранения координат пикселя
-class Point {
+public class Point {
     private final int x;
     private final int y;
 
-    public Point(int x, int y) {
+    Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -21,6 +21,6 @@ class Point {
 
     @Override
     public String toString() {
-        return "Point - (" + x + ',' + y +')';
+        return "Point - (" + x + ',' + y + ')';
     }
 }
