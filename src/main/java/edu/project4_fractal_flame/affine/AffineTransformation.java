@@ -56,7 +56,7 @@ public class AffineTransformation {
         if ((b * b + e * e) >= 1) {
             return false;
         }
-	    return !((a * a + d * d + b * b + e * e) >= 1 + Math.pow((a * e - b * d), 2));
+        return !((a * a + d * d + b * b + e * e) >= 1 + Math.pow((a * e - b * d), 2));
     }
 
     public Color getColor() {
