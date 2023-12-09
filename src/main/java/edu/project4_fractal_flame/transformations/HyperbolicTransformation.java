@@ -9,6 +9,6 @@ public class HyperbolicTransformation implements Transformation {
     public Point transform(Point point) {
         double t = theta(point);
         double r = radius(point);
-        return new Point((Math.sin(t)/r), r * Math.cos(t));
+        return new Point((Math.sin(t) / r), r * Math.cos(t));
     }
 }

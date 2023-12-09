@@ -21,15 +21,14 @@ public class RenderSingleThread implements Renderer {
     private static final double Y_MAX = 1;
 
     @Override
-    public FractalImage render
-        (
-            FractalImage canvas,
-            Rect world,
-            List<Transformation> transformations,
-            int samples,
-            int iterationsPerSample,
-            int symmetry
-        ) {
+    public FractalImage render(
+        FractalImage canvas,
+        Rect world,
+        List<Transformation> transformations,
+        int samples,
+        int iterationsPerSample,
+        int symmetry
+    ) {
 
         AffineTransformation[] affineTransformations = affine(samples);
         for (int num = 0; num < samples; ++num) {
@@ -58,7 +57,7 @@ public class RenderSingleThread implements Renderer {
                         continue;
                     }
 
-                    Pixel pixel = map_range(world, pwr, canvas);
+                    Pixel pixel = mapRange(world, pwr, canvas);
                     if (pixel == null) {
                         continue;
                     }
@@ -66,7 +65,7 @@ public class RenderSingleThread implements Renderer {
                     // 1. делаем лок на время работы с пикселем
                     // 2. подмешиваем цвет и увеличиваем hit count
                     synchronized (pixel) {
-                        pixel.setColor();
+                        pixel.setColor(affine);
                         pixel.incrementHitCount();
                     }
                 }
@@ -85,19 +84,19 @@ public class RenderSingleThread implements Renderer {
         return new Point(x, y);
     }
 
+/*
     private Pixel map_range(Rect world, Point pwr, FractalImage canvas) {
-        int x = (int) ((pwr.getX() - world.getX()) * canvas.getWidth() / world.getWidth());
-        int y = (int) ((pwr.getY() - world.getY()) * canvas.getHeight() / world.getHeight());
+        int x = (int) (world.getWidth() - ((X_MAX - pwr.getX()) / (X_MAX - X_MIN)) * world.getWidth());
+        int y = (int) (world.getHeight() - ((Y_MAX - pwr.getY()) / (Y_MAX - Y_MIN)) * world.getHeight());
         return canvas.getPixel(x, y);
     }
+*/
 
-    /*
-    private Pixel map_range(Rect world, Point pwr, FractalImage canvas) {
+    private Pixel mapRange(Rect world, Point pwr, FractalImage canvas) {
         int x = (int) ((pwr.getX() - world.getX()) * canvas.getWidth() / world.getWidth());
         int y = (int) ((pwr.getY() - world.getY()) * canvas.getHeight() / world.getHeight());
         return canvas.getPixel(x, y);
     }
-    */
 
     /**
      * Поворот точки относительно начала координат на определенный угол осуществляется по формуле:

@@ -3,7 +3,10 @@ package edu.project4_fractal_flame.transformations;
 import edu.project4_fractal_flame.flameParts.Point;
 
 public class TransformationUtils {
-    public static final double pi = 3.141592;
+    public static final double PI = 3.141592;
+
+    private TransformationUtils() {
+    }
 
     public static double radius(Point p) {
         double x = p.getX();

@@ -1,7 +1,7 @@
 package edu.project4_fractal_flame.renderers;
 
-import edu.project4_fractal_flame.flameParts.Rect;
 import edu.project4_fractal_flame.FractalImage;
+import edu.project4_fractal_flame.flameParts.Rect;
 import edu.project4_fractal_flame.transformations.Transformation;
 import java.util.List;
 

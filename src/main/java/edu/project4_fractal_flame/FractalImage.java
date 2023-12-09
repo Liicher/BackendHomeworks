@@ -7,24 +7,25 @@ public class FractalImage {
     private final int width;
     private final int height;
 
-    public FractalImage(int width, int height) {
+    public FractalImage(Pixel[][] pixels, int width, int height) {
         this.width = width;
         this.height = height;
-        this.pixels = this.generatePixelsFlame();
+        this.pixels = pixels;
     }
 
-    public Pixel[][] generatePixelsFlame() {
+    public static FractalImage create(int width, int height) {
+        Pixel[][] pixels = generatePixelsFlame(width, height);
+        return new FractalImage(pixels, width, height);
+    }
+
+    public static Pixel[][] generatePixelsFlame(int width, int height) {
         Pixel[][] generatedPixels = new Pixel[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                generatedPixels[i][j] = new Pixel(1, 1, 1, 0);
+                generatedPixels[i][j] = new Pixel(0, 0, 0, 0);
             }
         }
         return generatedPixels;
-    }
-
-    public void gammaCorrection() {
-
     }
 
     public Pixel getPixel(int x, int y) {
