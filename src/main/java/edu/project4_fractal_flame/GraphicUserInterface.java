@@ -1,6 +1,6 @@
 package edu.project4_fractal_flame;
 
-import edu.project4_fractal_flame.FlameParts.Pixel;
+import edu.project4_fractal_flame.flameParts.Pixel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
