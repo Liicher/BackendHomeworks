@@ -5,7 +5,7 @@ import edu.project4_fractal_flame.flameParts.Pixel;
 
 @SuppressWarnings("LineLength")
 public class GammaCorrection implements ImageProcessor {
-    private static final double GAMMA = 2.2;
+    private static final double GAMMA = 1.7;
 
     @Override
     public void process(FractalImage image) {

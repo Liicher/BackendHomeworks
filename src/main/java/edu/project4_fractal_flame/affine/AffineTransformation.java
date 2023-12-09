@@ -11,7 +11,6 @@ public class AffineTransformation {
     private double d;
     private double e;
     private double f;
-
     private final Color color;
 
     public AffineTransformation() {
@@ -21,7 +20,6 @@ public class AffineTransformation {
         this.d = ThreadLocalRandom.current().nextDouble(-1, 1);
         this.e = ThreadLocalRandom.current().nextDouble(-1, 1);
         this.f = ThreadLocalRandom.current().nextDouble(-1, 1);
-
         this.color = generateStarterColor();
     }
 
@@ -30,8 +28,7 @@ public class AffineTransformation {
 
         ADDER:
         for (int i = 0; i < amount; i++) {
-
-            while (true) {
+            while (affineTransformations[i] == null) {
                 AffineTransformation affine = new AffineTransformation();
                 if (affine.checkAffine()) {
                     affineTransformations[i] = affine;
@@ -59,10 +56,7 @@ public class AffineTransformation {
         if ((b * b + e * e) >= 1) {
             return false;
         }
-        if ((a * a + d * d + b * b + e * e) >= 1 + Math.pow((a * e - b * d), 2)) {
-            return false;
-        }
-        return true;
+	    return !((a * a + d * d + b * b + e * e) >= 1 + Math.pow((a * e - b * d), 2));
     }
 
     public Color getColor() {

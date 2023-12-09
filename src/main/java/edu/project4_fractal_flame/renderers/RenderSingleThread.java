@@ -84,14 +84,6 @@ public class RenderSingleThread implements Renderer {
         return new Point(x, y);
     }
 
-/*
-    private Pixel map_range(Rect world, Point pwr, FractalImage canvas) {
-        int x = (int) (world.getWidth() - ((X_MAX - pwr.getX()) / (X_MAX - X_MIN)) * world.getWidth());
-        int y = (int) (world.getHeight() - ((Y_MAX - pwr.getY()) / (Y_MAX - Y_MIN)) * world.getHeight());
-        return canvas.getPixel(x, y);
-    }
-*/
-
     private Pixel mapRange(Rect world, Point pwr, FractalImage canvas) {
         int x = (int) ((pwr.getX() - world.getX()) * canvas.getWidth() / world.getWidth());
         int y = (int) ((pwr.getY() - world.getY()) * canvas.getHeight() / world.getHeight());

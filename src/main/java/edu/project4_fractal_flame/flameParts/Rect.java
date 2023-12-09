@@ -29,11 +29,7 @@ public class Rect {
         return height;
     }
 
-    /*public boolean contains(Point p) {
-        return p.getX() < width && p.getY() < height;
-    }*/
-
     public boolean contains(Point p) {
-        return p.getX() > x && p.getX() < width + x && p.getY() > y && p.getY() < height + y;
+        return p.getX() < width && p.getY() < height;
     }
 }

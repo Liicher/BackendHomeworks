@@ -4,16 +4,14 @@ import edu.project4_fractal_flame.affine.AffineTransformation;
 import java.awt.Color;
 import java.util.concurrent.ThreadLocalRandom;
 
-// Внешний вид пикселя
-// Класс Pixel для окрашивания пикселя
-// Класс для хранения информации о пикселе
 public class Pixel {
     private static final int BOUND = 255;
+
     private int r;
     private int g;
     private int b;
     private int hitCount;
-    private double normal = 0;
+    private double normal = 0;  // Коррекция
 
     public Pixel(int r, int g, int b, int hitCount) {
         this.r = r;
