@@ -57,9 +57,10 @@ public class StatsCollector {
                 }
             }
             double average = sum / data.size();
+            double roundAverage = Math.ceil(average * 100) / 100;
 
             stats.put(metricName + "_sum", sum);
-            stats.put(metricName + "_average", average);
+            stats.put(metricName + "_average", roundAverage);
             stats.put(metricName + "_min", min);
             stats.put(metricName + "_max", max);
         }

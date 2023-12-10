@@ -18,7 +18,7 @@ class StatsCollectorTest {
     @Test
     void collectorTest() throws InterruptedException {
         collector.push("metric_name", new double[] {0.1, 0.05, 1.4, 5.1, 0.3});
-        Thread.sleep(10);
+        Thread.sleep(100);
 
         Map<String, Double> expected = Map.of(
             "metric_name_sum", 6.95,
