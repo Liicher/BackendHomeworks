@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,7 +43,7 @@ public class StatsCollector {
     }
 
     public Map<String, Float> stats() {
-        Map<String, Float> stats = new HashMap<>();
+        Map<String, Float> stats = new TreeMap<>();
         for (String metricName : metrics.keySet()) {
             List<Float> data = metrics.get(metricName);
             float sum = 0;
