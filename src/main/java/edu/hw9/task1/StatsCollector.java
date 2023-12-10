@@ -17,37 +17,38 @@ import java.util.concurrent.Executors;
  * - минимум
  */
 
+@SuppressWarnings("MagicNumber")
 public class StatsCollector {
     private final ExecutorService executorService;
-    private final Map<String, List<Double>> metrics;
+    private final Map<String, List<Float>> metrics;
 
     public StatsCollector(int amountOfThreads) {
         this.executorService = Executors.newFixedThreadPool(amountOfThreads);
         this.metrics = new HashMap<>();
     }
 
-    public void push(String metricName, double[] data) {
+    public void push(String metricName, float[] data) {
         executorService.execute(() -> {
             synchronized (metrics) {
                 if (!metrics.containsKey(metricName)) {
                     metrics.put(metricName, new ArrayList<>());
                 }
 
-                for (double d : data) {
+                for (float d : data) {
                     metrics.get(metricName).add(d);
                 }
             }
         });
     }
 
-    public Map<String, Double> stats() {
-        Map<String, Double> stats = new HashMap<>();
+    public Map<String, Float> stats() {
+        Map<String, Float> stats = new HashMap<>();
         for (String metricName : metrics.keySet()) {
-            List<Double> data = metrics.get(metricName);
-            double sum = 0;
-            double min = Double.MAX_VALUE;
-            double max = Double.MIN_VALUE;
-            for (double d : data) {
+            List<Float> data = metrics.get(metricName);
+            float sum = 0;
+            float min = Float.MAX_VALUE;
+            float max = Float.MIN_VALUE;
+            for (float d : data) {
                 sum += d;
                 if (d < min) {
                     min = d;
@@ -56,11 +57,9 @@ public class StatsCollector {
                     max = d;
                 }
             }
-            double average = sum / data.size();
-            double roundAverage = Math.ceil(average * 100) / 100;
-
+            float average = sum / data.size();
             stats.put(metricName + "_sum", sum);
-            stats.put(metricName + "_average", roundAverage);
+            stats.put(metricName + "_average", average);
             stats.put(metricName + "_min", min);
             stats.put(metricName + "_max", max);
         }
