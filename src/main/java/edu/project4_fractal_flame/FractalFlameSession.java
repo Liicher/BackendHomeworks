@@ -10,6 +10,7 @@ import edu.project4_fractal_flame.renderers.Renderer;
 import edu.project4_fractal_flame.transformations.LinearTransformation;
 import edu.project4_fractal_flame.transformations.SpiralTransformation;
 import edu.project4_fractal_flame.transformations.Transformation;
+import edu.project4_fractal_flame.transformations.TransformationUtils;
 import java.util.List;
 
 @SuppressWarnings({"MagicNumber"})
@@ -40,12 +41,9 @@ public class FractalFlameSession {
     ) {
         FractalImage fractalImage = FractalImage.create(FHD_X, FHD_Y);
         Rect rect = new Rect(-4, -3, 8, 6);
-        List<Transformation> transformations = List.of(
-            new LinearTransformation(),
-            new SpiralTransformation()
-        );
+        List<Transformation> transformations = TransformationUtils.getAllTransformations();
 
-        renderer.render(fractalImage, rect, transformations, 10, 10000, 3);
+        renderer.render(fractalImage, rect, transformations, 75, 5000, 1);
         imageProcessor.process(fractalImage);
         ImageUtils.save(fractalImage, path, ImageFormat.PNG);
     }
