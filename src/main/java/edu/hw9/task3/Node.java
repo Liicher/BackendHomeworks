@@ -8,7 +8,7 @@ class Node {
     private int value;
     private List<Node> adjacentNodes;
 
-    public Node(int value) {
+    Node(int value) {
         this.value = value;
         this.adjacentNodes = new ArrayList<>();
     }

@@ -2,7 +2,6 @@ package edu.hw9.task3;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 // Класс потока для поиска в глубину
 class DFS extends Thread {
@@ -11,7 +10,7 @@ class DFS extends Thread {
     private List<Integer> solveWay;
     private int endPosition;
 
-    public DFS(Graph graph, int endPosition) {
+    DFS(Graph graph, int endPosition) {
         this.graph = graph;
         this.endPosition = endPosition;
         this.solveWay = new ArrayList<>();

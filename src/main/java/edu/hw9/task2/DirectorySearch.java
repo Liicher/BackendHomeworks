@@ -1,10 +1,8 @@
 package edu.hw9.task2;
 
 import java.io.File;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
 // Поиск директорий, в которых больше 1000 файлов
