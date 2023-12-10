@@ -22,11 +22,11 @@ public class FractalFlameSession {
         ImageProcessor imageProcessor = new GammaCorrection();
 
         FractalImage fractalImage = FractalImage.create(FHD_X, FHD_Y);
-        // Сократил 1920 и 1080 на одинаковые коэфы, пока не стал заполнять экран
+        // Сократил 1920 и 1080 на одинаковые коэффициенты, пока фрактал не стал располагаться на середине изображения
         Rect rect = new Rect(-4, -3, 8, 6);
         List<Transformation> transformations = List.of(new LinearTransformation());
 
-        renderer.render(fractalImage, rect, transformations, 25, 10000, 7);
+        renderer.render(fractalImage, rect, transformations, 25, 10000, 11);
         imageProcessor.process(fractalImage);
 
         ImageUtils.save(fractalImage, "src/main/java/edu/project4_fractal_flame/test/test.jpeg", ImageFormat.JPEG);
