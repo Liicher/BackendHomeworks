@@ -42,7 +42,7 @@ public class FractalFlameSession {
         Rect rect = new Rect(-4, -3, 8, 6);
         List<Transformation> transformations = TransformationUtils.getAllTransformations();
 
-        renderer.render(fractalImage, rect, transformations, 75, 5000, 1);
+        renderer.render(fractalImage, rect, transformations, 25, 1000, 5);
         imageProcessor.process(fractalImage);
         ImageUtils.save(fractalImage, path, ImageFormat.PNG);
     }
