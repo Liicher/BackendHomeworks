@@ -8,7 +8,6 @@ import edu.project4_fractal_flame.image.ImageUtils;
 import edu.project4_fractal_flame.renderers.RenderMultiThread;
 import edu.project4_fractal_flame.renderers.Renderer;
 import edu.project4_fractal_flame.transformations.LinearTransformation;
-import edu.project4_fractal_flame.transformations.SpiralTransformation;
 import edu.project4_fractal_flame.transformations.Transformation;
 import edu.project4_fractal_flame.transformations.TransformationUtils;
 import java.util.List;
