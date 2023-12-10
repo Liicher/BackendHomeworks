@@ -26,7 +26,7 @@ public class FractalFlameSession {
         Rect rect = new Rect(-4, -3, 8, 6);
         List<Transformation> transformations = List.of(new LinearTransformation());
 
-        renderer.render(fractalImage, rect, transformations, 12, 100000, 1);
+        renderer.render(fractalImage, rect, transformations, 25, 10000, 7);
         imageProcessor.process(fractalImage);
 
         ImageUtils.save(fractalImage, "src/main/java/edu/project4_fractal_flame/test/test.jpeg", ImageFormat.JPEG);
