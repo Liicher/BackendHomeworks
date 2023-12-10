@@ -3,9 +3,9 @@ package edu.project4_fractal_flame.renderers;
 import edu.project4_fractal_flame.FractalImage;
 import edu.project4_fractal_flame.flameParts.Rect;
 import edu.project4_fractal_flame.transformations.Transformation;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.util.List;
 
 public class RenderMultiThread implements Renderer {
     private final static Logger LOGGER = LogManager.getLogger();
