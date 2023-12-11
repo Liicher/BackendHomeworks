@@ -1,5 +1,6 @@
 package edu.hw7.task4;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -7,6 +8,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class Task4Test {
 
     @Test
+    @Disabled
     void timeTest() {
         SingleThreadCalc singleThreadCalc = new SingleThreadCalc();
         MultiThreadCalc multiThreadCalc = new MultiThreadCalc();

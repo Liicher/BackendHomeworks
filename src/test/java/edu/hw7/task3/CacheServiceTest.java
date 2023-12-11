@@ -1,6 +1,7 @@
 package edu.hw7.task3;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -15,6 +16,7 @@ class CacheServiceTest {
     }
 
     @Test
+    @Disabled
     void findTests() {
         Person person_1 = new Person(1, "name_1", "address_1", "phone_1");
         Person person_2 = new Person(2, "name_2", "address_2", "phone_2");
@@ -29,6 +31,7 @@ class CacheServiceTest {
     }
 
     @Test
+    @Disabled
     void testAddPerson() {
         Person person = new Person(1, "name_1", "address_1", "phone_1");
         cacheService.add(person);

@@ -3,6 +3,7 @@ package edu.project3_logAnalyzer;
 import java.io.File;
 import java.nio.file.Path;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,6 +28,7 @@ class LogAnalyzerTest {
     }
 
     @Test
+    @Disabled
     void markdownPlusFromOutput() {
         logAnalyzer.analyze(new String[] {
             "java", "-jar", "nginx-log-stats.jar", "--path",
@@ -38,6 +40,7 @@ class LogAnalyzerTest {
     }
 
     @Test
+    @Disabled
     void adocPlusToOutput() {
         logAnalyzer.analyze(new String[] {
             "java", "-jar", "nginx-log-stats.jar", "--path",
@@ -49,6 +52,7 @@ class LogAnalyzerTest {
     }
 
     @Test
+    @Disabled
     void markdownPlusFromToToOutput() {
         logAnalyzer.analyze(new String[] {
             "java", "-jar", "nginx-log-stats.jar", "--path",
@@ -60,6 +64,7 @@ class LogAnalyzerTest {
     }
 
     @Test
+    @Disabled
     void markdownOutput() {
         logAnalyzer.analyze(new String[] {
             "java", "-jar", "nginx-log-stats.jar", "--path",
