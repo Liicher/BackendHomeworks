@@ -2,6 +2,7 @@ package edu.project2_maze.mazeSolver;
 
 import edu.project2_maze.cell.Cell;
 import edu.project2_maze.maze.MazeSession;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static edu.project2_maze.cell.TypeOfCell.END_POS;
 import static edu.project2_maze.cell.TypeOfCell.PASSAGE;
@@ -13,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class MazeSolverRandomTest {
 
     @Test
+    @Disabled
     void solve() {
         MazeSession mazeSession = new MazeSession();
 

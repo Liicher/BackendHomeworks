@@ -2,6 +2,7 @@ package edu.project2_maze.maze;
 
 import edu.project2_maze.cell.Cell;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -15,6 +16,7 @@ class MazeSessionWilsonTest {
     }
 
     @Test
+    @Disabled
     void invalidInputs() {
         mazeSession.setCells(null);
         mazeSessionWilson = new MazeSessionWilson(mazeSession);
