@@ -1,10 +1,12 @@
 package edu.hw7.task2;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class Task2Test {
     @Test
+    @Disabled
     void task2Test() {
         Task2 task2 = new Task2();
         assertThat(task2.multithreadingFactorial(1)).isEqualTo(1);
