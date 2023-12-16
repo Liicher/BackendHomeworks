@@ -21,7 +21,8 @@ class CacheProxyTest {
 
     @Test
     void fibonacciTest() {
-        FibCalculator proxy = CacheProxy.create(new FibCalculatorImpl(), FibCalculator.class, "src/test/java/edu/hw10/task2/cache.txt");
+        FibCalculator c = new FibCalculatorImpl();
+        FibCalculator proxy = CacheProxy.create(c, FibCalculator.class, "src/test/java/edu/hw10/task2/cache.txt");
 
         proxy.fib(5);
         proxy.fib(6);
