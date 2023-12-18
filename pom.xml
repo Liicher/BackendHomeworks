@@ -40,6 +40,9 @@
 
         <maven-checkstyle-plugin.version>3.3.0</maven-checkstyle-plugin.version>
 
+        <bytebuddy.version>1.14.8</bytebuddy.version>
+        <asm.version>9.6</asm.version>
+
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
         <maven-enforcer-plugin.version>3.4.1</maven-enforcer-plugin.version>
@@ -118,6 +121,23 @@
             <version>2.10.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>${asm.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+            <version>${bytebuddy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+            <version>${bytebuddy.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -177,6 +197,13 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco-maven-plugin.version}</version>
+
+                    <configuration>
+                        <excludes>
+                            <exclude>edu/hw11/task2/**</exclude>
+                        </excludes>
+                    </configuration>
+
                     <executions>
                         <execution>
                             <goals>
